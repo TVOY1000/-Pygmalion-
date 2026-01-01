@@ -1,0 +1,13 @@
+{
+  "hero": {
+    "title": "Pygmalion / C.R.I.S.T.A.L.L.",
+    "subtitle": "Recognizing human value beyond money, coercion, and KPI logic",
+    "tagline": "Social-tech platform for the 7th technological wave (Noonomics)",
+    "cta_primary": "Explore MVP",
+    "cta_secondary": "Read Whitepaper"
+  },
+  "footer": {
+    "license": "MIT License. Open source. Governed by ethics, not money.",
+    "values": "Built with ❤️ on principles of trust, transparency, and non-monetary value recognition."
+  }
+}
