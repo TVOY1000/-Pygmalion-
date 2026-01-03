@@ -189,5 +189,30 @@
   "footer": {
     "license": "MIT License (MVP phase)",
     "values": "Privacy-respecting · Non-political · Human-centered"
+
+    "manifesto": {
+  "back": "← Back to main",
+  "title": "Pygmalion Manifesto",
+  "subtitle": "Realization and Flourishing of Human Value beyond money, coercion, and KPI logic.",
+
+  "principles_title": "Core Principles",
+
+  "p1": "Human value exists beyond price, productivity, and performance metrics.",
+  "p2": "Participation must remain voluntary and meaningful, not enforced through incentives or penalties.",
+  "p3": "Recognition is not a reward, currency, or score — it is an ethical act.",
+  "p4": "Technology must reveal consequences of actions without controlling behavior.",
+  "p5": "No accumulation, speculation, ranking, or extraction of attention and data.",
+  "p6": "Human dignity has priority over efficiency, optimization, and growth logic.",
+
+  "summary_title": "Executive Summary",
+  "summary_body": "Pygmalion / C.R.I.S.T.A.L.L. is an accounting-learning innovative NOD platform designed to explore post-economic forms of human value recognition. It enables the realization, acknowledgment, and flourishing of non-material human contributions such as care, trust, gratitude, and conscious participation. The platform deliberately avoids money, gamification, coercive mechanics, political alignment, and behavioral manipulation. Pygmalion functions as an open research environment and a living prototype for the 7th technological wave — Noonomics.",
+
+  "boundary_title": "Ethical Boundary",
+  "boundary_body": "Pygmalion is not a product for monetization, tokenization, political influence, or behavioral control. Any use that violates human dignity, voluntary participation, or ethical transparency is outside the scope of this project.",
+
+  "cta_mvp": "Explore the MVP",
+  "cta_repo": "View GitHub Repository"
+}
+
   }
 }
