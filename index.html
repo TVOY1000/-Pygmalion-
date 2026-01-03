@@ -1,254 +1,43 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Пигмалион / К.Р.И.С.Т.А.Л.Л. — Признание человеческой ценности вне денег">
-    <title>Pygmalion / C.R.I.S.T.A.L.L.</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pygmalion / C.R.I.S.T.A.L.L. — Human-centered NOD platform">
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            color: #333;
-        }
+  <title>Pygmalion / C.R.I.S.T.A.L.L.</title>
 
-        .container {
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 24px;
-            padding: 50px 40px;
-            max-width: 700px;
-            width: 100%;
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(20px);
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 35px;
-        }
-
-        .logo {
-            font-size: 52px;
-            font-weight: 800;
-            background: linear-gradient(135deg, #2a5298 0%, #7e22ce 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 15px;
-            letter-spacing: -1px;
-        }
-
-        .lang-switch {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-bottom: 35px;
-        }
-
-        .lang-btn {
-            padding: 12px 32px;
-            font-size: 17px;
-            font-weight: 700;
-            border: 3px solid #2a5298;
-            background: white;
-            color: #2a5298;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .lang-btn:hover {
-            background: #2a5298;
-            color: white;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(42, 82, 152, 0.3);
-        }
-
-        .lang-btn.active {
-            background: linear-gradient(135deg, #2a5298 0%, #7e22ce 100%);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 8px 25px rgba(42, 82, 152, 0.4);
-        }
-
-      
-            animation: contentFade 0.4s ease-out;
-        }
-
-        @keyframes contentFade {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        .subtitle {
-            font-size: 26px;
-            color: #1e3c72;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-            line-height: 1.3;
-        }
-
-        .description {
-            font-size: 18px;
-            color: #555;
-            line-height: 1.7;
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .tagline {
-            font-size: 16px;
-            color: #777;
-            font-style: italic;
-            margin-bottom: 40px;
-            text-align: center;
-            padding: 0 10px;
-        }
-
-        .cta-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 35px;
-        }
-
-        .cta-btn {
-            padding: 20px 40px;
-            font-size: 19px;
-            font-weight: 700;
-            border: none;
-            border-radius: 14px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-decoration: none;
-            text-align: center;
-            display: block;
-        }
-
-        .cta-primary {
-            background: linear-gradient(135deg, #2a5298 0%, #7e22ce 100%);
-            color: white;
-            box-shadow: 0 12px 35px rgba(42, 82, 152, 0.45);
-        }
-
-        .cta-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 18px 45px rgba(42, 82, 152, 0.55);
-        }
-
-        .cta-secondary {
-            background: white;
-            color: #2a5298;
-            border: 3px solid #2a5298;
-        }
-
-        .cta-secondary:hover {
-            background: #2a5298;
-            color: white;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(42, 82, 152, 0.35);
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: 35px 25px;
-            }
-
-            .logo {
-                font-size: 42px;
-            }
-
-            .subtitle {
-                font-size: 22px;
-            }
-
-            .description {
-                font-size: 16px;
-            }
-
-            .tagline {
-                font-size: 14px;
-            }
-
-            .cta-btn {
-                padding: 18px 35px;
-                font-size: 17px;
-            }
-        }
-    </style>
+  <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
+
 <body>
-    <div class="container">
-        <div class="header">
-            <h1 class="logo">Pygmalion</h1>
-        </div>
 
-        <div class="lang-switch">
-            <button data-set-lang="ru">RU</button>
-            <button data-set-lang="en">EN</button>
-        </div>
+<header class="top-bar">
+  <strong class="brand">Pygmalion</strong>
 
-        <!-- Русская версия -->
-        <div class="content active" id="content-ru">
-            <h2 class="subtitle">Пигмалион / К.Р.И.С.Т.А.Л.Л.</h2>
-            <p class="description">
-                Применение, признание и торжество человеческой ценности вне денег, принуждения и логики KPI
-            </p>
-            <p class="tagline">
-                Учётно-учебная инновационная НОД.-Платформа для 7-го технологического уклада (прогрессивная ноономика)
-            </p>
-            <div class="cta-buttons">
-                <a href="/mvp/">Исследовать MVP</a>
-                <a href="./manifesto/index.html" class="cta-btn cta-secondary">Прочитать манифест</a>
-            </div>
-        </div>
-        <!-- English version -->
-        <div class="content" id="content-en">
-            <h2 class="subtitle">Pygmalion / C.R.I.S.T.A.L.L.</h2>
-            <p class="description">
-                Realization and Flourishing of Human Value, coercion, and KPI logic
-            </p>
-            <p class="tagline">
-                An accounting-learning innovation platform based on NOD principles, built for the 7th technological wave (Noonomics).
-            </p>
-            <div class="cta-buttons">
-                <a href="./mvp/index.html">Explore MVP</a>
-                <a href="./manifesto/index.html" class="cta-btn cta-secondary">Read Manifesto</a>
-            </div>
-        </div>
-    </div>
-    
-    <script src="/assets/js/lang.js"></script>
-    </body>
+  <div class="lang-switch">
+    <button data-set-lang="ru">RU</button>
+    <button data-set-lang="en">EN</button>
+  </div>
+</header>
+
+<main class="container">
+
+  <h1 data-i18n="title"></h1>
+
+  <p class="description" data-i18n="description"></p>
+
+  <div class="cta-buttons">
+    <a href="/mvp/" class="cta-btn cta-primary" data-i18n="cta_mvp"></a>
+    <a href="/manifesto/" class="cta-btn cta-secondary" data-i18n="cta_manifesto"></a>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <small>MIT License · Human-centered · Non-political</small>
+</footer>
+
+<script src="/assets/js/lang.js"></script>
+</body>
 </html>
