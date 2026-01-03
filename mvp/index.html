@@ -2,125 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Pygmalion MVP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pygmalion — MVP</title>
 
-  <!-- OpenGraph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Pygmalion / C.R.I.S.T.A.L.L." />
-  <meta property="og:title" content="Pygmalion MVP — Working Prototype" />
-  <meta property="og:description" content="A working MVP for realizing and flourishing non-material human value beyond money, coercion, and metrics." />
-  <meta property="og:url" content="https://ordenp.github.io/-Pygmalion-/mvp/" />
-  <meta property="og:image" content="https://ordenp.github.io/-Pygmalion-/assets/img/og-previewOF.png" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Pygmalion MVP — Working Prototype" />
-  <meta name="twitter:description" content="Human-centered MVP beyond money, coercion, and KPI logic." />
-  <meta name="twitter:image" content="https://ordenp.github.io/-Pygmalion-/assets/img/og-previewOF.png" />
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="../assets/css/style.css" />
-
-  <!-- i18n -->
-  <script src="../assets/js/lang.js" defer></script>
+  <link rel="stylesheet" href="/assets/css/style.css" />
 </head>
-
 <body>
 
-<header class="top-nav">
-  <a href="/" data-i18n="nav.home">← Back to Home</a>
+<header class="top-bar">
+  <a href="/" class="back-link" data-i18n="nav.back">← Back</a>
+
   <div class="lang-switch">
     <button data-set-lang="ru">RU</button>
     <button data-set-lang="en">EN</button>
   </div>
 </header>
 
-<main class="content">
+<main class="container">
 
-  <!-- HERO -->
-  <section class="section">
-    <h1 data-i18n="mvp.title">
-      This is a working MVP — not a product.
-    </h1>
+  <h1 data-i18n="mvp.title"></h1>
 
-    <p class="lead" data-i18n="mvp.lead">
-      Pygmalion MVP is a functional prototype used for research, reflection, and pilot practices.
-    </p>
+  <p data-i18n="mvp.description"></p>
 
-    <p data-i18n="mvp.sublead">
-      It demonstrates how non-material human value can be realized and flourish without money,
-      coercion, ratings, or gamification.
-    </p>
-  </section>
+  <ul>
+    <li data-i18n="mvp.point1"></li>
+    <li data-i18n="mvp.point2"></li>
+    <li data-i18n="mvp.point3"></li>
+  </ul>
 
-  <hr />
-
-  <!-- WHAT IT DOES -->
-  <section class="section">
-    <h2 data-i18n="mvp.what_title">What the MVP Does</h2>
-    <ul>
-      <li data-i18n="mvp.what_1">Records acts of conscious participation</li>
-      <li data-i18n="mvp.what_2">Registers gratitude without creating obligations</li>
-      <li data-i18n="mvp.what_3">Works with non-monetary accounting markers (first contour)</li>
-      <li data-i18n="mvp.what_4">Shows a non-material footprint of actions — not scores or ranks</li>
-    </ul>
-
-    <p class="note" data-i18n="mvp.what_note">
-      There is no accumulation, competition, conversion into value, or status.
-    </p>
-  </section>
-
-  <hr />
-
-  <!-- FORMATS -->
-  <section class="section">
-    <h2 data-i18n="mvp.formats_title">Two Formats — Online & Offline</h2>
-
-    <h3 data-i18n="mvp.online_title">Online MVP (React)</h3>
-    <ul>
-      <li data-i18n="mvp.online_1">Individual reflection flows</li>
-      <li data-i18n="mvp.online_2">Acknowledgment of participation and trust</li>
-      <li data-i18n="mvp.online_3">Experimental interface for non-material accounting</li>
-    </ul>
-
-    <h3 data-i18n="mvp.offline_title">Offline MVP (HTML / CSS / JS)</h3>
-    <ul>
-      <li data-i18n="mvp.offline_1">Group facilitation and dialogue tool</li>
-      <li data-i18n="mvp.offline_2">Works without internet or accounts</li>
-      <li data-i18n="mvp.offline_3">Used in education, therapy, and community settings</li>
-    </ul>
-  </section>
-
-  <hr />
-
-  <!-- CTA -->
-  <section class="section">
-    <h2 data-i18n="mvp.cta_title">This MVP Exists to Be Tested — Not Consumed</h2>
-    <p data-i18n="mvp.cta_text">
-      We invite researchers, developers, and practitioners to explore, discuss,
-      and evolve this prototype together.
-    </p>
-
-    <div class="actions">
-      <a
-        href="https://github.com/ORDENp/-Pygmalion-"
-        class="btn btn-primary"
-        target="_blank"
-        rel="noopener"
-        data-i18n="mvp.cta_repo"
-      >
-        View GitHub Repository
-      </a>
-    </div>
-  </section>
+  <a href="https://github.com/ORDENp/-Pygmalion-" target="_blank"
+     class="cta-btn" data-i18n="mvp.cta_repo"></a>
 
 </main>
 
-<footer class="footer">
-  <small data-i18n="footer.license">MIT Licensed (MVP stage)</small><br />
-  <small data-i18n="footer.values">Privacy-respecting · Non-political · Human-centered</small>
-  </footer>
-  <script src="/assets/js/lang.js"></script>
-  </body>
+<script src="/assets/js/lang.js"></script>
+</body>
 </html>
