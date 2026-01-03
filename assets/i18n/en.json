@@ -1,216 +1,23 @@
 {
-  "hero": {
-    "title": "Human-Centered Research Platform for Non-Material Value",
-    "subtitle": "Pygmalion / C.R.I.S.T.A.L.L. An accounting-learning innovation platform based on NOD principles, built for the 7th technological wave (Noonomics).",
-    "cta_primary": "Explore the concept",
-    "cta_secondary": "Join the research"
-  },
+  "title": "Pygmalion / C.R.I.S.T.A.L.L.",
+  "description": "An accounting-and-learning innovative NOD platform of the 7th technological wave (progressive Noonomics). The startup is focused on the realization, recognition, and flourishing of non-material human value: participation, trust, gratitude, and conscious contribution — beyond money, coercion, and KPI logic.",
 
-  "why_now": {
-    "title": "Why Now",
-    "points": [
-      "Modern systems measure price, productivity, and efficiency.",
-      "They fail to recognize what actually sustains society.",
-      "Invisible contributions disappear.",
-      "Care remains unaccounted for.",
-      "Gratitude turns into obligation."
-    ],
-    "question": "What if social infrastructure could recognize value without turning it into debt or control?"
-  },
+  "idea_title": "Startup Idea",
+  "idea_body": "Modern systems can measure price but fail to recognize value. Pygmalion creates an environment where contribution does not turn into obligation, gratitude does not become debt, and value is not reduced to money or cost.",
 
-  "problem": {
-    "title": "The Problem",
-    "points": [
-      "Reduce human contribution to metrics and incentives",
-      "Turn participation into obligation",
-      "Optimize behavior instead of respecting dignity"
-    ],
-    "result": [
-      "Erosion of trust",
-      "Decline of voluntary contribution",
-      "Disappearance of meaningful action"
-    ],
-    "conclusion": "This is not a technical bug. It is a systemic limitation."
-  },
+  "audience_title": "Who This Is For",
+  "audience_body": "Researchers, developers, practitioners, systems thinkers, philanthropists, and anyone working with human contribution beyond economic incentives.",
 
-  "solution": {
-    "title": "The Solution",
-    "subtitle": "TIUP(h) — Human-Centered Navigation Technology",
-    "points": [
-      "Does not coerce",
-      "Does not punish",
-      "Does not optimize humans as resources"
-    ],
-    "description": "TIUP(h) helps people see the consequences of their actions while preserving freedom of choice, responsibility, and meaning."
-  },
+  "core_title": "Technology Core",
+  "core_body": "TIUP (Human-Centered Navigation Technology) helps people see the consequences of their actions while preserving freedom of choice, responsibility, and human dignity.",
 
-  "architecture": {
-    "title": "Platform Architecture",
-    "pygmalion": {
-      "title": "Pygmalion — Initial NOD Environment",
-      "points": [
-        "Recording conscious actions",
-        "Recognizing participation",
-        "Forming a non-material footprint"
-      ]
-    },
-    "cristall": {
-      "title": "C.R.I.S.T.A.L.L. — Accounting Core",
-      "points": [
-        "Registers acts of recognition and trust",
-        "Prohibits accumulation and speculation",
-        "Allows transfer but not storage of accounting markers"
-      ],
-      "note": "Accounting units cannot be accumulated — only passed on."
-    },
-    "flower": {
-      "title": "Flower of Life — NOD Sphere",
-      "status": "In development",
-      "description": "An ethical and evaluative layer integrating biological, social, and cognitive dimensions of the human being."
-    }
-  },
+  "status_title": "Project Status",
+  "status_body": "Online and offline MVPs have been created. The startup is in an open research and applied development stage.",
 
-  "mvp": {
-    "back": "← Back to Home",
-    "hero_title": "This is a working MVP — not a product",
-    "hero_subtitle": "Pygmalion MVP is a functional prototype used for research, reflection, and pilot practices. It demonstrates how non-material human value can be recognized without money, coercion, ratings, or gamification.",
-    "hero_note": "This MVP exists to be tested, discussed, and evolved — not consumed.",
-    
-    "what_does": {
-      "title": "What the MVP Does",
-      "points": [
-        "Record acts of conscious participation",
-        "Express and register gratitude without creating obligations",
-        "Work with non-monetary accounting markers (first contour)",
-        "Observe a non-material footprint of actions, not a score or ranking"
-      ],
-      "note": "There is no accumulation, no competition, and no conversion into value or status."
-    },
-    
-    "formats": {
-      "title": "Two Formats — Online & Offline",
-      "online": {
-        "title": "Online MVP (React)",
-        "points": [
-          "Individual reflection flows",
-          "Acknowledgment of participation and trust",
-          "Experimental interface for non-material accounting"
-        ]
-      },
-      "offline": {
-        "title": "Offline MVP (HTML / CSS / JS)",
-        "points": [
-          "Group facilitation tool",
-          "Used in discussions, workshops, and pilot communities",
-          "Supports collective reflection without digital pressure"
-        ]
-      },
-      "note": "Both versions are intentionally minimal and transparent."
-    },
-    
-    "how_used": {
-      "title": "How It Is Used Today",
-      "points": [
-        "Facilitation instrument for small groups",
-        "Research tool for testing post-economic hypotheses",
-        "Prototype for ethical social-technology design",
-        "Discussion medium, not a behavioral controller"
-      ]
-    },
-    
-    "what_not": {
-      "title": "What the MVP Is Not",
-      "points": [
-        "Not a social network",
-        "Not a DAO or token system",
-        "Not a reputation or scoring mechanism",
-        "Not a productivity or KPI tool"
-      ],
-      "note": "The MVP deliberately avoids mechanics that undermine trust or human dignity."
-    },
-    
-    "participate": {
-      "title": "How to Participate",
-      "points": [
-        "Explore the source code on GitHub",
-        "Open an Issue with a question, idea, or use-case",
-        "Propose a pilot group or research scenario",
-        "Contribute to code, documentation, or translations"
-      ],
-      "note": "This MVP evolves through dialogue, not through \"growth hacking\"."
-    },
-    
-    "links": {
-      "github": "View MVP source on GitHub",
-      "home": "Return to main page"
-    }
-  },
+  "cta_mvp": "Explore MVP",
+  "cta_manifesto": "Read Manifesto",
 
-  "audience": {
-    "title": "Who This Is For",
-    "points": [
-      "Researchers — testing post-economic models of value accounting",
-      "Developers — building ethical social-tech infrastructure",
-      "Practitioners — education, therapy, community facilitation",
-      "Systems thinkers — working with Noonomics as a living prototype",
-      "Philanthropists — supporting human-centered infrastructure outside politics"
-    ]
-  },
-
-  "ethics": {
-    "title": "Ethical Filter",
-    "not_about": [
-      "Speculation or tokenization",
-      "Behavioral manipulation",
-      "Political agendas",
-      "Monetization of attention or personal data"
-    ],
-    "principle": "Human dignity is higher than efficiency. Ethics is higher than technical optimization."
-  },
-
-  "join": {
-    "title": "How to Join",
-    "points": [
-      "Explore documentation and research",
-      "Open an Issue with an idea or use case",
-      "Propose a pilot group or scenario",
-      "Contribute to code, research, or translations"
-    ],
-    "note": "Pygmalion develops as an open research platform, not as a closed product."
-  },
-
-  "final_cta": {
-    "title": "Build technology that amplifies humanity — not replaces it.",
-    "cta_repo": "Visit the GitHub repository",
-    "cta_summary": "Read the Executive Summary",
-    "cta_join": "Join the research"
-  },
-
-  "footer": {
-    "license": "MIT License (MVP phase)",
-    "values": "Privacy-respecting · Non-political · Human-centered"
-
-    "manifesto": {
-  "back": "← Back to main",
-  "title": "Pygmalion Manifesto",
-  "subtitle": "Realization and Flourishing of Human Value beyond money, coercion, and KPI logic.",
-
-  "principles_title": "Core Principles",
-
-  "p1": "Human value exists beyond price, productivity, and performance metrics.",
-  "p2": "Participation must remain voluntary and meaningful, not enforced through incentives or penalties.",
-  "p3": "Recognition is not a reward, currency, or score — it is an ethical act.",
-  "p4": "Technology must reveal consequences of actions without controlling behavior.",
-  "p5": "No accumulation, speculation, ranking, or extraction of attention and data.",
-  "p6": "Human dignity has priority over efficiency, optimization, and growth logic.",
-
-  "summary_title": "Executive Summary",
-  "summary_body": "Pygmalion / C.R.I.S.T.A.L.L. is an accounting-learning innovative NOD platform designed to explore post-economic forms of human value recognition. It enables the realization, acknowledgment, and flourishing of non-material human contributions such as care, trust, gratitude, and conscious participation. The platform deliberately avoids money, gamification, coercive mechanics, political alignment, and behavioral manipulation. Pygmalion functions as an open research environment and a living prototype for the 7th technological wave — Noonomics.",
-
-  "boundary_title": "Ethical Boundary",
-  "boundary_body": "Pygmalion is not a product for monetization, tokenization, political influence, or behavioral control. Any use that violates human dignity, voluntary participation, or ethical transparency is outside the scope of this project.",
-
-  "cta_mvp": "Explore the MVP",
-  "cta_repo": "View GitHub Repository"
+  "nav": {
+    "home": "← Back to Home"
+  }
 }
-    
