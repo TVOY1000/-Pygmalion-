@@ -1,30 +1,45 @@
-let translations = {};
-let currentLang = localStorage.getItem('lang') || 'en';
+const supportedLangs = ['en', 'ru'];
 
-async function loadJSON(lang) {
-  const response = await fetch(`./assets/i18n/${lang}.json`);
-  return response.json();
+function getLang() {
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get('lang');
+  const storedLang = localStorage.getItem('lang');
+
+  if (supportedLangs.includes(urlLang)) {
+    localStorage.setItem('lang', urlLang);
+    return urlLang;
+  }
+
+  if (supportedLangs.includes(storedLang)) {
+    return storedLang;
+  }
+
+  return 'en';
 }
 
+let currentLang = getLang();
+
 async function loadTranslations() {
-  translations[currentLang] = await loadJSON(currentLang);
+  const response = await fetch(`../assets/i18n/${currentLang}.json`);
+  const dict = await response.json();
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const keys = el.dataset.i18n.split('.');
-    let value = translations[currentLang];
+    let value = dict;
     keys.forEach(k => value = value?.[k]);
     if (value) el.textContent = value;
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('[data-set-lang]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      currentLang = btn.dataset.setLang;
-      localStorage.setItem('lang', currentLang);
-      await loadTranslations();
-    });
-  });
+document.querySelectorAll('[data-set-lang]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const lang = btn.dataset.setLang;
+    localStorage.setItem('lang', lang);
 
-  loadTranslations();
+    const url = new URL(window.location);
+    url.searchParams.set('lang', lang);
+    window.location.href = url.toString();
+  });
 });
+
+loadTranslations();
