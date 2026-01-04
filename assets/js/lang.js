@@ -3,6 +3,7 @@
     'use strict';
 
     let currentLang = localStorage.getItem('preferredLang') || 'ru';
+    const VALID_LANGS = ['ru', 'en'];
     const langToggleButtons = document.querySelectorAll('[data-set-lang]');
 
     // Функция загрузки JSON файла с переводом
