@@ -17,7 +17,9 @@
   "cta_mvp": "Explore MVP",
   "cta_manifesto": "Read Manifesto"
 
-  "nav": {
-    "home": "← Back to Home"
-  }
+ {
+  "back_home": "← Back to home",
+  "mvp_title": "Minimum Viable Product (MVP)",
+  "mvp_description": "This is a demonstration version of the platform confirming the viability of principles for accounting non-material human contribution."
+ }
 }
