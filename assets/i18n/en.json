@@ -15,12 +15,12 @@
   "status_body": "Online and offline MVPs have been created. The startup is in an open research and applied development stage.",
 
   "cta_mvp": "Explore MVP",
-  "cta_manifesto": "Read Manifesto"
+  "cta_manifesto": "Read Manifesto",
 
   "back_home": "← Back to home",
   
   "mvp_title": "Minimum Viable Product (MVP)",
-  "mvp_description": "This is a demonstration version of the platform confirming the viability of principles for accounting non-material human contribution."
+  "mvp_description": "This is a demonstration version of the platform confirming the viability of principles for accounting non-material human contribution.",
 
   "manifesto_title": "Manifesto",
 
@@ -33,4 +33,3 @@
   "manifesto_goal_title": "Goal",
   "manifesto_goal_body": "To create an environment where non-material human value can be recognized, recorded, and understood — without turning it into debt or commodity."
 }
-
