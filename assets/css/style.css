@@ -160,6 +160,34 @@ footer {
   border: 2px solid #2a5298;
   color: #2a5298;
 }
+.mvp-table-section {
+  margin-top: 3rem;
+}
+
+.mvp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.mvp-table th,
+.mvp-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.mvp-table th {
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.mvp-table-note {
+  max-width: 720px;
+  opacity: 0.75;
+  font-size: 0.95rem;
+}
 
 /* =========================
    Responsive
