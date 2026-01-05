@@ -1,12 +1,12 @@
 {
   "title": "Pygmalion / C.R.I.S.T.A.L.L.",
   "description": "An accounting-and-learning platform of progressive noonomics. The MVP explores non-material human values — participation, trust, gratitude, and conscious contribution — beyond money, coercion, and KPI logic. The project follows the path of numerical restraint, aiming to reduce digital inequality, dependencies, and forms of voluntary submission.",
-
+  
   "cta_mvp": "Explore MVP",
   "cta_manifesto": "Read Manifesto",
 
   "back_home": "← Back to home",
-
+  "manifesto_title": "Manifesto"
   "mvp_title": "Minimum Viable Product (MVP)",
   "mvp_description": "The MVP demonstrates the possibility of accounting for non-material human participation without ratings, accumulation, or competition. The focus is on the person, their choice, and their action — not their utility to the system.",
 
@@ -31,15 +31,15 @@
   "mvp_col_note": "Comment",
 
   "mvp_placeholder_note": "Example observation entry",
-"mvp_summary_title": "MVP Summary Table",
-"mvp_summary_note": "This table provides a cumulative observation over the MVP period. It is not used for evaluation, comparison, or decision-making.",
+  "mvp_summary_title": "MVP Summary Table",
+  "mvp_summary_note": "This table provides a cumulative observation over the MVP period. It is not used for evaluation, comparison, or decision-making.",
 
-"mvp_sum_days": "Number of cons (days)",
-"mvp_sum_received": "Total received u.e.",
-"mvp_sum_given": "Total given u.e.",
-"mvp_sum_balance": "Cumulative balance",
+  "mvp_sum_days": "Number of cons (days)",
+  "mvp_sum_received": "Total received u.e.",
+  "mvp_sum_given": "Total given u.e.",
+  "mvp_sum_balance": "Cumulative balance",
 
-"mvp_avg_received": "Average received per day",
-"mvp_avg_given": "Average given per day"
+  "mvp_avg_received": "Average received per day",
+  "mvp_avg_given": "Average given per day"
 
 }
