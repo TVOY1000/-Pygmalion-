@@ -40,6 +40,23 @@
   "mvp_sum_balance": "Cumulative balance",
 
   "mvp_avg_received": "Average received per day",
-  "mvp_avg_given": "Average given per day"
+  "mvp_avg_given": "Average given per day",
+"mvp_intro": "MVP is not a product and not a system. It is a demonstration of principle and a space of personal experience.",
+
+"mvp_what_title": "What MVP is",
+"mvp_what_body": "MVP demonstrates the possibility of recognizing non-material human value without money, coercion, KPI, or obligations.",
+
+"mvp_structure_title": "Structure of MVP",
+"mvp_structure_body": "MVP represents a complete chain of human acts: intention, emission, transfer, reflection, summary, registry, and contact. MVP is the whole chain, not a single action.",
+
+"mvp_participants_title": "Participants",
+"mvp_participants_body": "MVP can be experienced individually or with 2–5 direct participants. Participation is voluntary. Interpretation belongs to the participant.",
+
+"mvp_not_title": "What MVP is not",
+"mvp_not_body": "MVP does not fix daily results, does not impose obligations, does not rank people, and does not simulate the full platform.",
+
+"mvp_ethics_title": "Ethics",
+"mvp_ethics_body": "MVP is based on voluntary participation, liberated labor, respect for attention and time, and numerical restraint instead of digital expansion."
+
 
 }
