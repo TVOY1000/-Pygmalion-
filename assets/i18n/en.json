@@ -30,6 +30,16 @@
   "mvp_col_balance": "Daily balance",
   "mvp_col_note": "Comment",
 
-  "mvp_placeholder_note": "Example observation entry"
+  "mvp_placeholder_note": "Example observation entry",
+"mvp_summary_title": "MVP Summary Table",
+"mvp_summary_note": "This table provides a cumulative observation over the MVP period. It is not used for evaluation, comparison, or decision-making.",
+
+"mvp_sum_days": "Number of cons (days)",
+"mvp_sum_received": "Total received u.e.",
+"mvp_sum_given": "Total given u.e.",
+"mvp_sum_balance": "Cumulative balance",
+
+"mvp_avg_received": "Average received per day",
+"mvp_avg_given": "Average given per day"
 
 }
