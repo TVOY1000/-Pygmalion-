@@ -188,6 +188,33 @@ footer {
   opacity: 0.75;
   font-size: 0.95rem;
 }
+.mvp-summary-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.mvp-summary-table {
+  width: 100%;
+  max-width: 600px;
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+
+.mvp-summary-table td {
+  padding: 0.75rem 0;
+  font-size: 0.95rem;
+}
+
+.mvp-summary-table td:first-child {
+  opacity: 0.75;
+}
+
+.mvp-summary-note {
+  max-width: 720px;
+  font-size: 0.95rem;
+  opacity: 0.75;
+}
 
 /* =========================
    Responsive
