@@ -72,19 +72,12 @@
       instead of digital expansion.
     </p>
   </section>
-  <h2 data-i18n="mvp_table_title">
-    Итог наблюдения
-    <p>
-Итог — это отражение опыта, а не оценка.
-Интерпретация принадлежит участнику.
-</p>
-    
-  </h2>
 
-  <p class="mvp-table-note" data-i18n="mvp_table_note">
-    Кон — это момент фиксации внимания.
-Он не измеряет ценность и не требует интерпретации.
+<p class="mvp-table-note" data-i18n="mvp_table_note">
+  Кон — это момент фиксации внимания.
+  Он не измеряет ценность и не требует интерпретации.
 </p>
+  
 <section id="kon-section">
   <h2>Таблица конов</h2>
 
@@ -106,39 +99,43 @@
     <button onclick="copyKons()">Скопировать таблицу</button>
   </div>
 </section>
-<section id="summary-section">
-  <h2>Итог наблюдения</h2>
-
-  <p>
-    Количество зафиксированных конов:
-    <strong><span id="konCount">0</span></strong>
-  </p>
-
-  <textarea id="reflection"
-    placeholder="Свободная рефлексия (по желанию)"
-    rows="4"></textarea>
-</section>
+  <!-- Таблица конов -->
+<section id="kon-section">
+  <h2 data-i18n="mvp_kon_title">Таблица конов</h2>
 
   <table class="mvp-table">
     <thead>
       <tr>
-        <th data-i18n="mvp_col_day">Кон</th>
-       
-        <th data-i18n="mvp_col_note">Комментарий</th>
+        <th>#</th>
+        <th data-i18n="mvp_col_observation">Наблюдение</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>—</td>
-        <td>—</td>
-        <td>—</td>
-        <td data-i18n="mvp_placeholder_note">
-          Пример строки наблюдения
-        </td>
-      </tr>
-    </tbody>
+    <tbody id="konTableBody"></tbody>
   </table>
+
+  <div class="mvp-actions">
+    <button onclick="addKon()" data-i18n="btn_new_kon">Новый кон</button>
+    <button onclick="clearKons()" data-i18n="btn_clear">Очистить</button>
+    <button onclick="copyKons()" data-i18n="btn_copy">Скопировать таблицу</button>
+  </div>
+</section>
+
+<!-- Итог -->
+<section id="summary-section">
+  <h2 data-i18n="mvp_summary_title">Итог наблюдения</h2>
+
+  <p data-i18n="mvp_summary_count">
+    Количество зафиксированных конов:
+    <strong><span id="konCount">0</span></strong>
+  </p>
+
+  <textarea
+    id="reflection"
+    rows="4"
+    data-i18n-placeholder="mvp_reflection_placeholder"
+    placeholder="Свободная рефлексия (по желанию)">
+  </textarea>
+</section>
 
   </main>
 
