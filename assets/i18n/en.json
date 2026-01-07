@@ -1,64 +1,30 @@
 {
   "title": "Pygmalion / C.R.I.S.T.A.L.L.",
-  "description": "An accounting-and-learning platform of progressive noonomics. The MVP explores non-material human values — participation, trust, gratitude, and conscious contribution — beyond money, coercion, and KPI logic. The project follows the path of numerical restraint, aiming to reduce digital inequality, dependencies, and forms of voluntary submission.",
-  
-  "cta_mvp": "Explore MVP",
-  "cta_manifesto": "Read Manifesto",
+  "description": "A minimally viable space of experience. The MVP is not a product or a system. It is a form of observing non-material human participation without money, coercion, or evaluation.",
 
   "back_home": "← Back to home",
-  
-  "mvp_title": "Minimum Viable Product (MVP)",
-  "mvp_description": "The MVP demonstrates the possibility of accounting for non-material human participation without ratings, accumulation, or competition. The focus is on the person, their choice, and their action — not their utility to the system.",
 
-  "mvp_kon_title": "Kon and daily recording",
-  "mvp_kon_body": "The MVP uses a kon table — a simple form of daily recording. One kon equals one day. Facts of participation and transfer of non-material units are recorded without interpretation, evaluation, or sanctions.",
+  "mvp_title": "Minimum Viable Presence (MVP)",
+  "mvp_intro": "MVP is not a product and not a system. It is a demonstration of principle and a space of personal experience.",
 
-  "mvp_values_title": "System of non-material values",
-  "mvp_values_body": "The project is grounded in non-material spiritual values and the principle of numerical restraint. Its aim is to reduce dependence on financial mechanisms, wage servitude, accumulation, coercion, systemic education, political and ethnic division, as well as forms of tribal consciousness.",
+  "mvp_what_title": "What MVP is",
+  "mvp_what_body": "MVP demonstrates the possibility of recognizing non-material human participation without money, coercion, KPI, or obligations.",
 
-  "mvp_meaning_title": "Meaning of the MVP",
-  "mvp_meaning_body": "The MVP does not propose a utopia and does not impose a path. It creates a neutral environment where voluntary labor is fully liberated, and meaning emerges later — through reflection on lived days, not at the moment of action.",
+  "mvp_structure_title": "Structure of MVP",
+  "mvp_structure_body": "MVP represents a complete chain of human experience: intention, action, attention fixation, reflection, and understanding. MVP is the whole chain, not a single act.",
 
-  "mvp_future_title": "Further development",
-  "mvp_future_body": "After the MVP phase, a final table will be formed across all kons (days) in two MVP versions. It exists solely for analysis and understanding, without influencing participant behavior.",
-  "mvp_table_title": "Daily Cons Table",
-  "mvp_table_note": "One con corresponds to one day of observation. The table records non-material participation without evaluation, debt, or coercion.",
+  "mvp_participants_title": "Participants",
+  "mvp_participants_body": "MVP can be experienced individually or with 2–5 participants. Participation is fully voluntary. Interpretation belongs to the participant.",
 
-  "mvp_col_day": "Con",
-  "mvp_col_received": "Received u.e.",
-  "mvp_col_given": "Given u.e.",
-  "mvp_col_balance": "Daily balance",
-  "mvp_col_note": "Comment",
+  "mvp_not_title": "What MVP is not",
+  "mvp_not_body": "MVP does not fix daily results, does not impose obligations, does not rank people, and does not simulate a full platform.",
 
-  "mvp_placeholder_note": "Example observation entry",
-  "mvp_summary_title": "MVP Summary Table",
-  "mvp_summary_note": "This table provides a cumulative observation over the MVP period. It is not used for evaluation, comparison, or decision-making.",
+  "mvp_ethics_title": "Ethics",
+  "mvp_ethics_body": "MVP is based on voluntary participation, liberated labor, respect for human attention and time, and the principle of numerical restraint instead of digital expansion.",
 
-  "mvp_sum_days": "Number of cons (days)",
-  "mvp_sum_received": "Total received u.e.",
-  "mvp_sum_given": "Total given u.e.",
-  "mvp_sum_balance": "Cumulative balance",
+  "mvp_table_note": "A kon is a moment of attention fixation. It does not measure value and does not require interpretation.",
 
-  "mvp_avg_received": "Average received per day",
-  "mvp_avg_given": "Average given per day",
-"mvp_intro": "MVP is not a product and not a system. It is a demonstration of principle and a space of personal experience.",
-
-"mvp_what_title": "What MVP is",
-"mvp_what_body": "MVP demonstrates the possibility of recognizing non-material human value without money, coercion, KPI, or obligations.",
-
-"mvp_structure_title": "Structure of MVP",
-"mvp_structure_body": "MVP represents a complete chain of human acts: intention, emission, transfer, reflection, summary, registry, and contact. MVP is the whole chain, not a single action.",
-
-"mvp_participants_title": "Participants",
-"mvp_participants_body": "MVP can be experienced individually or with 2–5 direct participants. Participation is voluntary. Interpretation belongs to the participant.",
-
-"mvp_not_title": "What MVP is not",
-"mvp_not_body": "MVP does not fix daily results, does not impose obligations, does not rank people, and does not simulate the full platform.",
-
-"mvp_ethics_title": "Ethics",
-"mvp_ethics_body": "MVP is based on voluntary participation, liberated labor, respect for attention and time, and numerical restraint instead of digital expansion.",
-
- "mvp_kon_title": "Kon observation table",
+  "mvp_kon_title": "Kon table",
   "mvp_col_observation": "Observation",
 
   "btn_new_kon": "New kon",
@@ -66,6 +32,6 @@
   "btn_copy": "Copy table",
 
   "mvp_summary_title": "Observation summary",
-  "mvp_summary_count": "Number of recorded kons:"
-
+  "mvp_summary_count": "Number of recorded kons:",
+  "mvp_reflection_placeholder": "Free reflection (optional)"
 }
