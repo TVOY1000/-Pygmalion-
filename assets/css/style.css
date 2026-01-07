@@ -216,6 +216,10 @@ footer {
   opacity: 0.75;
 }
 
+.english-note {
+    font-style: italic;
+    opacity: 0.8;
+}
 /* =========================
    Responsive
    ========================= */
