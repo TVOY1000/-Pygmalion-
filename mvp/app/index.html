@@ -18,7 +18,6 @@ const COLORS = {
   ue21: { bg: 'bg-purple-500', text: 'text-purple-500', label: 'Безопасность (№21)', icon: Shield, triadId: 'T5', hex: '#a855f7' },
 };
 
-// ОПРЕДЕЛЕНИЕ TRIADS_MAP
 const TRIADS_MAP = { knowledge: 'T1', practice: 'T2', leisure: 'T3', creativity: 'T4', ue21: 'T5' };
 
 const EMISSION_GROUPS = [
@@ -38,12 +37,11 @@ const SCENARIO_DEFINITIONS = [
     { id: 7, total: 16, perUser: 4,  label: 'Сценарий №7: 16 У.Е.', desc: 'По 4 У.Е. (1 триада + №21)' },
 ];
 
-// --- КОНСТАНТЫ КЛАВИАТУРЫ ---
+// КЛАВИАТУРА
 const MAX_KEY_LENGTH = 70;
 const BASE_COLORS = {
     RED: 'RED', BLUE: 'BLUE', GREEN: 'GREEN', WHITE: 'WHITE', SPECIAL: 'SPECIAL'
 };
-// Тема клавиатуры (Dark)
 const KEYBOARD_THEME = {
     bg: 'bg-[#0f172a]', keyBg: 'bg-[#1e293b]', inputBg: 'bg-[#1e293b]', digitBg: 'bg-[#334155]',
     textColor: 'text-white', digitColor: 'text-white',
@@ -51,14 +49,14 @@ const KEYBOARD_THEME = {
     borderColor: 'border-slate-700', placeholderColor: 'text-slate-600', splitLineColor: 'rgba(255, 255, 255, 0.15)', ringColor: 'ring-blue-500'
 };
 const KEYBOARD_ROWS_DATA = [
-  [{ val: 'Ё', color: BASE_COLORS.RED }, { val: 'Й', color: BASE_COLORS.RED }, { val: '8', color: BASE_COLORS.WHITE, isDigit: true }, { val: '6', color: BASE_COLORS.WHITE, isDigit: true }, { val: '4', color: BASE_COLORS.WHITE, isDigit: true }, { val: '2', color: BASE_COLORS.WHITE, isDigit: true }, { val: '0', color: BASE_COLORS.WHITE, isDigit: true }, { val: '1', color: BASE_COLORS.WHITE, isDigit: true }, { val: '3', color: BASE_COLORS.WHITE, isDigit: true }, { val: '5', color: BASE_COLORS.WHITE, isDigit: true }, { val: '7', color: BASE_COLORS.WHITE, isDigit: true }, { val: '9', color: BASE_COLORS.WHITE, isDigit: true }, { val: 'Ы', color: BASE_COLORS.RED }, { val: 'Э', color: BASE_COLORS.RED }],
+  [{ val: 'А', color: BASE_COLORS.RED }, { val: 'Й', color: BASE_COLORS.RED }, { val: '8', color: BASE_COLORS.WHITE, isDigit: true }, { val: '6', color: BASE_COLORS.WHITE, isDigit: true }, { val: '4', color: BASE_COLORS.WHITE, isDigit: true }, { val: '2', color: BASE_COLORS.WHITE, isDigit: true }, { val: '0', color: BASE_COLORS.WHITE, isDigit: true }, { val: '1', color: BASE_COLORS.WHITE, isDigit: true }, { val: '3', color: BASE_COLORS.WHITE, isDigit: true }, { val: '5', color: BASE_COLORS.WHITE, isDigit: true }, { val: '7', color: BASE_COLORS.WHITE, isDigit: true }, { val: '9', color: BASE_COLORS.WHITE, isDigit: true }, { val: 'Ы', color: BASE_COLORS.RED }, { val: 'Э', color: BASE_COLORS.RED }],
   [{ val: 'Q', color: BASE_COLORS.BLUE }, ...['X', 'C', 'T'].map(char => ({ val: char, color: BASE_COLORS.GREEN })), { val: '\u{1D56F}', color: BASE_COLORS.GREEN, isDouble: true }, ...['M', 'O', 'A', 'K', 'E', 'B', 'H', 'P'].map(char => ({ val: char, color: BASE_COLORS.GREEN })), { val: 'Ю', color: BASE_COLORS.RED }],
   [{ val: 'Z', color: BASE_COLORS.BLUE }, { val: 'Y', color: BASE_COLORS.BLUE }, { val: 'S', color: BASE_COLORS.BLUE }, { val: 'U', color: BASE_COLORS.BLUE }, { val: 'F', color: BASE_COLORS.BLUE }, { val: 'G', color: BASE_COLORS.BLUE }, { val: 'J', color: BASE_COLORS.BLUE }, { val: 'I', color: BASE_COLORS.BLUE }, { val: 'W', color: BASE_COLORS.BLUE }, { val: 'V', color: BASE_COLORS.BLUE }, { val: 'L', color: BASE_COLORS.BLUE }, { val: 'N', color: BASE_COLORS.BLUE }, { val: 'R', color: BASE_COLORS.BLUE }, { val: 'Я', color: BASE_COLORS.RED }],
-  [{ val: 'З', color: BASE_COLORS.RED }, { val: 'Ч', color: BASE_COLORS.RED }, { val: 'Ц', color: BASE_COLORS.RED }, { val: 'У', color: BASE_COLORS.RED }, { val: 'Ф', color: BASE_COLORS.RED }, { val: 'Г', color: BASE_COLORS.RED }, { val: 'Ж', color: BASE_COLORS.RED }, { val: 'И', color: BASE_COLORS.RED }, { val: 'Ш', color: BASE_COLORS.RED }, { val: 'Щ', color: BASE_COLORS.RED }, { val: 'Л', color: BASE_COLORS.RED }, { val: 'Б', color: BASE_COLORS.RED }, { val: 'П', color: BASE_COLORS.RED }, { type: 'split', tl: 'Ь', br: 'Ъ', color: BASE_COLORS.RED }],
-  [{ type: 'func', val: 'delete', funcColor: 'bg-red-900', width: 'flex-[1]' }, { type: 'split', tl: '+', br: '-', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '|', br: '\\', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '(', br: '[', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: ';', br: ':', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '!', br: '?', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'func', val: 'space', funcColor: 'DYNAMIC', width: 'flex-[1.5]' }, { type: 'split', tl: '@', br: '#', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '*', br: '/', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: ')', br: ']', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '_', br: '=', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: ',', br: '.', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'func', val: 'backspace', funcColor: 'bg-red-900', width: 'flex-[1]' }]
+  [{ val: 'З', color: BASE_COLORS.RED }, { val: 'Ч', color: BASE_COLORS.RED }, { val: 'Ц', color: BASE_COLORS.RED }, { val: 'У', color: BASE_COLORS.RED }, { val: 'Ф', color: BASE_COLORS.RED }, { val: 'Г', color: BASE_COLORS.RED }, { val: 'Ж', color: BASE_COLORS.RED }, { val: 'И', color: BASE_COLORS.RED }, { val: 'Ш', color: BASE_COLORS.RED }, { val: 'Щ', color: BASE_COLORS.RED }, { val: 'Л', color: BASE_COLORS.RED }, { val: 'В', color: BASE_COLORS.RED }, { val: 'П', color: BASE_COLORS.RED }, { type: 'split', tl: 'Ь', br: 'Ъ', color: BASE_COLORS.RED }],
+  [{ type: 'func', val: 'delete', funcColor: 'bg-red-900', width: 'flex-[1]' }, { type: 'split', tl: '+', br: '-', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '|', br: '\\', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '(', br: '[', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: ';', br: ':', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '!', br: '?', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'func', val: 'space', funcColor: 'DYNAMIC', width: 'flex-[2]' }, { type: 'split', tl: '@', br: '#', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '*', br: '/', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: ')', br: ']', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: '_', br: '=', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'split', tl: ',', br: '.', color: BASE_COLORS.WHITE, width: 'flex-[1]' }, { type: 'func', val: 'backspace', funcColor: 'bg-red-900', width: 'flex-[1]' }]
 ];
 
-// --- API ---
+// API
 async function callGeminiAPI(prompt) {
   const apiKey = ""; 
   const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
@@ -76,7 +74,7 @@ async function callGeminiAPI(prompt) {
   }
 }
 
-// --- КОМПОНЕНТЫ UI ---
+// КОМПОНЕНТЫ UI
 const FlowerOfLife = () => (
   <div className="relative w-64 h-64 animate-spin-slow opacity-80">
     {[...Array(6)].map((_, i) => (
@@ -88,6 +86,11 @@ const FlowerOfLife = () => (
 );
 
 const UeIcon = ({ type, onDragStart, isSelected, onClick }) => {
+  // Пигмалион MVP: fallback для иконки, если тип не определен
+  if (!type || !COLORS[type]) {
+    return <div className="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center border-2 border-gray-500 text-xs">?</div>;
+  }
+  
   const Icon = COLORS[type]?.icon || CheckCircle;
   return (
     <div
@@ -101,7 +104,7 @@ const UeIcon = ({ type, onDragStart, isSelected, onClick }) => {
   );
 };
 
-// --- КОМПОНЕНТЫ КЛАВИАТУРЫ ---
+// КЛАВИАТУРА
 const SplitKey = ({ tl, br, color, onCharClick, theme, isRow5 }) => {
     let textColorClass;
     if (color === BASE_COLORS.WHITE) textColorClass = theme.digitColor;
@@ -150,7 +153,7 @@ const VirtualKeyboard = ({ onKeyPress }) => {
     combinedRows.push(KEYBOARD_ROWS_DATA[4]);
 
     return (
-        <div className={`w-full max-w-[900px] flex flex-col gap-1.5 p-2 select-none`}>
+        <div className="w-full max-w-4xl mx-auto flex flex-col gap-1.5 p-2 select-none">
              <div className="mb-2 text-[10px] text-slate-500 font-mono flex gap-4 uppercase tracking-wider justify-center">
                 <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500"></span> Двойные</span>
                 <span className="flex items-center gap-1"><span className={`w-2 h-2 rounded-full border border-slate-400 ${theme.keyBg}`}></span> Разделенные</span>
@@ -165,7 +168,7 @@ const VirtualKeyboard = ({ onKeyPress }) => {
                         onDragStart={(e) => onDragStart(e, originalIdx)}
                         onDragOver={(e) => { e.preventDefault(); setDragOverIndex(originalIdx); }}
                         onDrop={(e) => onDrop(e, originalIdx)}
-                        className={`flex gap-1.5 justify-center h-12 sm:h-14 ${theme.keyBg} p-1.5 rounded-xl border ${theme.borderColor} shadow-lg transition-colors duration-200 ${isDraggable ? 'cursor-grab active:cursor-grabbing' : ''} ${ringClass}`}>
+                        className={`flex gap-1.5 justify-center h-12 sm:h-14 max-w-[860px] mx-auto ${theme.keyBg} p-1.5 rounded-xl border ${theme.borderColor} shadow-lg transition-colors duration-200 ${isDraggable ? 'cursor-grab active:cursor-grabbing' : ''} ${ringClass}`}>
                         {isDraggable && <div className="flex items-center text-slate-400 mr-1 cursor-grab"><MoveHorizontal size={16}/></div>}
                         {row.map((key, idx) => {
                             if (key.type === 'split') return <div key={idx} className={`${key.width || 'flex-1'} min-w-[2.5rem] relative`}><SplitKey tl={key.tl} br={key.br} color={key.color} onCharClick={(c, col) => onKeyPress({type:'char', val:c, color:col})} theme={theme} isRow5={visualIdx === 4} /></div>;
@@ -195,7 +198,7 @@ const VirtualKeyboard = ({ onKeyPress }) => {
     );
 };
 
-// --- ВСПОМОГАТЕЛЬНЫЕ МОДАЛКИ ---
+// МОДАЛЬНЫЕ ОКНА
 const ErrorInformer = ({ message, onClose }) => {
   useEffect(() => { const timer = setTimeout(onClose, 8000); return () => clearTimeout(timer); }, [onClose]);
   return (
@@ -221,12 +224,12 @@ const IntroInfoModal = ({ onClose }) => (
     <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[60] p-4 animate-fade-in">
         <div className="bg-slate-800 border border-blue-500 rounded-xl p-6 max-w-lg w-full relative shadow-2xl">
             <button onClick={onClose} className="absolute top-3 right-3 text-gray-400 hover:text-white"><X/></button>
-            <h3 className="text-xl font-bold text-blue-400 mb-4 text-center">"i" Для ВСЕХ. Механика ежедневного поЛУЧения и приМЕНение «Учётной единицы» У.Е. по своему желанию</h3>
+            <h3 className="text-xl font-bold text-blue-400 mb-4 text-center">"i" Для ВСЕХ. Механика ежедневного поЛУЧения и примЕнение «Учётной единицы» У.Е. по своему желанию</h3>
             <ul className="text-sm text-gray-300 space-y-3 list-decimal pl-4">
                 <li>После получения своего "О.К." каждый участник вправе ежедневно выбирать от 3 до 13 У.Е.</li>
-                <li>Все полученные У.Е. можно перераспределять среди собеседников.</li>
+                <li>Все полученные У.Е. можно перераспределить среди собеседников.</li>
                 <li>Невозможно поблагодарить себя. Непереданное сгорает.</li>
-                <li>Итоги: "заКаз – уКаз – наКаз – отКаз – приКаз - поКаз".</li>
+                <li>Итоги: "заКаз — уКаз — наКаз — отКаз — приКаз - поКаз".</li>
             </ul>
         </div>
     </div>
@@ -288,7 +291,7 @@ const ResultProgressBar = ({ value, label }) => {
     );
 };
 
-// Экран Реестра Транзакций
+// Реестр Транзакций
 const RegistryUI = ({ transactions, onBack, userOK }) => {
     return (
         <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col">
@@ -345,7 +348,6 @@ function FinalUI({ participants, transactions, onNewDay, onGoToContacts, onGoToR
   const sortedParticipants = [...participants].sort((a, b) => a.id - b.id);
   const calculateScore = (p) => (p.sent * 2) + (p.received * 1) - (p.burned * 1);
   
-  // Расчет средней духовности
   const currentTotalScore = sortedParticipants.reduce((sum, p) => sum + calculateScore(p), 0);
   const historyTotalScore = historyStats.totalScore + currentTotalScore;
   const historyCount = historyStats.rounds + 1;
@@ -358,7 +360,6 @@ function FinalUI({ participants, transactions, onNewDay, onGoToContacts, onGoToR
         <p className="text-gray-400 text-sm mb-1">Итоги демонстрации и Шкала Духовности</p>
         <p className="text-red-400 font-mono text-xs mb-6">Время: 00:01 (Сгорание)</p>
         
-        {/* Статистика Духовности */}
         <div className="w-full bg-slate-800/80 p-4 rounded-xl mb-6 border border-blue-500 flex justify-around items-center">
             <div className="text-center">
                 <div className="text-xs text-gray-400">Средняя Духовность (Все Коны)</div>
@@ -425,7 +426,7 @@ const ParticipantNode = ({ participant, isActive, onSelect, isSelected, isCenter
     </div>
 );
 
-// --- ГЛАВНОЕ ПРИЛОЖЕНИЕ ---
+// ГЛАВНОЕ ПРИЛОЖЕНИЕ
 const INITIAL_PARTICIPANTS = [
     { id: 1, name: 'Вы (Уч.1)', role: 'Me', received: 0, sent: 0, spirituality: 0, burned: 0, inventory: [], emissionSelections: [] },
     { id: 2, name: 'Уч.2 (Лев)', role: 'Bot', received: 0, sent: 0, spirituality: 0, burned: 0, inventory: [], emissionSelections: [] },
@@ -434,14 +435,12 @@ const INITIAL_PARTICIPANTS = [
     { id: 5, name: 'Уч.5 (Центр)', role: 'Target', received: 0, sent: 0, spirituality: 0, burned: 0, inventory: [], emissionSelections: [] },
 ];
 
-type Mode = 'threshold' | 'observation';
-      export default function App() {
+export default function App() {
   const [screen, setScreen] = useState(0.1);
-       const [mode, setMode] = useState<Mode>('threshold');
   const [userOK, setUserOK] = useState(() => localStorage.getItem('userOK') || null);
   const [showIntroInfo, setShowIntroInfo] = useState(false);
-  const [isKeyboardMode, setIsKeyboardMode] = useState(false); // Режим ввода ключа
-  const [keyboardInputData, setKeyboardInputData] = useState([]); // Буфер ввода ключа
+  const [isKeyboardMode, setIsKeyboardMode] = useState(false);
+  const [keyboardInputData, setKeyboardInputData] = useState([]);
 
   const [participants, setParticipants] = useState(JSON.parse(JSON.stringify(INITIAL_PARTICIPANTS)));
   const [transactions, setTransactions] = useState([]);
@@ -463,25 +462,20 @@ type Mode = 'threshold' | 'observation';
   const [act3Time, setAct3Time] = useState("20:00:00");
   const [validationAttempts, setValidationAttempts] = useState(0);
   const [refusalCount, setRefusalCount] = useState(0);
-  const [historyStats, setHistoryStats] = useState({ rounds: 0, totalScore: 0 }); // История для "Нового Дня"
+  const [historyStats, setHistoryStats] = useState({ rounds: 0, totalScore: 0 });
 
-  // Состояние для музыки
   const [isPlaying, setIsPlaying] = useState(false);
   const [audioFile, setAudioFile] = useState(null);
   const audioRef = useRef(new Audio());
   const fileInputRef = useRef(null);
 
-  // Инициализация персистентности ключа
   useEffect(() => {
     if (userOK) localStorage.setItem('userOK', userOK);
   }, [userOK]);
 
-  // Эффект для музыки
   useEffect(() => {
-      // Настройка аудио
       audioRef.current.loop = true;
-      audioRef.current.volume = 0.3; // Тихий фон (30%)
-
+      audioRef.current.volume = 0.3;
       return () => {
           audioRef.current.pause();
           if (audioFile) URL.revokeObjectURL(audioFile);
@@ -522,7 +516,6 @@ type Mode = 'threshold' | 'observation';
       }
   };
 
-  // ТАЙМЕРЫ
   useEffect(() => {
       let timer;
       if (screen === 1.0) {
@@ -535,14 +528,13 @@ type Mode = 'threshold' | 'observation';
       } else if (screen === 3.0 || screen === 3.5) {
           let baseHour = 20;
           if (validationAttempts > 0) baseHour += validationAttempts;
-          else baseHour += refusalCount; // 0=20:00, 1=21:00, 2=22:00, 3=23:00
+          else baseHour += refusalCount;
           if (baseHour > 23) baseHour = 23; 
           setAct3Time(`${baseHour}:00:00`);
       }
       return () => clearInterval(timer);
   }, [screen, validationAttempts, refusalCount]);
 
-  // АВТО-ХОД
   useEffect(() => {
       if ((screen === 3.0 || screen === 3.5) && !showConfirmation && !normViolationMessage && !showGratitudeModal) {
           const distributor = participants.find(p => p.id === activeDistributor);
@@ -553,7 +545,6 @@ type Mode = 'threshold' | 'observation';
       }
   }, [participants, activeDistributor, screen, showConfirmation, normViolationMessage, showGratitudeModal]);
 
-  // ОБРАБОТЧИК КЛАВИАТУРЫ
   const handleKeyboardPress = (keyEvent) => {
     if (keyEvent.type === 'func') {
         if (keyEvent.val === 'delete') setKeyboardInputData([]);
@@ -574,9 +565,9 @@ type Mode = 'threshold' | 'observation';
   const isKeyValid = () => {
       if (keyboardInputData.length < 3 || keyboardInputData.length > 70) return false;
       const text = keyboardInputData.map(k => k.char).join('');
-      if (text.startsWith(' ')) return false; // Не начинаем с пробела
-      if (text.includes('  ')) return false; // Нет двойных пробелов
-      if (text.endsWith(' ')) return false; // Не заканчиваем пробелом (для подтверждения)
+      if (text.startsWith(' ')) return false;
+      if (text.includes('  ')) return false;
+      if (text.endsWith(' ')) return false;
       return true;
   };
 
@@ -588,9 +579,7 @@ type Mode = 'threshold' | 'observation';
     setScreen(1.0);
   };
 
-  // НОВЫЙ ДЕНЬ (СОХРАНЕНИЕ СТАТИСТИКИ)
   const handleNewDay = () => {
-    // Рассчет очков за текущий раунд
     const currentRoundScore = participants.reduce((sum, p) => sum + ((p.sent * 2) + (p.received * 1) - (p.burned * 1)), 0);
     setHistoryStats(prev => ({
         rounds: prev.rounds + 1,
@@ -615,7 +604,6 @@ type Mode = 'threshold' | 'observation';
     setScreen(1.0);
   };
 
-  // ПОЛНЫЙ СБРОС (НАЧАТЬ ЗАНОВО)
   const handleResetAll = () => {
       setUserOK(null);
       localStorage.removeItem('userOK');
@@ -627,14 +615,13 @@ type Mode = 'threshold' | 'observation';
       setKeyboardInputData([]);
   };
 
-  // --- ЛОГИКА ДЕМОНСТРАЦИИ (Оставлена без изменений) ---
   const handleOrderSelection = (type) => {
       setInformerMessage(null); 
       if (currentOrderSelections.includes(type)) setCurrentOrderSelections(currentOrderSelections.filter(t => t !== type));
       else setCurrentOrderSelections([...currentOrderSelections, type]);
   };
+  
   const handleOrderPassTurn = () => {
-      // Валидация: нельзя выбрать только У.Е. 21
       if (currentOrderSelections.length === 1 && currentOrderSelections[0] === 'ue21') {
           setInformerMessage("В этой версии платформы нельзя выбрать только одну У.Е. №21. Пожалуйста, добавьте другие типы У.Е.");
           setTimeout(() => setInformerMessage(null), 8000);
@@ -649,6 +636,7 @@ type Mode = 'threshold' | 'observation';
         setScreen(2.0); setTimeout(() => setScreen(3.0), 2000);
       }
   };
+  
   const [showScenarioMenu, setShowScenarioMenu] = useState(false);
   const getRandomTriads = (count) => ['knowledge', 'practice', 'creativity', 'leisure'].sort(() => 0.5 - Math.random()).slice(0, count);
   const applyScenario = (scenario) => {
@@ -670,6 +658,7 @@ type Mode = 'threshold' | 'observation';
     generateInventories(newParticipants);
     setScreen(2.0); setTimeout(() => setScreen(3.0), 2000); setShowScenarioMenu(false);
   };
+  
   const generateInventories = (currentParticipants) => {
       const newParticipants = currentParticipants.map(p => {
           if (p.role === 'Target') return p;
@@ -685,6 +674,7 @@ type Mode = 'threshold' | 'observation';
       });
       setParticipants(newParticipants);
   };
+  
   const checkAndInitTransaction = (ue, receiverId) => {
       if (ue && receiverId) {
           if (activeDistributor === receiverId) return; 
@@ -692,6 +682,7 @@ type Mode = 'threshold' | 'observation';
           setShowGratitudeModal(true);
       }
   };
+  
   const handleSelectUE = (ue) => {
       if (selectedSourceUE?.id === ue.id) setSelectedSourceUE(null); 
       else {
@@ -699,6 +690,7 @@ type Mode = 'threshold' | 'observation';
           if (selectedReceiverId) checkAndInitTransaction(ue, selectedReceiverId);
       }
   };
+  
   const handleSelectReceiver = (receiverId) => {
       if (activeDistributor === receiverId) return;
       if (selectedReceiverId === receiverId) setSelectedReceiverId(null);
@@ -707,6 +699,7 @@ type Mode = 'threshold' | 'observation';
           if (selectedSourceUE) checkAndInitTransaction(selectedSourceUE, receiverId);
       }
   };
+  
   const executeTransaction = (txInfo, aiMessage = null) => {
       const { fromId, toId, ue } = txInfo;
       const newParticipants = participants.map(p => {
@@ -727,6 +720,7 @@ type Mode = 'threshold' | 'observation';
       setShowGratitudeModal(false); setPendingTx(null);
       setSelectedSourceUE(null); setSelectedReceiverId(null);
   };
+  
   const executeAiTransaction = async () => {
       if (!pendingTx) return;
       setIsGenerating(true);
@@ -737,6 +731,7 @@ type Mode = 'threshold' | 'observation';
       setIsGenerating(false);
       executeTransaction(pendingTx, message);
   };
+  
   const detectNormViolations = (currentTxs) => {
       const receiverTriads = {};
       const activeTxs = currentTxs.filter(tx => !tx.isMinus);
@@ -750,6 +745,7 @@ type Mode = 'threshold' | 'observation';
       });
       return { violationCount };
   };
+  
   const handleTurnEnd = () => {
       if (activeDistributor < 4) {
           setActiveDistributor(activeDistributor + 1);
@@ -763,6 +759,7 @@ type Mode = 'threshold' | 'observation';
           else validateNorms(); 
       }
   };
+  
   const finishAct3WithBurn = () => {
       setShowConfirmation(false);
       const burnedTxs = [];
@@ -851,30 +848,9 @@ type Mode = 'threshold' | 'observation';
   };
 
   // --- RENDERING ---
-   if (mode === 'threshold') {
-  return (
-   <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-4">
-    <div className="max-w-2xl text-center space-y-8">
-     <p className="text-lg leading-relaxed text-gray-300">
-      Ты стоишь на пороге эксперимента.
-      <br />
-      Это пространство выткано исключительно ис твоих наблюдений.
-     </p>
-     <div className="flex flex-col sm:flex-row gap-4 justify-center mt-12">
-      <button onClick={() => setMode('observation')} className="px-8 py-3 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-500 transition-colors">
-       Выйти на площадь наблюдения
-      </button>
-      <button onClick={() => { window.location.href = '/mvp/'; }} className="px-8 py-3 bg-gray-700 text-gray-300 rounded-lg font-bold hover:bg-gray-600 transition-colors">
-       Вернуться
-      </button>
-     </div>
-    </div>
-   </div>
-  );
- }
-else             if (screen === 0.1) {
+  if (screen === 0.1) {
       return (
-          <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center font-sans p-4 relative overflow-hidden">
+           <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white flex flex-col items-center justify-center font-sans p-4 relative overflow-hidden">
               {/* Аудио контроллер */}
               <div className="fixed top-4 left-4 z-50 flex gap-2">
                   <input type="file" accept="audio/*" onChange={handleFileChange} ref={fileInputRef} className="hidden" />
@@ -921,9 +897,11 @@ else             if (screen === 0.1) {
                             </div>
                         </div>
 
-                        {/* KEYBOARD */}
+                        {/* Пигмалион MVP: центровка клавиатуры */}
                         <div className="w-full mb-8 flex justify-center">
-                            <VirtualKeyboard onKeyPress={handleKeyboardPress} />
+                            <div className="max-w-4xl mx-auto w-full px-4">
+                                <VirtualKeyboard onKeyPress={handleKeyboardPress} />
+                            </div>
                         </div>
                         
                         <div className="flex gap-4">
@@ -1051,15 +1029,35 @@ else             if (screen === 0.1) {
                           <span className="text-xs text-gray-500 whitespace-nowrap">Инвентарь</span>
                       </div>
                       <div className="flex flex-wrap gap-2 justify-center">
-                          {Object.entries(groupedInventory).map(([type, count]) => (
-                              <div key={type} className="relative cursor-pointer" onClick={() => handleSelectUE(activeInventory.find(i => i.type === type))}>
-                                  <UeIcon type={type} />
-                                  <span className="absolute -top-2 -right-2 bg-blue-600 text-xs w-5 h-5 rounded-full flex items-center justify-center border border-gray-900">{count}</span>
-                                  {selectedSourceUE?.type === type && <div className="absolute inset-0 border-2 border-white rounded-full animate-pulse"></div>}
-                              </div>
-                          ))}
+                          {Object.entries(groupedInventory).map(([type, count]) => {
+                                // Пигмалион MVP: защита от undefined при поиске UE
+                                const ueItem = activeInventory.find(i => i.type === type);
+                                if (!ueItem) return null;
+                                return (
+                                    <div key={type} className="relative cursor-pointer" onClick={() => handleSelectUE(ueItem)}>
+                                        <UeIcon type={type} />
+                                        <span className="absolute -top-2 -right-2 bg-blue-600 text-xs w-5 h-5 rounded-full flex items-center justify-center border border-gray-900">{count}</span>
+                                        {selectedSourceUE?.type === type && <div className="absolute inset-0 border-2 border-white rounded-full animate-pulse"></div>}
+                                    </div>
+                                );
+                          })}
                       </div>
-                      <button onClick={handleTurnEnd} className="mt-4 w-full bg-green-600 py-2 rounded font-bold text-sm">{activeDistributor < 4 ? 'Переход хода' : 'Завершить кон'}</button>
+                      <button 
+                        onClick={handleTurnEnd} 
+                        className="mt-4 w-full bg-green-600 py-2 rounded font-bold text-sm"
+                      >
+                        {activeDistributor < 4 ? 'Переход хода' : 'Завершить кон'}
+                      </button>
+        
+                      {/* Пигмалион MVP: принудительный переход к итогам для тестирования */}
+                      <div className="flex justify-center mt-2 gap-4">
+                          <button
+                            onClick={() => setScreen(4.0)}
+                            className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all"
+                          >
+                            Принудительно к итогам
+                          </button>
+                      </div>
                   </div>
               )}
           </div>
