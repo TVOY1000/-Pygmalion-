@@ -85,6 +85,20 @@ const FlowerOfLife = () => (
   </div>
 );
 
+// Пигмалион MVP: QR-код для донатов
+const FloatingQR = () => (
+    <div className="fixed bottom-4 right-4 z-[999] opacity-50 hover:opacity-100 transition-opacity flex flex-col items-center">
+        <div className="bg-white p-1 rounded-lg shadow-lg">
+            <img 
+                src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://vtb.paymo.ru/collect-money/?transaction=e0bbf146-0286-4bc1-a78e-035f3739c752" 
+                alt="Поддержать проект" 
+                className="w-16 h-16" 
+            />
+        </div>
+        <p className="text-[10px] text-gray-500 mt-1 bg-black/50 px-1 rounded text-center">Благодарность<br/>приветствуется</p>
+    </div>
+);
+
 const UeIcon = ({ type, onDragStart, isSelected, onClick }) => {
   // Пигмалион MVP: fallback для иконки, если тип не определен
   if (!type || !COLORS[type]) {
@@ -354,7 +368,8 @@ function FinalUI({ participants, transactions, onNewDay, onGoToContacts, onGoToR
   const averageSpirituality = Math.round(historyTotalScore / historyCount);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col items-center w-full">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white p-4 flex flex-col items-center w-full">
+      <FloatingQR />
       <div className="w-full max-w-3xl flex flex-col items-center">
         <h1 className="text-3xl font-bold text-orange-500 mb-2">ВЕЧЕР ДОБРЫЙ!</h1>
         <p className="text-gray-400 text-sm mb-1">Итоги демонстрации и Шкала Духовности</p>
@@ -851,6 +866,7 @@ export default function App() {
   if (screen === 0.1) {
       return (
            <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white flex flex-col items-center justify-center font-sans p-4 relative overflow-hidden">
+              <FloatingQR />
               {/* Аудио контроллер */}
               <div className="fixed top-4 left-4 z-50 flex gap-2">
                   <input type="file" accept="audio/*" onChange={handleFileChange} ref={fileInputRef} className="hidden" />
@@ -898,10 +914,8 @@ export default function App() {
                         </div>
 
                         {/* Пигмалион MVP: центровка клавиатуры */}
-                        <div className="w-full mb-8 flex justify-center">
-                            <div className="max-w-4xl mx-auto w-full px-4">
-                                <VirtualKeyboard onKeyPress={handleKeyboardPress} />
-                            </div>
+                        <div className="w-full mb-8 flex justify-center max-w-4xl mx-auto px-4">
+                            <VirtualKeyboard onKeyPress={handleKeyboardPress} />
                         </div>
                         
                         <div className="flex gap-4">
@@ -927,7 +941,8 @@ export default function App() {
   if (screen === 1.0) {
       const currentP = participants.find(p => p.id === activeOrderingFor);
       return (
-          <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col items-center">
+          <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white p-4 flex flex-col items-center">
+              <FloatingQR />
               {/* Аудио контроллер */}
               <div className="fixed top-4 left-4 z-50 flex gap-2">
                   <input type="file" accept="audio/*" onChange={handleFileChange} ref={fileInputRef} className="hidden" />
@@ -998,7 +1013,8 @@ export default function App() {
   if (screen === 2.0 || screen === 3.0 || screen === 3.5) {
       const isAct35 = screen === 3.5;
       return (
-          <div className="min-h-screen bg-gray-900 text-white flex flex-col overflow-hidden relative">
+          <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white flex flex-col overflow-hidden relative">
+              <FloatingQR />
               {/* Аудио контроллер */}
               <div className="fixed top-4 left-4 z-50 flex gap-2">
                   <input type="file" accept="audio/*" onChange={handleFileChange} ref={fileInputRef} className="hidden" />
@@ -1067,7 +1083,7 @@ export default function App() {
   if (screen === 6.0) return <RegistryUI transactions={transactions} onBack={() => setScreen(4.0)} userOK={userOK} />;
   if (screen === 7.0) {
       return (
-        <div className="min-h-screen bg-gray-900 text-white p-4 flex flex-col">
+        <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white p-4 flex flex-col">
             <header className="flex items-center justify-between mb-6"><h2 className="text-xl font-bold">Об Авторе</h2><button onClick={() => setScreen(4.0)}><ArrowLeft /></button></header>
             <div className="p-6 bg-gray-800 rounded-xl border border-gray-700 shadow-2xl">
                 <h3 className="text-xl font-bold mb-2 text-green-500 font-extrabold">::OP𝕯EH 𝕯AP::</h3>
