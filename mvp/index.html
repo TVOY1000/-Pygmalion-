@@ -11,8 +11,7 @@
 
 <header class="header">
   <a href="../" class="back-link" data-i18n="back_home">
-    ← Back to home
-  </a>
+    ← Back to home </a>
 
   <div class="lang-switch">
     <button data-set-lang="en" class="lang-btn">EN</button>
@@ -30,6 +29,106 @@
     MVP is not a product and not a system.
     It is a demonstration of principle and a space of personal experience.
   </p>
+
+<section class="mvp-transition">
+  <h2>Для Вас 6 вариантов сразу:</h2>
+  <div class="not-list">
+
+    <p>
+      1.
+      <a href="https://ordenp.github.io/-Pygmalion-/mvp/app/offline-mvp/"
+         target="_blank" rel="noopener noreferrer">
+        browser-offline MVP Пигмалион v.0.1.6
+      </a><br />
+      <small>Рекомендуется сейчас.</small>
+    </p>
+
+    <p>
+      2.
+      <a href="https://ordenp.github.io/-Pygmalion-/mvp/app/dist/"
+         target="_blank" rel="noopener noreferrer">
+        <span class="not-item">Online MVP /dist v.0.2.2.</span>
+        Online MVP Пигмалион v.0.2.2
+      </a><br />
+      <small>
+        Основной онлайн вариант.
+        (сборка работает КРИВО без нужных стилей и экранов — АКТ 3 трудно юзать, НО можно; версия требует специалиста)
+      </small>
+    </p>
+
+    <p>
+      3.
+      <a href="./app/"
+         class="btn-neutral"
+         target="_blank" rel="noopener noreferrer">
+        Online MVP Пигмалион v.0.2.2 (основной) →
+      </a>
+      <br />
+      <span class="not-item">
+        (исходный код) Online MVP Пигмалион v.0.2.2 </span>
+        (показывает как текст, канон, показывает код)</p>
+     <p>
+        4. или публичная ссылка на Рекат-приложение
+        <a href="https://gemini.google.com/share/36096faaee81"
+   target="_blank" rel="noopener noreferrer">
+  https://gemini.google.com/share/36096faaee81
+</a>
+     </p>
+    <!-- СКАЧИВАНИЕ -->
+    <p>
+      5.
+      <span class="not-item">
+        взять с собой .7z Offline MVP v.0.1.6.
+      </span><br />
+      <a href="./download/offline-mvp-0.1.6.7z">
+        Скачать browser-offline демо v.0.1.6 (локально)
+      </a><br />
+      <small>Рекомендуется сейчас.</small>
+    </p>
+
+    <p>
+      6.
+      <span class="not-item">
+        взять с собой .7z /dist Online MVP версия 0.2.2.
+      </span><br />
+      <a href="./download/dist.7z">
+        доп. скачать /dist Online MVP v.0.2.2
+      </a>
+      <span>
+        (архив, требует ручной донастройки ссылок для корректной работы)
+      </span>
+    </p>
+
+  </div>
+</section>
+
+<h1>Перед тем, как войти</h1>
+<section class="mvp-transition">
+  <h2>Вход в пространство. Это не инструкция и не гайд — это опыт, который можно только прожить.</h2>
+  <p>
+    ,,, описывает принцип.
+    Ниже — возможность прожить его напрямую.
+  </p>
+
+  <p>
+    Исполняемая версия не добавляет функций. Она убирает объяснение.
+  </p>
+
+  <h2>Чего НЕТ:</h2>
+<ul>
+  <li>не требует регистрации. Данные остаются на вашем устройстве.</li>
+  <li>нет Правильных или неправильных ответов.</li>
+  <li>нет требований что-либо доказать.</li>
+</ul>
+</section>
+
+<h2>Что Вас всех ждёт:</h2>
+<ul>
+  <li>Четыре простых действия (Акта).</li>
+  <li>Никаких объяснений до завершения.</li>
+  <li>Возможность прервать в любой момент.</li>
+</ul>
+<p><strong>Время:</strong> От 5 до 15 минут, зависит от вашего темпа.</p>
 
   <section>
     <h2 data-i18n="mvp_what_title">What MVP is</h2>
@@ -77,35 +176,7 @@
   Кон — это момент фиксации внимания.
   Он не измеряет ценность и не требует интерпретации.
 </p>
-    <!-- Таблица конов -->
-<section id="kon-section">
-  <h2 data-i18n="mvp_kon_title">Таблица конов</h2>
-
-  <table class="mvp-table">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th data-i18n="mvp_col_observation">Наблюдение</th>
-      </tr>
-    </thead>
-    <tbody id="konTableBody"></tbody>
-  </table>
-
-  <div class="mvp-actions">
-    <button onclick="addKon()" data-i18n="btn_new_kon">Новый кон</button>
-    <button onclick="clearKons()" data-i18n="btn_clear">Очистить</button>
-    <button onclick="copyKons()" data-i18n="btn_copy">Скопировать таблицу</button>
-  </div>
-</section>
-
-<!-- Итог -->
-<section id="summary-section">
-  <h2 data-i18n="mvp_summary_title">Итог наблюдения</h2>
-
-  <p data-i18n="mvp_summary_count">
-    Количество зафиксированных конов:
-    <strong><span id="konCount">0</span></strong>
-  </p>
+   
 
   <textarea
     id="reflection"
@@ -115,33 +186,19 @@
   </textarea>
 </section>
   
- <section class="mvp-transition">
-  <h2>Вход в пространство</h2>
-  
-  <p>
-   Эта страница описывает принцип.<br>
-   Ниже — возможность прожить его напрямую.
-  </p>
-  
-  <a href="./app/" class="btn-neutral">
-   Войти в пространство наблюдения →
-  </a>
-  
-  <p class="note">
-   Не требует регистрации.<br>
-   Данные остаются на вашем устройстве.
-  </p>
- </section>
-
   </main>
 
   <!-- Footer -->
   <footer class="footer">
     <p>MIT License · Human-centered · Non-political</p>
+     <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
+                   Не поле битвы. Сад.</p>
   </footer>
 
   <!-- i18n -->
-  <script src="../assets/js/lang.js" defer></script>
+ <script src="../assets/js/lang.js" defer></script>
+ <script src="/-Pygmalion-/mvp/offline/logic.js"></script>
+      <link href="style.css">
   <script>
 let kons = [];
 
@@ -191,4 +248,3 @@ function copyKons() {
 
 </body>
 </html>
-125
