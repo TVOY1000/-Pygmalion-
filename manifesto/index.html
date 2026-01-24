@@ -11,55 +11,42 @@
 </head>
 
 <body class="manifesto">
-  <body>
   <!-- Header -->
   <header class="header">
     <a href="../" class="back-link" data-i18n="back_home">← На главный экран</a>
-  <div class="lang-switch">
+    <div class="lang-switch">
       <button data-set-lang="ru" class="lang-btn">RU</button>
       <button data-set-lang="en" class="lang-btn">EN</button>
-  </div>
-      
+    </div>
   </header>
-   <h1>Манифест Пигмалиона</h1>
+
+  <!-- Title -->
+  <h1>Манифест Пигмалиона</h1>
   <p class="subtitle">Документы, презентации и материалы стартапа (Для тех, кто хочет разобраться глубже)</p>
   <p class="subtitle">This manifesto is currently available in Russian only</p>
-  
-<section>
-   
+
+  <!-- Black Paper Preview -->
+  <section>
     <details class="pdf-preview">
-  <summary>Открыть Black Paper</summary>
-  <iframe
-    src="./black-paper/Black_Paper_Pygmalion_v1.0.pdf"
-    width="100%"
-    height="600"
-    loading="lazy">
-  </iframe>
-</details>
-   
-</section>
- 
-  <!-- Основной контент -->
-  <main class="content manifesto">
+      <summary>Открыть Black Paper</summary>
+      <iframe
+        src="./black-paper/Black_Paper_Pygmalion_v1.0.pdf"
+        width="100%"
+        height="600"
+        loading="lazy">
+      </iframe>
+    </details>
+  </section>
+
+  <!-- Основной контент с чередованием -->
+  <main class="content">
+    <!-- БЛОК 1: Идея -->
     <section>
       <h1 data-i18n="manifesto_idea_title">Идея</h1>
       <p data-i18n="manifesto_idea_body">Современные системы умеют измерять цену, но плохо распознают ценность.</p>
     </section>
 
-    <section>
-      <h1 data-i18n="manifesto_principles_title">Принципы</h1>
-      <p data-i18n="manifesto_principles_body">Добровольность, отсутствие принуждения, отказ от KPI-логики и приоритет человеческого достоинства.</p>
-    </section>
-
-    <section>
-      <h1 data-i18n="manifesto_goal_title">Цель</h1>
-      <p data-i18n="manifesto_goal_body">Создание среды, где нематериальная человеческая ценность может быть признана, зафиксирована и осмыслена — без превращения в долг или товар.</p>
-    </section>
-  </main>
-        
-<section class="manifesto-download">
-
-    <!-- English Documents Section -->
+    <!-- ДОКУМЕНТЫ 1: English Documents -->
     <section class="section">
       <h2 class="section-title">
         <span class="section-icon">🌐</span>
@@ -70,7 +57,13 @@
       </div>
     </section>
 
-    <!-- Main Documents Section (Russian) -->
+    <!-- БЛОК 2: Принципы -->
+    <section>
+      <h1 data-i18n="manifesto_principles_title">Принципы</h1>
+      <p data-i18n="manifesto_principles_body">Добровольность, отсутствие принуждения, отказ от KPI-логики и приоритет человеческого достоинства.</p>
+    </section>
+
+    <!-- ДОКУМЕНТЫ 2: Основные документы -->
     <section class="section">
       <h2 class="section-title">
         <span class="section-icon">📄</span>
@@ -81,7 +74,13 @@
       </div>
     </section>
 
-       <!-- Presentations Section -->
+    <!-- БЛОК 3: Цель -->
+    <section>
+      <h1 data-i18n="manifesto_goal_title">Цель</h1>
+      <p data-i18n="manifesto_goal_body">Создание среды, где нематериальная человеческая ценность может быть признана, зафиксирована и осмыслена — без превращения в долг или товар.</p>
+    </section>
+
+    <!-- ДОКУМЕНТЫ 3: Презентации -->
     <section class="section">
       <h2 class="section-title">
         <span class="section-icon">📊</span>
@@ -91,26 +90,25 @@
         <!-- Заполняется JS -->
       </div>
     </section>
-  </div>
+  </main>
 
   <script>
-      
-       const documents = {
-           en: [
+    const documents = {
+      en: [
         { name: 'Black Paper Pygmalion', file: './en/Black_Paper_Pygmalion_v1.1.EN.pdf', type: 'PDF' },
         { name: 'Whitepaper', file: './en/White_Paper_Pygmalion_v1.1.EN.pdf', type: 'TXT' },
-              ],
-           
+      ],
+      
       main: [
         { name: 'Чёрная Бумага', file: './black-paper/Black_Paper_Pygmalion_v1.1.pdf', type: 'PDF' },
         { name: 'Белая Книга (для стартапа)', file: './white-paper/White_Paper_Pygmalion_v1.1.pdf', type: 'TXT' }
-            ],
-           
-            presentations: [
+      ],
+      
+      presentations: [
         { name: 'Пигмалион К.Р.И.С.Т.А.Л.Л. Ноономика', file: 'presentations/Pygmalion_KRISTALL_Noonomics.pdf', type: 'PDF' },
         { name: 'Pygmalion_Social_Architecture', file: 'presentations/Pygmalion_Social_Architecture.pdf', type: 'PDF' },
         { name: 'Pygmalion_The_Value_Protocol', file: 'presentations/Pygmalion_The_Value_Protocol.pdf', type: 'PDF' },
-               ],
+      ],
     };
 
     // Иконки по типам файлов
@@ -149,9 +147,9 @@
 
     // Инициализация
     function init() {
-      renderDocs(documents.presentations, 'presentations-grid');
       renderDocs(documents.en, 'en-docs-grid');
       renderDocs(documents.main, 'main-docs-grid');
+      renderDocs(documents.presentations, 'presentations-grid');
     }
 
     // Переключение языка (базовая версия)
@@ -166,18 +164,20 @@
         alert('English version coming soon!');
       }
     }
+
     // Запуск при загрузке
     document.addEventListener('DOMContentLoaded', init);
   </script>
+
   <!-- Footer -->
   <footer class="footer">
     <p>MIT License · Human-centered · Non-political</p>
-         <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
-            Не поле битвы. Сад. </p>
+    <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
+      Не поле битвы. Сад.
+    </p>
   </footer>
 
   <!-- i18n engine -->
   <script src="../assets/js/lang.js" defer></script>
-
 </body>
 </html>
