@@ -1,103 +1,233 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Pygmalion — MVP</title>
+  <title>MVP — Pygmalion</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Canonical CSS -->
   <link rel="stylesheet" href="../assets/css/style.css">
+  
+  <style>
+    /* MVP Page Styles */
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 100;
+    }
+
+    .lang-switch {
+      display: flex;
+      gap: 10px;
+    }
+
+    .lang-btn {
+      padding: 8px 16px;
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .lang-btn:hover {
+      background: #444;
+      border-color: #777;
+    }
+
+    .lang-btn.active {
+      background: #3b82f6;
+      border-color: #60a5fa;
+    }
+
+    /* Title */
+    h1 {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+    }
+
+    /* Content */
+    .content {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .content p {
+      font-size: 1.2rem;
+      margin: 1.5rem 0;
+      color: #cbd5e1;
+    }
+
+    .subtitle {
+      font-size: 1.4rem;
+      margin: 2rem 0;
+      font-weight: 300;
+    }
+
+    /* Links Section */
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin: 3rem auto;
+      max-width: 500px;
+    }
+
+    .link-item {
+      display: block;
+      padding: 1.2rem 2rem;
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 8px;
+      color: #e2e8f0;
+      text-decoration: none;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .link-item:hover {
+      background: rgba(30, 41, 59, 0.9);
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    }
+
+    .link-item.download {
+      background: rgba(249, 115, 22, 0.1);
+      border-color: rgba(249, 115, 22, 0.3);
+    }
+
+    .link-item.download:hover {
+      background: rgba(249, 115, 22, 0.2);
+      border-color: #f97316;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .back-link {
+      display: inline-block;
+      padding: 12px 24px;
+      background: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-size: 1rem;
+    }
+
+    .back-link:hover {
+      background: #444;
+      transform: translateX(-5px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .content p,
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .link-item {
+        font-size: 1rem;
+        padding: 1rem 1.5rem;
+      }
+
+      body {
+        padding: 15px;
+      }
+
+      .header {
+        top: 15px;
+        right: 15px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-
-<header class="header">
-  <a href="../" class="back-link" data-i18n="back_home">
-    ← Back to home </a>
-
-  <div class="lang-switch">
-    <button data-set-lang="en" class="lang-btn">EN</button>
-    <button data-set-lang="ru" class="lang-btn">RU</button>
+  <!-- Language Switch -->
+  <div class="header">
+    <div class="lang-switch">
+      <button data-set-lang="ru" class="lang-btn">RU</button>
+      <button data-set-lang="en" class="lang-btn">EN</button>
+    </div>
   </div>
-</header>
 
-<main class="content narrow">
-
-  <h1 data-i18n="mvp_title">
-    Minimum Viable Presence (MVP)
-  </h1>
-
-  <p class="lead" data-i18n="mvp_intro">
-    MVP is not a product and not a system.
-    It is a demonstration of principle and a space of personal experience.
+  <!-- Main Content -->
+  <div class="container">
+    <h1 data-i18n="mvp_title">Minimum Viable Presence (MVP)</h1>
+    <div class="content">
+      <p data-i18n="mvp_not_product">Это не продукт. Не сервис. Две версии демонстрации принципа. Не система улучшения.</p>
+           <p class="lead" data-i18n="mvp_intro">
+    MVP and a space of personal experience.
   </p>
+    </div>
 
-<section class="mvp-transition">
-  <h2>Для Вас 4 варианта сразу:</h2>
-  <div class="not-list">
-    <p>
-      1. <span class="not-item">Рекомендуется сейчас. Онлайн-сборка и оптимальный вариант.</span>
-      <a href="./app/" class="btn-neutral" target="_blank" rel="noopener noreferrer">
-        Online MVP Пигмалион v.0.2.2 →
-      </a>
-       Доступен по ссылке от G.Gemini п.3.
-    </p>
-
-    <p>
-      2. Альтернатива, offline v.
-      <a href="https://ordenp.github.io/-Pygmalion-/mvp/app/offline-mvp/"
-         target="_blank" rel="noopener noreferrer">
-        browser-offline MVP Пигмалион v.0.1.6 →
-      </a>
-      <small> этот вариант доступен для скачивания п.4.</small>
-    </p>
-
-    <p>
-      3. Публичная ссылка на Рекат-приложение Google Gemini
-      <a href="https://gemini.google.com/share/36096faaee81"  →
+    <!-- Links -->
+    <div class="links">
+      <a href="./app/" class="link-item" data-i18n="mvp_version_online">Версия 0.2.2</a>
+      <a href="./app/offline-mvp/" class="link-item" data-i18n="mvp_version_offline">Версия 0.1.6 (оффлайн)</a>
+      <a href="./download/offline-mvp-0.1.6.7z" class="link-item download" download data-i18n="mvp_download">Скачать оффлайн-версию</a>
+    </div>
+          <small>Возьми с собой (локально)</small>
+ <p>
+      Публичная ссылка на Рекат-приложение Google Gemini
+      <a href="https://gemini.google.com/share/36096faaee81 → "
          target="_blank" rel="noopener noreferrer">
         https://gemini.google.com/share/36096faaee81
-      </a>  доступна тут п.1.
-    </p>
-
-    <p>
-      4. <span class="not-item">взять с собой .7z Offline MVP v.0.1.6. доступно выше п.2.</span><br>
-      <a href="./download/offline-mvp-0.1.6.7z">
-        browser-offline демо v.0.1.6. →
       </a>
-      <small> Скачать. Рекомендуется (локально).</small>
     </p>
+
+    <div class="content">
+      <p data-i18n="mvp_notice">Вход — выбор. Выход — в любой момент.</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <a href="../" class="back-link" data-i18n="back_home">← На главную</a>
+    </div>
   </div>
-</section>
-
-
-<h1>Перед тем, как войти</h1>
-<section class="mvp-transition">
-  <h2>Вход в пространство. Это не инструкция и не гайд — это опыт, который можно только прожить.</h2>
-  <p>
-    ,,, описывает принцип.
-    Ниже — возможность прожить его напрямую.
-  </p>
-
-  <p>
-    Исполняемая версия не добавляет функций. Она убирает объяснение.
-  </p>
-
-  <h2>Чего НЕТ:</h2>
-<ul>
-  <li>не требует регистрации. Данные остаются на вашем устройстве.</li>
-  <li>нет Правильных или неправильных ответов.</li>
-  <li>нет требований что-либо доказать.</li>
-</ul>
-</section>
-
-<h2>Что Вас всех ждёт:</h2>
-<ul>
-  <li>Четыре простых действия (Акта).</li>
-  <li>Никаких объяснений до завершения.</li>
-  <li>Возможность прервать в любой момент.</li>
-</ul>
-<p><strong>Время:</strong> От 5 до 15 минут, зависит от вашего темпа.</p>
-
-  <section>
+    <section>
     <h2 data-i18n="mvp_what_title">What MVP is</h2>
     <p data-i18n="mvp_what_body">
       MVP demonstrates the possibility of recognizing non-material human value
@@ -143,21 +273,10 @@
   Кон — это момент фиксации внимания.
   Он не измеряет ценность и не требует интерпретации.
 </p>
-   
-
-  <textarea
-    id="reflection"
-    rows="4"
-    data-i18n-placeholder="mvp_reflection_placeholder"
-    placeholder="Свободная рефлексия (по желанию)">
-  </textarea>
-</section>
-  
-  </main>
 
   <!-- Footer -->
   <footer class="footer">
-    <p>MIT License · Human-centered · Non-political</p>
+    <p>· MIT License · Human-centered · Non-political· </p>
      <p style="margin-top: 20px; font-size: 0.9em; opacity: 0.7;">
                    Не поле битвы. Сад.</p>
   </footer>
@@ -166,52 +285,8 @@
  <script src="../assets/js/lang.js" defer></script>
  <script src="/-Pygmalion-/mvp/offline/logic.js"></script>
       <link href="style.css">
-  <script>
-let kons = [];
 
-function addKon() {
-  kons.push('');
-  renderKons();
-}
-
-function renderKons() {
-  const body = document.getElementById('konTableBody');
-  body.innerHTML = '';
-
-  kons.forEach((text, i) => {
-    const row = document.createElement('tr');
-    row.innerHTML = `
-      <td>${i + 1}</td>
-      <td>
-        <input type="text"
-          value="${text}"
-          oninput="updateKon(${i}, this.value)"
-        />
-      </td>
-    `;
-    body.appendChild(row);
-  });
-
-  document.getElementById('konCount').textContent = kons.length;
-}
-
-function updateKon(index, value) {
-  kons[index] = value;
-}
-
-function clearKons() {
-  if (confirm('Очистить все коны?')) {
-    kons = [];
-    renderKons();
-  }
-}
-
-function copyKons() {
-  const text = kons.map((k, i) => `${i + 1}. ${k}`).join('\n');
-  navigator.clipboard.writeText(text);
-  alert('Таблица скопирована');
-}
-</script>
-
+  <!-- i18n engine -->
+  <script src="../assets/js/lang.js" defer></script>
 </body>
 </html>
