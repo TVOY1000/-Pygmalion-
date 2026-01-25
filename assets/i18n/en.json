@@ -37,5 +37,25 @@
 
   "mvp_summary_title": "Observation summary",
   "mvp_summary_count": "Number of recorded kons:",
-  "mvp_reflection_placeholder": "Free reflection (optional)"
+  "mvp_reflection_placeholder": "Free reflection (optional)",
+  "mvp_not_product": "This is not a product. Not a service. Two versions demonstrating the principle. Not an improvement system.",
+  "mvp_version_online": "1. MVP 0.2.2",
+  "mvp_version_offline": "2.MVP v0.1.6 (offline)",
+  "mvp_download": "Download offline MVP",
+  "mvp_notice": "Entry is a choice. Exit at any moment.",
+  
+  "manifesto_subtitle": "Documents, presentations, and materials",
+  "manifesto_subtitle_note": "For those who want to understand deeper",
+  "manifesto_idea_title": "Idea",
+  "manifesto_idea_body": "Modern systems can measure price, but poorly recognize value.",
+  "manifesto_principles_title": "Principles",
+  "manifesto_principles_body": "Voluntariness, absence of coercion, rejection of KPI-logic, and priority of human dignity.",
+  "manifesto_goal_title": "Goal",
+  "manifesto_goal_body": "Creating an environment where intangible human value can be acknowledged, recorded, and understood — without turning into debt or commodity.",
+  "en_documents_title": "English Documents",
+  "main_documents_title": "Main Documents",
+  "presentations_title": "Presentations",
+  "footer_quote": "Not a battlefield. A garden.",
+  "open_black_paper": "Open Black Paper",
+  "docs_coming_soon": "Documents coming soon"
 }
