@@ -152,12 +152,24 @@ section:first-of-type p {
    Footer
    ========================= */
 
-footer {
-  border-top: 1px solid var(--border);
-  padding: 2rem 1rem;
-  text-align: center;
-  color: var(--text-muted);
+.footer-links {
   font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.footer-links a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.canon {
+  margin-top: 1.2rem;
+  font-size: 0.7rem;
+  opacity: 0.4;
 }
 
 .lang-btn.active {
