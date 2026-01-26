@@ -32,6 +32,22 @@ body {
   line-height: 1.6;
 }
 
+.brand-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-sub a {
+  font-size: 0.75rem;
+  color: #64748b;
+  text-decoration: none;
+  opacity: 0.6;
+}
+
+.brand-sub a:hover {
+  opacity: 0.9;
+}
+
 /* =========================
    Typography
    ========================= */
