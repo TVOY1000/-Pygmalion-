@@ -265,6 +265,13 @@ section:first-of-type p {
     font-style: italic;
     opacity: 0.8;
 }
+
+.support-container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
 /* =========================
    Responsive
    ========================= */
