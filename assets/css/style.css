@@ -32,6 +32,15 @@ body {
   line-height: 1.6;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("/-Pygmalion-/assets/img/pygmalion-bg.jpg") center/cover no-repeat;
+  opacity: 0.08;
+  z-index: -1;
+}
+
 .brand-block {
   display: flex;
   flex-direction: column;
