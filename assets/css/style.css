@@ -285,6 +285,12 @@ section:first-of-type p {
   color: #4da3ff;
 }
 
+.site-footer {
+  margin-top: 4rem;
+  opacity: 0.6;
+  text-align: center;
+}
+
 /* =========================
    Responsive
    ========================= */
