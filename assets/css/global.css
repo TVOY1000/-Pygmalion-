@@ -1,0 +1,72 @@
+/* --- 1. ФОН (Исправление проблемы "фон везде") --- */
+
+/* Базовый фон для всех страниц - чистый, темный, тихий */
+body {
+    background-color: #111; /* Или ваш базовый темный цвет */
+    color: #eee;
+    margin: 0;
+    font-family: sans-serif; /* Или ваш шрифт */
+}
+
+/* Фон ТОЛЬКО для главной страницы */
+/* ВАЖНО: Добавьте класс class="home-page" в тег <body> файла index.html */
+body.home-page {
+    background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+    background: url("/-Pygmalion-/assets/img/pygmalion-bg.jpg") center/cover no-repeat;
+}
+
+/* --- 2. FOOTER (Единый стиль для всех страниц) --- */
+.site-footer {
+    width: 100%;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: auto; /* Прижимает футер вниз */
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.site-footer a {
+    color: #aaa;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: #fff;
+}
+
+/* --- 3. SUPPORT PAGE (Исправление ширины) --- */
+/* Класс контейнера для страницы Support */
+.support-container {
+    width: 100%;
+    max-width: 800px; /* Было 600px, стало шире для десктопа */
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* На мобильных оставляем узко */
+@media (max-width: 600px) {
+    .support-container {
+        padding: 15px;
+    }
+}
+
+/* --- 4. MANIFESTO (Уплотнение текста) --- */
+.manifesto-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.manifesto-container p {
+    margin-bottom: 1.2em; /* Уменьшаем отступы между абзацами */
+    line-height: 1.5;     /* Делаем строчки чуть плотнее, но читаемо */
+}
+
+.manifesto-container h2 {
+    margin-top: 1.5em;    /* Меньше отступ перед заголовками */
+    margin-bottom: 0.5em;
+}
