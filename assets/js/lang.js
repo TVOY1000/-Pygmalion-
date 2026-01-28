@@ -13,16 +13,12 @@ function setLang(lang) {
 async function loadLang(lang) {
   const res = await fetch(`/-Pygmalion-/assets/i18n/${lang}.json`);
   const dict = await res.json();
+}
 
   document.querySelectorAll('[data-i18n]').forEach(el => {
     const key = el.dataset.i18n;
     if (dict[key]) el.textContent = dict[key];
   });
-
-  document.querySelectorAll('[data-set-lang]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.setLang === lang);
-  });
-}
 
 document.addEventListener('DOMContentLoaded', () => {
   loadLang(getLang());
