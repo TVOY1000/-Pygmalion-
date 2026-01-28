@@ -15,8 +15,9 @@
   "mvp_version_offline": "2.MVP 0.1.6 (offline)",
   "mvp_download": "Download offline version",
   "mvp_notice": "Entry is a choice. Exit at any moment.",
-   "mvp_what_title": "What MVP is",
-  
+  "mvp_what_title": "What MVP is",
+  "mvp_intro": "MVP and a space of personal experience.",
+
   "mvp_what_body": "MVP demonstrates the possibility of recognizing non-material human participation without money, coercion, KPI, or obligations.",
 
   "mvp_structure_title": "Structure of MVP",
