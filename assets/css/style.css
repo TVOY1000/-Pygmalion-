@@ -293,6 +293,42 @@ section:first-of-type p {
   text-align: center;
 }
 
+.btn-icon {
+  margin-right: 8px;
+  font-size: 1.05em;
+  opacity: 0.85;
+}
+
+.mvp-layout {
+  display: grid;
+  grid-template-columns: 1fr minmax(280px, 420px) 1fr;
+  gap: 32px;
+  align-items: center;
+  margin-top: 48px;
+}
+
+.mvp-image {
+  display: flex;
+  justify-content: center;
+  opacity: 0.25;
+}
+
+.mvp-image img {
+  max-width: 180px;
+  height: auto;
+}
+
+/* мобильная версия */
+@media (max-width: 900px) {
+  .mvp-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .mvp-image {
+    display: none;
+  }
+}
+
 /* =========================
    Responsive
    ========================= */
