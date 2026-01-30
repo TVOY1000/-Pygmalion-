@@ -61,7 +61,11 @@
   
   "footer_quote": "Not a battlefield. A garden.",
   "faq_link": "FAQ — briefly",
+  
+  "contact_intro": "Space initiated by independent researcher.\nThe team does not seek public identification.\nResponsibility matters more than personal brand.",
   "contact_name": "(Oleg Golovatyuk)",
+  "contact_qr_label": "QR Telegram channel + group",
+
   "contact_title": "Contact",
   "contact_author_label": "Author",
   "contact_phone_label": "Phone",
