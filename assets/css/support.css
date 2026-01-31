@@ -1,415 +1,260 @@
+===========================
+SUPPORT PAGE STYLES
+=========================== */
 body {
-      background: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
-      flex: 1;
-      padding: 40px 20px;
-    }
-
-    .header {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 100;
-    }
-
-    .lang-switch {
-      display: flex;
-      gap: 10px;
-    }
-
-    .lang-btn {
-      padding: 8px 16px;
-      background: #333;
-      color: #fff;
-      border: 1px solid #555;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .lang-btn:hover {
-      background: #444;
-      border-color: #777;
-    }
-
-    .lang-btn.active {
-      background: #3b82f6;
-      border-color: #60a5fa;
-    }
-
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 2rem;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-    }
-
-    .content {
-      margin-bottom: 3rem;
-    }
-
-    .content p {
-      margin: 1.5rem 0;
-      color: #cbd5e1;
-      font-size: 1rem;
-      line-height: 1.8;
-    }
-
-    .qr-section {
-      text-align: center;
-      margin: 2rem 0;
-      padding: 2rem;
-      background: rgba(30, 41, 59, 0.3);
-      border-radius: 8px;
-    }
-
-    .qr-section img {
-      max-width: 200px;
-      margin: 1rem auto;
-      display: block;
-    }
-
-    .payment-link {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.75rem 1.5rem;
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      border-radius: 8px;
-      color: #60a5fa;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      word-break: break-all;
-    }
-
-    .payment-link:hover {
-      background: rgba(59, 130, 246, 0.2);
-      border-color: #3b82f6;
-    }
-
-    .footer {
-      text-align: center;
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(148, 163, 184, 0.2);
-    }
-
-    .back-link {
-      display: inline-block;
-      padding: 12px 24px;
-      background: #333;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: all 0.3s;
-      font-size: 0.95rem;
-    }
-
-    .back-link:hover {
-      background: #444;
-      transform: translateX(-5px);
-    }
-
-    .canon-mark {
-      margin-top: 2rem;
-      font-size: 0.75rem;
-      opacity: 0.5;
-      color: #64748b;
-    }
-
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-
-      .content p {
-        font-size: 0.95rem;
-      }
-
-      .qr-section {
-        padding: 1rem;
-      }
-      
-  body {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      color: #fff;
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      flex: 1;
-      padding: 40px 20px;
-    }
-
-    .header {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 100;
-    }
-
-    .lang-switch {
-      display: flex;
-      gap: 10px;
-    }
-
-    .lang-btn {
-      padding: 8px 16px;
-      background: rgba(51, 65, 85, 0.6);
-      color: #fff;
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .lang-btn:hover {
-      background: rgba(71, 85, 105, 0.8);
-      border-color: rgba(148, 163, 184, 0.5);
-    }
-
-    .lang-btn.active {
-      background: #3b82f6;
-      border-color: #60a5fa;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 3rem;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      text-align: center;
-    }
-
-    .intro {
-      max-width: 700px;
-      margin: 0 auto 3rem;
-      text-align: center;
-      color: #cbd5e1;
-      font-size: 1.05rem;
-      line-height: 1.8;
-    }
-
-    /* Унифицированный блок */
-    .support-block {
-      background: rgba(30, 41, 59, 0.6);
-      border: 1px solid rgba(148, 163, 184, 0.2);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      transition: all 0.3s;
-    }
-
-    .support-block:hover {
-      border-color: rgba(59, 130, 246, 0.4);
-      box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
-    }
-
-    .block-number {
-      font-size: 0.85rem;
-      color: #64748b;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .block-title {
-      font-size: 1.1rem;
-      color: #e2e8f0;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-    }
-
-    /* QR Section */
-    .qr-wrapper {
-      text-align: center;
-      margin: 2rem 0;
-    }
-
-    .qr-wrapper img {
-      max-width: 250px;
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-    }
-
-    .qr-caption {
-      font-size: 0.8rem;
-      color: #64748b;
-      opacity: 0.8;
-    }
-
-    .payment-link {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.75rem 1.5rem;
-      background: rgba(59, 130, 246, 0.1);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      border-radius: 8px;
-      color: #60a5fa;
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: all 0.3s;
-      word-break: break-all;
-    }
-
-    .payment-link:hover {
-      background: rgba(59, 130, 246, 0.2);
-      border-color: #3b82f6;
-    }
-
-    /* "Бумажный чек" */
-    .receipt {
-      background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
-      border: 1px solid #333;
-      border-radius: 8px;
-      padding: 1.5rem;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    .receipt-line {
-      display: flex;
-      justify-content: space-between;
-      margin: 0.5rem 0;
-      padding: 0.25rem 0;
-      border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
-    }
-
-    .receipt-line:last-child {
-      border-bottom: none;
-    }
-
-    .receipt-label {
-      color: #94a3b8;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-    }
-
-    .receipt-value {
-      color: #e2e8f0;
-      font-weight: bold;
-      text-align: right;
-      word-break: break-all;
-    }
-
-    /* Grid для блоков 2 и 3 */
-    .two-columns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    @media (max-width: 768px) {
-      .two-columns {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-      }
-    }
-
-    /* Footer */
-    .footer {
-      text-align: center;
-      margin-top: 4rem;
-      padding-top: 2rem;
-      border-top: 1px solid rgba(148, 163, 184, 0.2);
-    }
-
-    .back-link {
-      display: inline-block;
-      padding: 12px 24px;
-      background: rgba(51, 65, 85, 0.6);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: all 0.3s;
-      font-size: 0.95rem;
-    }
-
-    .back-link:hover {
-      background: rgba(71, 85, 105, 0.8);
-      transform: translateX(-5px);
-    }
-
-    .canon-mark {
-      margin-top: 2rem;
-      font-size: 0.75rem;
-      opacity: 0.5;
-      color: #64748b;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-
-      .intro {
-        font-size: 0.95rem;
-      }
-
-      .support-block {
-        padding: 1.5rem;
-      }
-
-      .qr-wrapper img {
-        max-width: 200px;
-      }
-
-      .receipt {
-        font-size: 0.8rem;
-        padding: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      body {
-        padding: 10px;
-      }
-
-      .container {
-        padding: 20px 10px;
-      }
-
-      .support-block {
-        padding: 1rem;
-      }
-
-      .receipt-line {
-        flex-direction: column;
-        gap: 0.25rem;
-      }
-
-      .receipt-value {
-        text-align: left;
-      }
-    }
-    }
+background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+color: #fff;
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 20px;
+line-height: 1.6;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+}
+.container {
+max-width: 1000px;
+margin: 0 auto;
+flex: 1;
+padding: 40px 20px;
+}
+.header {
+position: fixed;
+top: 20px;
+right: 20px;
+z-index: 100;
+}
+.lang-switch {
+display: flex;
+gap: 10px;
+}
+.lang-btn {
+padding: 8px 16px;
+background: rgba(51, 65, 85, 0.6);
+color: #fff;
+border: 1px solid rgba(148, 163, 184, 0.3);
+border-radius: 6px;
+cursor: pointer;
+transition: all 0.3s;
+font-weight: bold;
+font-size: 14px;
+}
+.lang-btn:hover {
+background: rgba(71, 85, 105, 0.8);
+border-color: rgba(148, 163, 184, 0.5);
+}
+.lang-btn.active {
+background: #3b82f6;
+border-color: #60a5fa;
+}
+/* Заголовки */
+h1 {
+font-size: 2.5rem;
+margin-bottom: 3rem;
+font-weight: 400;
+letter-spacing: 0.05em;
+text-align: center;
+}
+.intro {
+max-width: 700px;
+margin: 0 auto 3rem;
+text-align: center;
+color: #cbd5e1;
+font-size: 1.05rem;
+line-height: 1.8;
+}
+/* Унифицированный блок */
+.support-block {
+background: rgba(30, 41, 59, 0.6);
+border: 1px solid rgba(148, 163, 184, 0.2);
+border-radius: 12px;
+padding: 2rem;
+margin-bottom: 2rem;
+transition: all 0.3s;
+}
+.support-block:hover {
+border-color: rgba(59, 130, 246, 0.4);
+box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+}
+.block-number {
+display: block;
+font-size: 0.85rem;
+color: #64748b;
+margin-bottom: 0.5rem;
+text-transform: uppercase;
+letter-spacing: 0.1em;
+}
+.block-title {
+font-size: 1.1rem;
+color: #e2e8f0;
+margin-bottom: 1.5rem;
+font-weight: 600;
+}
+/* QR Section */
+.qr-wrapper {
+text-align: center;
+margin: 2rem 0;
+}
+.qr-wrapper img {
+max-width: 320px;
+width: 100%;
+height: auto;
+border-radius: 8px;
+margin-bottom: 1rem;
+}
+.qr-caption {
+font-size: 0.8rem;
+color: #64748b;
+opacity: 0.8;
+margin-bottom: 0.5rem;
+}
+.payment-link {
+display: inline-block;
+margin-top: 1rem;
+padding: 0.75rem 1.5rem;
+background: rgba(59, 130, 246, 0.1);
+border: 1px solid rgba(59, 130, 246, 0.3);
+border-radius: 8px;
+color: #60a5fa;
+text-decoration: none;
+font-size: 0.9rem;
+transition: all 0.3s;
+word-break: break-all;
+}
+.payment-link:hover {
+background: rgba(59, 130, 246, 0.2);
+border-color: #3b82f6;
+color: #fff;
+text-decoration: underline;
+}
+/* "Бумажный чек" */
+.receipt {
+background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+border: 1px solid #444;
+border-radius: 8px;
+padding: 1.5rem;
+font-family: 'Courier New', monospace;
+font-size: 0.9rem;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.receipt-line {
+display: flex;
+justify-content: space-between;
+margin: 0.5rem 0;
+padding: 0.25rem 0;
+border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
+}
+.receipt-line:last-child {
+border-bottom: none;
+}
+.receipt-label {
+color: #94a3b8;
+font-size: 0.8rem;
+text-transform: uppercase;
+}
+.receipt-value {
+color: #e2e8f0;
+font-weight: bold;
+text-align: right;
+word-break: break-all;
+}
+/* Grid для блоков 2 и 3 */
+.two-columns {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 2rem;
+margin-bottom: 2rem;
+}
+/* Footer */
+.footer {
+text-align: center;
+margin-top: 4rem;
+padding-top: 2rem;
+border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+.back-link {
+display: inline-block;
+padding: 12px 24px;
+background: rgba(51, 65, 85, 0.6);
+color: #fff;
+text-decoration: none;
+border-radius: 8px;
+transition: all 0.3s;
+font-size: 0.95rem;
+margin-bottom: 1.5rem;
+}
+.back-link:hover {
+background: rgba(71, 85, 105, 0.8);
+transform: translateX(-5px);
+}
+.footer-links {
+display: flex;
+justify-content: center;
+gap: 1rem;
+font-size: 0.85rem;
+opacity: 0.7;
+margin: 1.5rem 0;
+}
+.footer-links a {
+color: #60a5fa;
+text-decoration: none;
+transition: all 0.3s;
+}
+.footer-links a:hover {
+color: #fff;
+text-decoration: underline;
+}
+.canon-mark {
+margin-top: 1rem;
+font-size: 0.75rem;
+opacity: 0.5;
+color: #64748b;
+}
+/* ===========================
+RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+.two-columns {
+grid-template-columns: 1fr;
+gap: 1.5rem;
+}
+h1 {
+font-size: 2rem;
+}
+.intro {
+font-size: 0.95rem;
+}
+.support-block {
+padding: 1.5rem;
+}
+.qr-wrapper img {
+max-width: 250px;
+}
+.receipt {
+font-size: 0.8rem;
+padding: 1rem;
+}
+}
+@media (max-width: 480px) {
+body {
+padding: 10px;
+}
+.container {
+padding: 20px 10px;
+}
+.support-block {
+padding: 1rem;
+}
+.receipt-line {
+flex-direction: column;
+gap: 0.25rem;
+}
+.receipt-value {
+text-align: left;
+}
+.qr-wrapper img {
+max-width: 200px;
+}
+}
+</parameter>
+</invoke>
