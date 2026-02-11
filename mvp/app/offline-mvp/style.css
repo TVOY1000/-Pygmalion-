@@ -196,6 +196,14 @@ h1, h2, h3 {
     background: var(--border-hover);
 }
 
+/* Pygmalion MVP Fix: стабильная активная подсветка RU/EN переключателей */
+.btn-secondary.active {
+    background: var(--accent-primary);
+    color: var(--text-primary);
+    border-color: var(--accent-primary);
+    box-shadow: var(--glow-blue);
+}
+
 .btn-lg {
     padding: 1rem 2rem;
     font-size: 1.125rem;
@@ -284,7 +292,9 @@ h1, h2, h3 {
     flex-direction: column;
     gap: 0.5rem;
     width: 100%;
-    max-width: 600px;
+    max-width: 56rem; /* Pygmalion MVP Fix: max-w-4xl */
+    margin-left: auto; /* Pygmalion MVP Fix: mx-auto */
+    margin-right: auto; /* Pygmalion MVP Fix: mx-auto */
 }
 
 .keyboard-row {
@@ -396,6 +406,9 @@ h1, h2, h3 {
     text-align: center;
     word-break: break-all;
     transition: var(--transition);
+    max-width: 56rem; /* Pygmalion MVP Fix */
+    margin-left: auto; /* Pygmalion MVP Fix */
+    margin-right: auto; /* Pygmalion MVP Fix */
 }
 
 .input-display.valid {
