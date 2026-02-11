@@ -102,7 +102,7 @@ const KEYBOARD_ROWS = [
         { val: 'Ж', color: 'RED' }, { val: 'И', color: 'RED' },
         { val: 'Ш', color: 'RED' }, { val: 'Щ', color: 'RED' },
         { val: 'Л', color: 'RED' }, { val: 'Б', color: 'RED' },
-        { val: 'П', color: 'RED' }, { val: 'Ь', color: 'RED' }, { val: 'Ъ', color: 'RED' }
+        { val: 'П', color: 'RED' }, { val: 'Ь', alt: 'Ъ', color: 'RED', isSplit: true }
     ],
     // Ряд 4: Спецсимволы (фиксированный)
     [
@@ -173,7 +173,25 @@ const TRANSLATIONS = {
         summaryDate: 'Дата',
         summaryText: 'Краткие итоги',
         summaryEntry: 'Транзакций: {count}',
-        newDayToast: 'Новый день начался!'
+        newDayToast: 'Новый день начался!',
+        act1Header: 'Акт 1.0.',
+        acceptOk: 'Принять О.К.',
+        keyboardPlaceholder: 'Придумайте свой „О.К." — Открытый Ключик',
+        keyboardSpace: 'ПРОБЕЛ',
+        infoModalTitle: '"i" информер. Для ВСЕХ !!',
+        infoGoalTitle: 'Цель платформы',
+        infoGoalText: '"Механика ежедневного поЛУЧения и приМЕНение «Учётной единицы» У.Е. по своему желанию. Альтернатива для 7 го тех.уклада мир. Ноономики"',
+        infoParticipantsTitle: 'Участники',
+        infoUnitTitle: 'У.Е. - "Учётные Единицы"',
+        infoUnitText: 'Каждый день участники заказывают сами себе от 3 до 13 У.Е. из 4 триад:',
+        infoNormTitle: 'Рекомендация нормы',
+        infoNormText: 'Получатель не сможет принять более 1 У.Е. из каждой триады от отправителя за кон. (не более 5 у.е. от каждого за день)',
+        infoSpiritualTitle: 'Подвидение итого и "Шкала Духовности"',
+        infoSpiritualFormula: '(Отдал × 2) + (Принял × 1) - (Сгорело × 1)',
+        understood: 'Понятно',
+        registryTitle: 'Реестр транзакций',
+        registryNoData: 'Пока нет транзакций',
+        close: 'Закрыть'
     },
     en: {
         languageRu: 'RU',
@@ -196,7 +214,25 @@ const TRANSLATIONS = {
         summaryDate: 'Date',
         summaryText: 'Summary',
         summaryEntry: 'Transactions: {count}',
-        newDayToast: 'New day started!'
+        newDayToast: 'New day started!',
+        act1Header: 'Act 1.0 — From {min} to {max} symbols',
+        acceptOk: 'Accept O.K.',
+        keyboardPlaceholder: 'Create your “O.K.” — Open Key',
+        keyboardSpace: 'SPACE',
+        infoModalTitle: '"i" informer. For EVERYONE!!',
+        infoGoalTitle: 'Platform goal',
+        infoGoalText: '"Daily mechanics for receiving and applying the Accounting Unit (U.E.) by free choice. An alternative for the 7th technological paradigm of noonomics."',
+        infoParticipantsTitle: 'Participants',
+        infoUnitTitle: 'U.E. — "Accounting Units"',
+        infoUnitText: 'Every day, participants request from 3 to 13 U.E. for themselves from 4 triads:',
+        infoNormTitle: 'Norm recommendation',
+        infoNormText: 'A receiver cannot accept more than 1 U.E. from each triad from the same sender per con. (max 5 U.E. per sender per day)',
+        infoSpiritualTitle: 'Total and "Spirituality Scale"',
+        infoSpiritualFormula: '(Sent × 2) + (Received × 1) - (Burned × 1)',
+        understood: 'Got it',
+        registryTitle: 'Transaction Registry',
+        registryNoData: 'No transactions yet',
+        close: 'Close'
     }
 };
 
@@ -220,10 +256,25 @@ function loadState() {
         const saved = localStorage.getItem('pigmalion_state');
         if (saved) {
             const parsed = JSON.parse(saved);
-const { language, ...rest } = parsed;
+            const { language, ...rest } = parsed || {};
             state = { ...state, ...rest };
             // Инициализируем receivedUnits, если загрузились старые данные без него
             if (!state.receivedUnits) state.receivedUnits = [];
+
+            // Восстановление повреждённых/несовместимых данных из localStorage
+            if (!Array.isArray(state.inputData)) state.inputData = [];
+            if (!Array.isArray(state.rowsOrder) || state.rowsOrder.length !== 4) state.rowsOrder = [0, 1, 2, 3];
+            if (!state.participantSelections || typeof state.participantSelections !== 'object') {
+                state.participantSelections = { 1: [], 2: [], 3: [], 4: [] };
+            }
+            if (!Array.isArray(state.units)) state.units = [];
+            if (!Array.isArray(state.receivedUnits)) state.receivedUnits = [];
+            if (!Array.isArray(state.transactions)) state.transactions = [];
+            if (!Array.isArray(state.violations)) state.violations = [];
+            if (!Array.isArray(state.gameHistory)) state.gameHistory = [];
+            if (!Number.isInteger(state.currentStage) || state.currentStage < 0 || state.currentStage > 6) {
+                state.currentStage = 0;
+            }
         }
     } catch (e) {
         console.warn('Ошибка загрузки состояния:', e);
@@ -299,31 +350,40 @@ function toast(message, type = 'info') {
 // Главная функция рендера
 function render() {
     const app = $('#app');
+    if (!app) return;
     
-    switch (state.currentStage) {
-        case 0:
-            renderIntro(app);
-            break;
-        case 1:
-            renderKeyboard(app);
-            break;
-        case 2:
-            renderEmission(app);
-            break;
-        case 3:
-            renderTransfer(app);
-            break;
-        case 4:
-            renderReturn(app);
-            break;
-        case 5:
-            renderResults(app);
-            break;
-        case 6:
-            renderContacts(app);
-            break;
-        default:
-            renderIntro(app);
+    try {
+        switch (state.currentStage) {
+            case 0:
+                renderIntro(app);
+                break;
+            case 1:
+                renderKeyboard(app);
+                break;
+            case 2:
+                renderEmission(app);
+                break;
+            case 3:
+                renderTransfer(app);
+                break;
+            case 4:
+                renderReturn(app);
+                break;
+            case 5:
+                renderResults(app);
+                break;
+            case 6:
+                renderContacts(app);
+                break;
+            default:
+                renderIntro(app);
+        }
+    } catch (error) {
+        console.error('Ошибка рендера, выполняем восстановление:', error);
+        localStorage.removeItem('pigmalion_state');
+        state.currentStage = 0;
+        renderIntro(app);
+        toast('Данные были повреждены. Состояние сброшено.', 'error');
     }
     
     saveState();
@@ -409,38 +469,35 @@ function openInfoModal() {
     modal.className = 'modal-overlay';
     modal.innerHTML = `
         <div class="modal info-modal">
-								
-            <h2 class="modal-title text-gradient">"i" информер. Для ВСЕХ !!</h2>
-            <h3>Цель платформы</h3>
-            <p>"Механика ежедневного поЛУЧения и приМЕНение «Учётной единицы» У.Е. по своему желанию. Альтернатива для 7 го тех.уклада мир. Ноономики"</p>
-                        <h3>Участники</h3>
+            <h2 class="modal-title text-gradient">${t('infoModalTitle')}</h2>
+            <h3>${t('infoGoalTitle')}</h3>
+            <p>${t('infoGoalText')}</p>
+            <h3>${t('infoParticipantsTitle')}</h3>
             <ul>
-                <li><b>Уч.1 (Вы)</b> — Организатор с уникальным О.К.</li>
-                <li><b>Уч.2-4</b> — Собеседники</li>
-                <li><b>Уч.5</b> — Все люди</li>
+                <li><b>${state.language === 'ru' ? 'Уч.1 (Вы)' : 'P.1 (You)'}</b> — ${state.language === 'ru' ? 'Организатор с уникальным О.К.' : 'Organizer with a unique O.K.'}</li>
+                <li><b>${state.language === 'ru' ? 'Уч.2-4' : 'P.2-4'}</b> — ${state.language === 'ru' ? 'Собеседники' : 'Interlocutors'}</li>
+                <li><b>${state.language === 'ru' ? 'Уч.5' : 'P.5'}</b> — ${state.language === 'ru' ? 'Все люди' : 'All people'}</li>
             </ul>
-            
-            <h3>У.Е. - "Учётные Единицы"</h3>
-            <p>Каждый день участники заказывают сами себе от 3 до 13 У.Е. из 4 триад:</p>
+            <h3>${t('infoUnitTitle')}</h3>
+            <p>${t('infoUnitText')}</p>
             <ul>
-                <li style="color: var(--triad-red);">Знания: 1-3</li>
-                <li style="color: var(--triad-yellow);">Практики: 4-6</li>
-                <li style="color: var(--triad-green);">Творчество: 7-9</li>
-                <li style="color: var(--triad-blue);">Досуг/ЗОЖ: 10-12</li>
-                <li style="color: var(--triad-purple);">Безопасность №21</li>
+                <li style="color: var(--triad-red);">${state.language === 'ru' ? 'Знания: 1-3' : 'Knowledge: 1-3'}</li>
+                <li style="color: var(--triad-yellow);">${state.language === 'ru' ? 'Практики: 4-6' : 'Practice: 4-6'}</li>
+                <li style="color: var(--triad-green);">${state.language === 'ru' ? 'Творчество: 7-9' : 'Creativity: 7-9'}</li>
+                <li style="color: var(--triad-blue);">${state.language === 'ru' ? 'Досуг/ЗОЖ: 10-12' : 'Leisure/Health: 10-12'}</li>
+                <li style="color: var(--triad-purple);">${state.language === 'ru' ? 'Безопасность №21' : 'Safety #21'}</li>
             </ul>
-            <h3>Рекомендация нормы</h3>
-            <p>Получатель не сможет принять более 1 У.Е. из каждой триады от отправителя за кон. (не более 5 у.е. от каждого за день)</p>
-            
-                       <h3>Подвидение итого и "Шкала Духовности"</h3>
-            <p><b>(Отдал × 2) + (Принял × 1) - (Сгорело × 1)</b></p>
+            <h3>${t('infoNormTitle')}</h3>
+            <p>${t('infoNormText')}</p>
+            <h3>${t('infoSpiritualTitle')}</h3>
+            <p><b>${t('infoSpiritualFormula')}</b></p>
             <div class="modal-actions mt-6">
-                <button class="btn btn-primary" id="closeInfoModal">Понятно</button>
+                <button class="btn btn-primary" id="closeInfoModal">${t('understood')}</button>
             </div>
         </div>
     `;
     document.body.appendChild(modal);
-    
+
     modal.onclick = (e) => {
         if (e.target === modal || e.target.id === 'closeInfoModal') {
             modal.remove();
@@ -452,10 +509,12 @@ function openInfoModal() {
 function renderKeyboard(container) {
     container.innerHTML = `
         <div class="screen">
-            <h1 class="text-3xl text-gradient mb-2">ЧисСлоБукВ - Акт 1.0.</h1>
-            <div class="input-display mb-2 w-full" style="max-width: 600px;" id="inputDisplay">
+            <h1 class="text-3xl text-gradient mb-2">ЧисСлоБукВ</h1>
+            <p class="text-secondary mb-4">${t('act1Header',)}</p>
+            
+            <div class="input-display mb-2 w-full" id="inputDisplay">
                 ${state.inputData.length === 0 
-                    ? '<span class="input-placeholder">Придумайте свой „О.К." — Открытый Ключик</span>' 
+                    ? `<span class="input-placeholder">${t('keyboardPlaceholder')}</span>` 
                     : renderInputChars()}
             </div>
             
@@ -468,7 +527,7 @@ function renderKeyboard(container) {
             </div>
             
             <button class="btn btn-success btn-lg" id="btnAcceptOK">
-                ${icon('check')} Принять О.К.
+                ${icon('check')} ${t('acceptOk')}
             </button>
         </div>
     `;
@@ -509,7 +568,10 @@ function renderKey(key) {
         return `<button class="key key-func" data-action="${key.val}">${key.val === 'delete' ? icon('delete', 16) : icon('backspace', 16)}</button>`;
     }
     if (key.type === 'space') {
-        return `<button class="key key-space" data-char=" ">ПРОБЕЛ</button>`;
+        return `<button class="key key-space" data-char=" ">${t('keyboardSpace')}</button>`;
+    }
+    if (key.isSplit) {
+        return `<button class="key key-red key-split" data-char="${key.val}" data-char-alt="${key.alt}" data-color="${key.color || 'RED'}"><span class="key-split-tl">${key.val}</span><span class="key-split-br">${key.alt}</span></button>`;
     }
     let colorClass = 'key-white';
     if (key.color === 'RED') colorClass = 'key-red';
@@ -522,14 +584,24 @@ function renderKey(key) {
 
 function setupKeyboardHandlers() {
     $$('.key').forEach(key => {
-        key.onclick = () => {
+        key.onclick = (event) => {
             const action = key.dataset.action;
             const char = key.dataset.char;
             const color = key.dataset.color || 'WHITE';
             
             if (action === 'delete') state.inputData = [];
             else if (action === 'backspace') state.inputData = state.inputData.slice(0, -1);
-            else if (char) handleKeyPress(char, color);
+            else if (char) {
+                const altChar = key.dataset.charAlt;
+                if (altChar) {
+                    const rect = key.getBoundingClientRect();
+                    const x = (event?.clientX || rect.left) - rect.left;
+                    const y = (event?.clientY || rect.top) - rect.top;
+                    handleKeyPress((x + y > rect.width) ? altChar : char, color);
+                } else {
+                    handleKeyPress(char, color);
+                }
+            }
             
             updateInputDisplay();
         };
@@ -1085,6 +1157,40 @@ function renderReturn(container) {
     };
 }
 
+// Pygmalion MVP Fix: снимок результатов текущего кона
+function getCurrentKonSnapshot() {
+    const participants = PARTICIPANTS.map(p => {
+        const sent = state.transactions.filter(t => t.from === p.id).length;
+        const received = (state.receivedUnits || []).filter(u => u.owner === p.id).length;
+        const burned = state.units.filter(u => u.owner === p.id).length;
+        const score = (sent * 2) + received - burned;
+        return { id: p.id, name: p.name, sent, received, burned, score };
+    });
+    return {
+        day: state.currentKon + 1,
+        date: new Date().toLocaleDateString(state.language === 'ru' ? 'ru-RU' : 'en-US'),
+        transactions: state.transactions.length,
+        participants
+    };
+}
+
+// Pygmalion MVP Fix: агрегирование всех конов
+function getAggregatedSummaryRows() {
+    const sessions = [...(state.gameHistory || []), getCurrentKonSnapshot()];
+    if (sessions.length < 2) return [];
+    const totals = {};
+    sessions.forEach(session => {
+        (session.participants || []).forEach(p => {
+            if (!totals[p.id]) totals[p.id] = { name: p.name, sent: 0, received: 0, burned: 0, score: 0 };
+            totals[p.id].sent += p.sent || 0;
+            totals[p.id].received += p.received || 0;
+            totals[p.id].burned += p.burned || 0;
+            totals[p.id].score += p.score || 0;
+        });
+    });
+    return Object.entries(totals).map(([id, row]) => ({ id, ...row })).sort((a, b) => b.score - a.score);
+}
+
 // === ЭКРАН 4.0: РЕЗУЛЬТАТЫ (НОВЫЙ) ===
 function renderResults(container) {
     let stats = PARTICIPANTS.map(p => {
@@ -1102,7 +1208,7 @@ function renderResults(container) {
     // Ранжирование по баллам
     stats.sort((a, b) => b.score - a.score);
     const totalScore = stats.reduce((s, r) => s + r.score, 0);
-    const konSummaries = state.gameHistory || [];
+    const aggregatedRows = getAggregatedSummaryRows();
     container.innerHTML = `
         <div class="screen">
             <div style="color: var(--accent-primary); margin-bottom: 1rem;">${icon('sun', 48)}</div>
@@ -1151,23 +1257,27 @@ function renderResults(container) {
                 <button class="btn btn-success btn-lg" id="btnNewDay">${icon('sun')} ${t('newDay')}</button>
                 <button class="btn btn-danger" id="btnRestart">${t('restart')}</button>
             </div>
-            ${konSummaries.length ? `
+            ${aggregatedRows.length ? `
                 <div class="table-container mt-6">
                     <h3 class="mb-3">${t('summaryTitle')}</h3>
                     <table>
                         <thead>
                             <tr>
-                                <th>${t('summaryDay')}</th>
-                                <th>${t('summaryDate')}</th>
-                                <th>${t('summaryText')}</th>
+                                <th>${state.language === 'ru' ? 'Участник' : 'Participant'}</th>
+                                <th class="text-center">${state.language === 'ru' ? 'Отдал Σ' : 'Sent Σ'}</th>
+                                <th class="text-center">${state.language === 'ru' ? 'Принял Σ' : 'Received Σ'}</th>
+                                <th class="text-center">${state.language === 'ru' ? 'Сгорело Σ' : 'Burned Σ'}</th>
+                                <th class="text-center">${state.language === 'ru' ? 'Баллы Σ' : 'Score Σ'}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${konSummaries.map(entry => `
+                            ${aggregatedRows.map(row => `
                                 <tr>
-                                    <td>${entry.day}</td>
-                                    <td>${entry.date}</td>
-                                    <td>${entry.summary}</td>
+                                    <td>${row.name}</td>
+                                    <td class="text-center">${row.sent}</td>
+                                    <td class="text-center">${row.received}</td>
+                                    <td class="text-center">${row.burned}</td>
+                                    <td class="text-center font-bold">${row.score}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -1182,10 +1292,8 @@ function renderResults(container) {
     $('#btnViewRegistry').onclick = showFullRegistry;
     $('#btnContacts').onclick = () => { state.currentStage = 6; render(); };
     $('#btnNewDay').onclick = () => {
-    	const dayIndex = state.currentKon + 1;
-        const dateLabel = new Date().toLocaleDateString(state.language === 'ru' ? 'ru-RU' : 'en-US');
-        const summaryText = t('summaryEntry', { count: state.transactions.length });
-        state.gameHistory = [...(state.gameHistory || []), { day: dayIndex, date: dateLabel, summary: summaryText }];
+    	const snapshot = getCurrentKonSnapshot();
+        state.gameHistory = [...(state.gameHistory || []), snapshot];
         state.currentKon++;
         state.activeParticipant = 0;
         state.participantSelections = { 1: [], 2: [], 3: [], 4: [] };
@@ -1210,7 +1318,7 @@ function showFullRegistry() {
     modal.className = 'modal-overlay';
     modal.innerHTML = `
         <div class="modal" style="max-width: 700px; max-height: 80vh; overflow-y: auto;">
-            <h3 class="modal-title">Реестр транзакций</h3>
+            <h3 class="modal-title">${t('registryTitle')}</h3>
             <div class="table-container">
                 <table>
                     <thead>
@@ -1218,7 +1326,7 @@ function showFullRegistry() {
                     </thead>
                     <tbody>
                         ${state.transactions.length === 0 
-                            ? '<tr><td colspan="5" class="text-center text-muted">Нет транзакций</td></tr>'
+                            ? `<tr><td colspan="5" class="text-center text-muted">${t('registryNoData')}</td></tr>`
                             : state.transactions.map(t => {
                                 const triadColor = t.color || TRIADS[t.triad]?.color;
                                 return `
@@ -1234,7 +1342,7 @@ function showFullRegistry() {
                     </tbody>
                 </table>
             </div>
-            <div class="modal-actions mt-4"><button class="btn btn-primary" id="closeRegistry">Закрыть</button></div>
+            <div class="modal-actions mt-4"><button class="btn btn-primary" id="closeRegistry">${t('close')}</button></div>
         </div>
     `;
     document.body.appendChild(modal);
@@ -1269,5 +1377,4 @@ function renderContacts(container) {
 document.addEventListener('DOMContentLoaded', () => {
     loadState();
     render();
-
 });
