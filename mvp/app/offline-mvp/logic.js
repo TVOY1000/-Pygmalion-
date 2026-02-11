@@ -191,7 +191,47 @@ const TRANSLATIONS = {
         understood: 'Понятно',
         registryTitle: 'Реестр транзакций',
         registryNoData: 'Пока нет транзакций',
-        close: 'Закрыть'
+        close: 'Закрыть',
+        act2_title: 'Эмиссия — Акт 2.0',
+        act2_desc: 'Организатор: ::{okKey}::',
+        act2_selected_ue: 'Выбрано У.Е.:',
+        act2_next_participant: 'Следующий участник →',
+        act2_finish: 'Завершить эмиссию ✓',
+        act2_skip: 'Переход хода (0 У.Е.)',
+        scenario_label: '№{id}: {count} У.Е.',
+        triad_units_regular: '3 У.Е.',
+        triad_units_t5: '1 У.Е.',
+        btn_back: '← Назад',
+        validation_only_t5: 'Нельзя только №21',
+        validation_ue_range: 'От 3 до 13 У.Е.',
+        act3_title: 'Акт 3.0 — Перекидка',
+        act3_registry_title: 'Реестр передач ({count})',
+        act3_hint: 'Перетащите У.Е. между участниками',
+        act3_registry_entry: 'Уч.{from} → Уч.{to} — {triad} №{number}',
+        act3_back_to_emission: '← Назад к эмиссии',
+        act3_finish: 'Завершить кон',
+        modal_transfer_confirm_title: 'Подтверждение передачи',
+        modal_transfer_confirm_text: 'Передать {triad} №{number} от {from} → {to}?',
+        yes: 'Да',
+        no: 'Нет',
+        transfer_done: 'У.Е. №{number} передано!',
+        modal_confirm_burn: 'Лимит попыток (3/3) исчерпан. Нераспределённые У.Е. сгорели. Переход к итогам.',
+        modal_norm_violation: 'Обнаружены нарушения нормы!',
+        distribution_ok: 'Все У.Е. распределены правильно!',
+        act35_title: 'Журнал возвратов',
+        act35_desc: 'Система обнаружила нарушения нормы. Лишние У.Е. автоматически возвращены отправителям.',
+        act35_attempt: 'Попытка:',
+        act35_returned: 'Возвращено отправителям:',
+        act35_continue: 'Продолжить перераспределение',
+        day_summary_participant: 'Участник',
+        day_summary_sent: 'Отдал',
+        day_summary_received: 'Принял',
+        day_summary_burned: 'Сгорело',
+        con_summary_sent: 'Отдал Σ',
+        con_summary_received: 'Принял Σ',
+        con_summary_burned: 'Сгорело Σ',
+        btn_new_day: 'Новый день',
+        btn_start_over: 'Начать заново'
     },
     en: {
         languageRu: 'RU',
@@ -232,7 +272,47 @@ const TRANSLATIONS = {
         understood: 'Got it',
         registryTitle: 'Transaction Registry',
         registryNoData: 'No transactions yet',
-        close: 'Close'
+        close: 'Close',
+        act2_title: 'Emission — Act 2.0',
+        act2_desc: 'Organizer: ::{okKey}::',
+        act2_selected_ue: 'Selected U.E.:',
+        act2_next_participant: 'Next participant →',
+        act2_finish: 'Finish emission ✓',
+        act2_skip: 'Skip turn (0 U.E.)',
+        scenario_label: '# {id}: {count} U.E.',
+        triad_units_regular: '3 U.E.',
+        triad_units_t5: '1 U.E.',
+        btn_back: '← Back',
+        validation_only_t5: 'Cannot select only #21',
+        validation_ue_range: 'From 3 to 13 U.E.',
+        act3_title: 'Act 3.0 — Transfer',
+        act3_registry_title: 'Transfer registry ({count})',
+        act3_hint: 'Drag U.E. between participants',
+        act3_registry_entry: 'P.{from} → P.{to} — {triad} #{number}',
+        act3_back_to_emission: '← Back to emission',
+        act3_finish: 'Finish con',
+        modal_transfer_confirm_title: 'Transfer confirmation',
+        modal_transfer_confirm_text: 'Transfer {triad} #{number} from {from} → {to}?',
+        yes: 'Yes',
+        no: 'No',
+        transfer_done: 'U.E. #{number} transferred!',
+        modal_confirm_burn: 'Attempt limit (3/3) reached. Unassigned U.E. are burned. Moving to results.',
+        modal_norm_violation: 'Norm violations detected!',
+        distribution_ok: 'All U.E. distributed correctly!',
+        act35_title: 'Return log',
+        act35_desc: 'The system detected norm violations. Extra U.E. were automatically returned to senders.',
+        act35_attempt: 'Attempt:',
+        act35_returned: 'Returned to senders:',
+        act35_continue: 'Continue redistribution',
+        day_summary_participant: 'Participant',
+        day_summary_sent: 'Sent',
+        day_summary_received: 'Received',
+        day_summary_burned: 'Burned',
+        con_summary_sent: 'Sent Σ',
+        con_summary_received: 'Received Σ',
+        con_summary_burned: 'Burned Σ',
+        btn_new_day: 'New day',
+        btn_start_over: 'Start over'
     }
 };
 
@@ -432,7 +512,7 @@ function renderIntro(container) {
     
     $('#btnStart').onclick = () => {
         if (state.okKey) {
-            state.currentStage = 2; // Сразу к эмиссии если О.К. есть
+            state.currentStage = 1; // Сразу к эмиссии если О.К. есть
         } else {
             state.currentStage = 1; // К клавиатуре
         }
@@ -646,7 +726,7 @@ function updateInputDisplay() {
     const display = $('#inputDisplay');
     if (!display) return;
     if (state.inputData.length === 0) {
-        display.innerHTML = '<span class="input-placeholder">Придумайте свой „О.К." — Открытый Ключик</span>';
+        display.innerHTML = `<span class="input-placeholder">${t('keyboardPlaceholder')}</span>`;
         display.classList.remove('valid', 'invalid');
     } else {
         display.innerHTML = renderInputChars();
@@ -656,6 +736,11 @@ function updateInputDisplay() {
         display.classList.toggle('invalid', !isValid);
     }
     $('.text-sm.text-muted').textContent = `${state.inputData.length} / ${MAX_OK_LENGTH} символов`;
+}
+
+// Pygmalion MVP Fix: перевод сценариев эмиссии
+function scenarioLabel(scenario) {
+    return t('scenario_label', { id: scenario.id, count: scenario.perParticipant });
 }
 
 function acceptOK() {
@@ -675,8 +760,8 @@ function renderEmission(container) {
     
     container.innerHTML = `
         <div class="screen">
-            <h1 class="text-2xl text-gradient mb-2">Эмиссия — Акт 2.0</h1>
-            <p class="text-muted text-sm mb-4">Организатор: <span class="text-primary">::${state.okKey}::</span></p>
+            <h1 class="text-2xl text-gradient mb-2">${t('act2_title')}</h1>
+            <p class="text-muted text-sm mb-4">${t('act2_desc', { okKey: state.okKey })}</p>
             
             <div class="progress-dots mb-4">
                 ${PARTICIPANTS.slice(0, 4).map((p, idx) => `
@@ -685,11 +770,11 @@ function renderEmission(container) {
             </div>
             
             <h2 class="text-lg mb-2">${participant.name} <span class="text-muted">(${participant.label})</span></h2>
-            <p class="text-sm mb-4">Выбрано У.Е.: <span class="${ueCount >= 3 && ueCount <= 13 ? 'text-success' : 'text-danger'}">${ueCount}</span> / 3-13</p>
+            <p class="text-sm mb-4">${t('act2_selected_ue')} <span class="${ueCount >= 3 && ueCount <= 13 ? 'text-success' : 'text-danger'}">${ueCount}</span> / 3-13</p>
             
             <div class="scenarios-grid mb-4">
                 ${SCENARIOS.map(s => `
-                    <button class="scenario-btn ${state.selectedScenario === s.id ? 'active' : ''}" data-scenario="${s.id}">№${s.id}: ${s.perParticipant} У.Е.</button>
+                    <button class="scenario-btn ${state.selectedScenario === s.id ? 'active' : ''}" data-scenario="${s.id}">${scenarioLabel(s)}</button>
                 `).join('')}
             </div>
             
@@ -699,20 +784,20 @@ function renderEmission(container) {
                     return `
                         <div class="triad-card ${isSelected ? 'selected' : ''}" data-triad="${key}">
                             <div class="triad-name" style="color: ${val.color}">${val.name}</div>
-                            <div class="triad-count">${key === 'T5' ? '1 У.Е.' : '3 У.Е.'}</div>
+                            <div class="triad-count">${key === 'T5' ? t('triad_units_t5') : t('triad_units_regular')}</div>
                         </div>
                     `;
                 }).join('')}
             </div>
             
             <div class="flex gap-4">
-                ${state.activeParticipant > 0 ? `<button class="btn btn-secondary" id="btnPrevParticipant">← Назад</button>` : ''}
+                ${state.activeParticipant > 0 ? `<button class="btn btn-secondary" id="btnPrevParticipant">${t('btn_back')}</button>` : ''}
                 <button class="btn btn-primary" id="btnNextParticipant">
-                    ${state.activeParticipant < 3 ? 'Следующий участник →' : 'Завершить эмиссию ✓'}
+                    ${state.activeParticipant < 3 ? t('act2_next_participant') : t('act2_finish')}
                 </button>
             </div>
             
-            <button class="btn btn-secondary mt-4" id="btnSkipParticipant">Переход хода (0 У.Е.)</button>
+            <button class="btn btn-secondary mt-4" id="btnSkipParticipant">${t('act2_skip')}</button>
         </div>
     `;
     setupEmissionHandlers();
@@ -753,8 +838,8 @@ function setupEmissionHandlers() {
         const sel = state.participantSelections[pId] || [];
         const ueCount = calculateUECount(sel);
         
-        if (sel.length === 1 && sel[0] === 'T5') { toast('Нельзя только №21', 'error'); return; }
-        if (sel.length > 0 && (ueCount < 3 || ueCount > 13)) { toast('От 3 до 13 У.Е.', 'error'); return; }
+        if (sel.length === 1 && sel[0] === 'T5') { toast(t('validation_only_t5'), 'error'); return; }
+        if (sel.length > 0 && (ueCount < 3 || ueCount > 13)) { toast(t('validation_ue_range'), 'error'); return; }
         
         if (state.activeParticipant < 3) {
             state.activeParticipant++;
@@ -824,29 +909,29 @@ function generateUnits() {
 function renderTransfer(container) {
     container.innerHTML = `
         <div class="screen">
-            <h1 class="text-2xl text-gradient mb-2">Акт 3.0 — Перекидка</h1>
-            <p class="text-muted text-sm mb-6">Перетащите У.Е. между участниками</p>
+            <h1 class="text-2xl text-gradient mb-2">${t('act3_title')}</h1>
+            <p class="text-muted text-sm mb-6">${t('act3_hint')}</p>
             
             <div class="arena mb-4" id="arena">
                 ${renderArena()}
             </div>
             
             <div class="registry mb-6">
-                <div class="registry-title">Реестр передач (${state.transactions.length})</div>
+                <div class="registry-title">${t('act3_registry_title', { count: state.transactions.length })}</div>
                 ${state.transactions.length === 0 
-                    ? '<p class="text-muted text-xs">Перетащите У.Е. между участниками</p>'
+                    ? `<p class="text-muted text-xs">${t('act3_hint')}</p>`
                     : state.transactions.map(t => `
                         <div class="registry-item" style="color: ${TRIADS[t.triad].color};">
-                            Уч.${t.from} → Уч.${t.to} — ${TRIADS[t.triad].name} №${t.number}
+                            ${t('act3_registry_entry', { from: t.from, to: t.to, triad: TRIADS[t.triad].name, number: t.number })}
                         </div>
                     `).join('')
                 }
             </div>
             
             <div class="flex gap-4">
-                <button class="btn btn-secondary" id="btnBackToEmission">← К эмиссии</button>
+                <button class="btn btn-secondary" id="btnBackToEmission">${t('act3_back_to_emission')}</button>
                 <button class="btn btn-primary" id="btnFinishTransfer">
-                    Завершить → Акт 3.5
+                    ${t('act3_finish')}
                 </button>
             </div>
         </div>
@@ -975,16 +1060,16 @@ function setupTransferHandlers() {
             state.returnAttempts++; // Увеличиваем счетчик
             
             if (state.returnAttempts >= 3) {
-                toast('Лимит попыток (3/3) исчерпан. Переход к итогам.', 'warning');
+                toast(t('modal_confirm_burn'), 'warning');
                 state.currentStage = 5; // Сразу к итогам
             } else {
                 state.currentStage = 4; // К мягкому возврату
-                toast('Обнаружены нарушения нормы!', 'warning');
+                toast(t('modal_norm_violation'), 'warning');
             }
         } else {
             state.violations = [];
             state.currentStage = 5; // Успех -> Итоги
-            toast('Все У.Е. распределены правильно!', 'success');
+            toast(t('distribution_ok'), 'success');
         }
         render();
     };
@@ -999,14 +1084,13 @@ function showTransferConfirm(ue, targetId) {
     modal.className = 'modal-overlay';
     modal.innerHTML = `
         <div class="modal">
-            <h3 class="modal-title">Подтверждение передачи</h3>
+            <h3 class="modal-title">${t('modal_transfer_confirm_title')}</h3>
             <p class="modal-content">
-                Передать <b style="color: ${triadInfo.color};">${triadInfo.name} №${ue.number}</b><br>
-                от <span class="text-primary font-bold">${fromName}</span> → <span class="text-success font-bold">${toName}</span>?
+                ${t('modal_transfer_confirm_text', { triad: `<b style="color: ${triadInfo.color};">${triadInfo.name}</b>`, number: ue.number, from: `<span class="text-primary font-bold">${fromName}</span>`, to: `<span class="text-success font-bold">${toName}</span>` })}
             </p>
             <div class="modal-actions">
-                <button class="btn btn-success" id="confirmTransfer">Да</button>
-                <button class="btn btn-danger" id="cancelTransfer">Нет</button>
+                <button class="btn btn-success" id="confirmTransfer">${t('yes')}</button>
+                <button class="btn btn-danger" id="cancelTransfer">${t('no')}</button>
             </div>
         </div>
     `;
@@ -1044,7 +1128,7 @@ function executeTransfer(ue, targetId) {
         timeStr: now.toLocaleTimeString()
     });
     
-    toast(`У.Е. №${ue.number} передано!`, 'success');
+    toast(t('transfer_done', { number: ue.number }), 'success');
 }
 
 // Проверка нарушений нормы (С УЧЕТОМ receivedUnits)
@@ -1118,16 +1202,15 @@ function renderReturn(container) {
         <div class="screen screen-center">
             <div class="modal" style="max-width: 500px; border-color: var(--accent-warning); box-shadow: 0 0 40px rgba(239, 68, 68, 0.2);">
                 <div style="color: var(--accent-warning); margin-bottom: 1rem;">${icon('alert', 48)}</div>
-                <h1 class="modal-title" style="color: var(--accent-warning);">Журнал возвратов</h1>
+                <h1 class="modal-title" style="color: var(--accent-warning);">${t('act35_title')}</h1>
                 
                 <p class="text-muted mb-4">
-                    Система обнаружила нарушения нормы.<br>
-                    Лишние У.Е. автоматически возвращены отправителям.
+                    ${t('act35_desc')}
                 </p>
                 
                 <div class="mb-6 p-2 rounded" style="background: rgba(15, 23, 42, 0.5); border: 1px solid var(--border-color);">
                     <div class="flex justify-between text-sm mb-2">
-                        <span>Попытка:</span>
+                        <span>${t('act35_attempt')}</span>
                         <span class="font-bold text-primary">${state.returnAttempts} / 3</span>
                     </div>
                     <div class="w-full bg-gray-700 rounded-full h-2.5">
@@ -1136,7 +1219,7 @@ function renderReturn(container) {
                 </div>
                 
                 <div class="registry mb-6" style="max-height: 200px; text-align: left;">
-                    <div class="registry-title">Возвращено отправителям:</div>
+                    <div class="registry-title">${t('act35_returned')}</div>
                     ${state.violations.map(v => `
                         <div class="registry-item" style="color: ${TRIADS[v.triad].color}; display: flex; align-items: center; gap: 0.5rem;">
                             <span>↩</span> ${v.msg}
@@ -1145,7 +1228,7 @@ function renderReturn(container) {
                 </div>
                 
                 <button class="btn btn-primary btn-lg w-full" id="btnContinueReturn">
-                    Продолжить перераспределение
+                    ${t('act35_continue')}
                 </button>
             </div>
         </div>
@@ -1163,8 +1246,7 @@ function getCurrentKonSnapshot() {
         const sent = state.transactions.filter(t => t.from === p.id).length;
         const received = (state.receivedUnits || []).filter(u => u.owner === p.id).length;
         const burned = state.units.filter(u => u.owner === p.id).length;
-        const score = (sent * 2) + received - burned;
-        return { id: p.id, name: p.name, sent, received, burned, score };
+        return { id: p.id, name: p.name, sent, received, burned };
     });
     return {
         day: state.currentKon + 1,
@@ -1181,33 +1263,24 @@ function getAggregatedSummaryRows() {
     const totals = {};
     sessions.forEach(session => {
         (session.participants || []).forEach(p => {
-            if (!totals[p.id]) totals[p.id] = { name: p.name, sent: 0, received: 0, burned: 0, score: 0 };
+            if (!totals[p.id]) totals[p.id] = { name: p.name, sent: 0, received: 0, burned: 0 };
             totals[p.id].sent += p.sent || 0;
             totals[p.id].received += p.received || 0;
             totals[p.id].burned += p.burned || 0;
-            totals[p.id].score += p.score || 0;
         });
     });
-    return Object.entries(totals).map(([id, row]) => ({ id, ...row })).sort((a, b) => b.score - a.score);
+    return Object.entries(totals).map(([id, row]) => ({ id, ...row }));
 }
 
 // === ЭКРАН 4.0: РЕЗУЛЬТАТЫ (НОВЫЙ) ===
 function renderResults(container) {
     let stats = PARTICIPANTS.map(p => {
         const sent = state.transactions.filter(t => t.from === p.id).length;
-        // Принял считаем по receivedUnits
         const received = (state.receivedUnits || []).filter(u => u.owner === p.id).length;
-        // Сгорело считаем по units (остатки в инвентаре)
         const burned = state.units.filter(u => u.owner === p.id).length;
-        // Формула: (Отдал × 2) + (Принял × 1) - (Сгорело × 1)
-        const score = (sent * 2) + (received * 1) - (burned * 1);
-        const spirituality = Math.min(100, Math.max(0, (score / 30) * 100));
-        return { ...p, sent, received, burned, score, spirituality };
+        return { ...p, sent, received, burned };
     });
-    
-    // Ранжирование по баллам
-    stats.sort((a, b) => b.score - a.score);
-    const totalScore = stats.reduce((s, r) => s + r.score, 0);
+
     const aggregatedRows = getAggregatedSummaryRows();
     container.innerHTML = `
         <div class="screen">
@@ -1218,44 +1291,30 @@ function renderResults(container) {
                 <table>
                     <thead>
                         <tr>
-                            <th>Место</th>
-                            <th>Участник</th>
-                            <th class="text-center">Баллы</th>
-                            <th class="text-center" style="font-size: 0.75rem">Отдал<br>(x2)</th>
-                            <th class="text-center" style="font-size: 0.75rem">Принял<br>(x1)</th>
-                            <th class="text-center" style="font-size: 0.75rem">Сгорело<br>(-1)</th>
+                            <th>${t('day_summary_participant')}</th>
+                            <th class="text-center">${t('day_summary_sent')}</th>
+                            <th class="text-center">${t('day_summary_received')}</th>
+                            <th class="text-center">${t('day_summary_burned')}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        ${stats.map((s, idx) => `
+                        ${stats.map((s) => `
                             <tr ${s.id === '5' ? 'style="background: rgba(168, 85, 247, 0.1);"' : ''}>
-                                <td class="font-bold text-muted">#${idx + 1}</td>
-                                <td>
-                                    <div class="flex flex-col">
-                                        <span>${s.name}</span>
-                                        <div class="spirituality-bar mt-1" style="height: 4px; max-width: 100px;">
-                                            <div class="spirituality-fill" style="width: ${s.spirituality}%; background: ${s.id === '5' ? 'var(--triad-purple)' : 'var(--accent-success)'}"></div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-center font-bold text-xl text-primary">${s.score}</td>
+                                <td>${s.name}</td>
                                 <td class="text-center text-muted">${s.sent}</td>
                                 <td class="text-center text-success">${s.received}</td>
                                 <td class="text-center text-danger">${s.burned}</td>
                             </tr>
                         `).join('')}
                     </tbody>
-                    <tfoot>
-                        <tr><td colspan="2" class="text-right">Общая духовность:</td><td colspan="4" class="text-center font-bold text-lg">${totalScore}</td></tr>
-                    </tfoot>
                 </table>
             </div>
-            
+
             <div class="flex gap-4 flex-wrap justify-center">
                 <button class="btn btn-secondary" id="btnViewRegistry">${t('registry')}</button>
                 <button class="btn btn-secondary" id="btnContacts">${t('contacts')}</button>
-                <button class="btn btn-success btn-lg" id="btnNewDay">${icon('sun')} ${t('newDay')}</button>
-                <button class="btn btn-danger" id="btnRestart">${t('restart')}</button>
+                <button class="btn btn-success btn-lg" id="btnNewDay">${icon('sun')} ${t('btn_new_day')}</button>
+                <button class="btn btn-danger" id="btnRestart">${t('btn_start_over')}</button>
             </div>
             ${aggregatedRows.length ? `
                 <div class="table-container mt-6">
@@ -1263,11 +1322,10 @@ function renderResults(container) {
                     <table>
                         <thead>
                             <tr>
-                                <th>${state.language === 'ru' ? 'Участник' : 'Participant'}</th>
-                                <th class="text-center">${state.language === 'ru' ? 'Отдал Σ' : 'Sent Σ'}</th>
-                                <th class="text-center">${state.language === 'ru' ? 'Принял Σ' : 'Received Σ'}</th>
-                                <th class="text-center">${state.language === 'ru' ? 'Сгорело Σ' : 'Burned Σ'}</th>
-                                <th class="text-center">${state.language === 'ru' ? 'Баллы Σ' : 'Score Σ'}</th>
+                                <th>${t('day_summary_participant')}</th>
+                                <th class="text-center">${t('con_summary_sent')}</th>
+                                <th class="text-center">${t('con_summary_received')}</th>
+                                <th class="text-center">${t('con_summary_burned')}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1277,7 +1335,6 @@ function renderResults(container) {
                                     <td class="text-center">${row.sent}</td>
                                     <td class="text-center">${row.received}</td>
                                     <td class="text-center">${row.burned}</td>
-                                    <td class="text-center font-bold">${row.score}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -1286,13 +1343,11 @@ function renderResults(container) {
             ` : ''}
         </div>
     `;
-    
-    // Сохранить в историю (упрощено)
-    
+
     $('#btnViewRegistry').onclick = showFullRegistry;
     $('#btnContacts').onclick = () => { state.currentStage = 6; render(); };
     $('#btnNewDay').onclick = () => {
-    	const snapshot = getCurrentKonSnapshot();
+        const snapshot = getCurrentKonSnapshot();
         state.gameHistory = [...(state.gameHistory || []), snapshot];
         state.currentKon++;
         state.activeParticipant = 0;
@@ -1303,8 +1358,10 @@ function renderResults(container) {
         state.transactions = [];
         state.returnAttempts = 0;
         state.violations = [];
-        state.currentStage = 2;
+        state.currentStage = 1;
         toast(t('newDayToast'), 'success');
+        saveState();
+        render();
     };
     $('#btnRestart').onclick = () => {
         localStorage.removeItem('pigmalion_state');
