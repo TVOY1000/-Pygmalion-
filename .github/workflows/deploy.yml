@@ -1,10 +1,8 @@
-name: Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
     branches: [main]
-    paths:
-      - 'mvp/app/**'
 
 permissions:
   contents: read
@@ -12,7 +10,7 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,8 +18,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: mvp/app/package.json
       
-      - name: Install
+      - name: Install dependencies
         working-directory: mvp/app
         run: npm install
       
@@ -29,8 +29,10 @@ jobs:
         working-directory: mvp/app
         run: npm run build
       
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
           path: mvp/app/dist
       
-      - uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
