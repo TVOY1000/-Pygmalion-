@@ -3,7 +3,6 @@
   "version": "0.2.8",
   "private": true,
   "type": "module",
-  "homepage": "https://tvoy1000.github.io/-Pygmalion-/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
