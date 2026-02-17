@@ -315,7 +315,7 @@ const TRANSLATIONS = {
     // Contacts
     contactsTitle: 'About Author',
     authorName: '::OP𝕯EH 𝕯AP::',
-    authorRealName: '(Олег Головатюк)',
+    authorRealName: '(Oleg Golovatyuk)',
     authorDesc: 'DevOps architect, Concept author and visionary of "Pygmalion" startup.',
     authorPhone: 'Phone:',
     authorEmail: 'E-mail:',
