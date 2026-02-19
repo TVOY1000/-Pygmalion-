@@ -41,6 +41,20 @@ jobs:
         working-directory: mvp/app
         run: npm run build
 
+      - name: Validate build artifact
+        working-directory: mvp/app
+        run: |
+          test -f dist/index.html
+          test -d dist/assets
+          if grep -q '/src/main.jsx' dist/index.html; then
+            echo 'ERROR: dist/index.html still points to source /src/main.jsx'
+            exit 1
+          fi
+          if ! grep -q 'assets/index-' dist/index.html; then
+            echo 'ERROR: dist/index.html does not include built assets/index-*.js'
+            exit 1
+          fi
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
