@@ -1,0 +1,1486 @@
+/* Pygmalion v0.3.0 «Песочница» Styles */
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #16213e;
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --accent-blue: #3b82f6;
+  --accent-green: #22c55e;
+  --accent-red: #ef4444;
+  --accent-yellow: #facc15;
+  --accent-purple: #a855f7;
+  --accent-orange: #f97316;
+  --border-color: rgba(148, 163, 184, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body.sandbox {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', Arial, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* Header */
+.sandbox-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 10, 15, 0.95);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 1rem;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+  letter-spacing: 0.05em;
+}
+
+.version {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+/* Current DateTime */
+.current-datetime {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#current-datetime {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: rgba(59, 130, 246, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.lang-switch {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.lang-btn {
+  padding: 0.5rem 1rem;
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--text-primary);
+  border: 1px solid var(--accent-blue);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.lang-btn:hover {
+  background: rgba(59, 130, 246, 0.4);
+}
+
+.lang-btn.active {
+  background: var(--accent-blue);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+/* OK Badge */
+.ok-badge-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ok-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  animation: badgePulse 3s ease infinite;
+}
+
+@keyframes badgePulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(251, 191, 36, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+  }
+}
+
+.ok-badge.emission-active {
+  border-color: var(--accent-green);
+  background: rgba(34, 197, 94, 0.15);
+  animation: badgeGlow 1s ease 3;
+}
+
+@keyframes badgeGlow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.8);
+  }
+}
+
+.ok-icon {
+  font-size: 1.2rem;
+  animation: iconRotate 10s linear infinite;
+}
+
+@keyframes iconRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.ok-value {
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  color: var(--accent-gold);
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+}
+
+.ok-date {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Main Container */
+.sandbox-container {
+  max-width: 1200px;
+  margin: 80px auto 0;
+  padding: 2rem;
+  display: grid;
+  gap: 2rem;
+}
+
+/* Acts */
+.act {
+  background: rgba(26, 26, 46, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s;
+}
+
+.act:hover {
+  border-color: var(--accent-blue);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.2);
+}
+
+.act h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent-blue);
+}
+
+.act-desc {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+/* Act 1 Header с кнопкой Эмитировать */
+.act-1-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.act-1-header h2 {
+  margin: 0;
+  flex: 1;
+}
+
+.act-1-header .emit-btn {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+/* v0.3.11: Верхняя строка Акта 1 (заголовок + состояние) */
+.act-1-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.act-1-title {
+  flex: 1;
+  min-width: 280px;
+}
+
+.act-1-title h2 {
+  margin: 0 0 0.5rem 0;
+}
+
+.act-1-title .act-desc {
+  margin-bottom: 0;
+}
+
+/* Блок состояний (наверху Акта 1) */
+.state-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 0;
+  background: rgba(34, 197, 94, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  white-space: nowrap;
+}
+
+/* Блок статусов (внизу Акта 1) */
+.status-block {
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.phase-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(168, 85, 247, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.phase-status .phase-icon {
+  font-size: 1.2rem;
+}
+
+.phase-status .phase-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Индикаторы У.Е. (13 кругов) */
+.ue-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  padding: 1rem;
+  margin: 1rem 0;
+  background: rgba(10, 10, 15, 0.3);
+  border-radius: 8px;
+}
+
+/* v0.3.5: Две строки индикаторов — Импульс и Активные */
+.ue-indicators.impulse {
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.ue-indicators.active {
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* Контейнер для индикаторов А + кнопка Эмитировать */
+.indicators-a-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.indicators-a-container .ue-indicators {
+  flex: 1;
+  margin: 0;
+}
+
+.indicators-a-container .emit-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  align-self: stretch;
+}
+
+/* Контейнер для индикаторов Б + кнопка Передать */
+.indicators-b-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.indicators-b-container .ue-indicators {
+  flex: 1;
+  margin: 0;
+}
+
+.indicators-b-container .transfer-btn {
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+  align-self: stretch;
+}
+
+.ue-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(148, 163, 184, 0.1);
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.ue-indicator.active {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+/* v0.3.5: Выбранная У.Е. для передачи */
+.ue-indicator.selected {
+  background: rgba(34, 197, 94, 0.4);
+  border-color: var(--accent-green);
+  color: white;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+.ue-indicator[data-ue="21"] {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.ue-indicator[data-ue="21"].active {
+  background: rgba(168, 85, 247, 0.2);
+  border-color: var(--accent-purple);
+  color: var(--accent-purple);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+.ue-indicator[data-ue="21"].selected {
+  background: rgba(168, 85, 247, 0.4);
+  border-color: var(--accent-purple);
+  color: white;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+/* Emission Control */
+.emission-control,
+.transfer-control {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* v0.3.11: Кликабельный label получателя */
+.recipient-label {
+  cursor: pointer;
+  color: var(--accent-blue);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.recipient-label:hover {
+  color: var(--accent-blue-dark);
+  text-decoration: underline;
+}
+
+.recipient-hint {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: normal;
+}
+
+/* v0.3.5: Секция выбора У.Е. для передачи */
+.transfer-indicators-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(34, 197, 94, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.transfer-indicators-section label {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--accent-green);
+}
+
+/* Act 2 Header Row с полем сообщения */
+.act-2-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.act-2-header-row h2 {
+  margin: 0;
+  flex: 1;
+  min-width: 200px;
+}
+
+.gratitude-input-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 250px;
+}
+
+.gratitude-input-inline label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.gratitude-input-inline input {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+}
+
+/* Скрываем полное поле сообщения если используется inline */
+.message-label-full,
+#gratitude-message {
+  display: none;
+}
+
+/* DAG Split Container (реестры) */
+.dag-split-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(59, 130, 246, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.dag-split-left,
+.dag-split-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-registry {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid var(--accent-blue);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.btn-registry:hover {
+  background: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+.indicator-hint {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ue-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Удалено: .special-ue-section больше не используется */
+
+.special-btn {
+  border-color: var(--accent-purple);
+  background: rgba(168, 85, 247, 0.2);
+}
+
+.ue-btn {
+  padding: 0.75rem 1.5rem;
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid var(--accent-blue);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.ue-btn:hover {
+  background: rgba(59, 130, 246, 0.4);
+}
+
+.ue-btn.selected {
+  background: var(--accent-blue);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+}
+
+.ue-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--text-secondary);
+}
+
+.ue-btn.used {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: var(--text-secondary);
+  background: rgba(148, 163, 184, 0.1);
+}
+
+.ue-btn.used::after {
+  content: ' ✓';
+  font-size: 0.8rem;
+}
+
+.triad-btn {
+  border-color: var(--accent-green);
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.triad-btn:hover {
+  background: rgba(34, 197, 94, 0.4);
+}
+
+.triad-btn.selected {
+  background: var(--accent-green);
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+}
+
+.special-btn {
+  border-color: var(--accent-purple);
+  background: rgba(168, 85, 247, 0.2);
+}
+
+.special-btn:not(:disabled):hover {
+  background: rgba(168, 85, 247, 0.4);
+}
+
+.special-btn:not(:disabled).selected {
+  background: var(--accent-purple);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.6);
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  padding: 0.75rem;
+  background: rgba(10, 10, 15, 0.8);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+}
+
+.refs-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  padding: 1rem 2rem;
+  background: var(--accent-blue);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+}
+
+.emit-btn,
+.transfer-btn {
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+/* Emission Status */
+.emission-status {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(10, 10, 15, 0.5);
+  border-radius: 8px;
+}
+
+/* Индикатор фазы */
+.phase-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.phase-icon {
+  font-size: 1.5rem;
+}
+
+.phase-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.phase-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Таймер и индикаторы У.Е. (в один ряд) */
+.timer-ue-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.timer-display {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  white-space: nowrap;
+}
+
+.timer-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-yellow);
+}
+
+/* Индикаторы У.Е. */
+.ue-indicators {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: center;
+  padding: 0.5rem;
+  margin: 0;
+  background: rgba(10, 10, 15, 0.3);
+  border-radius: 8px;
+}
+
+.ue-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(148, 163, 184, 0.1);
+  border: 2px solid rgba(148, 163, 184, 0.3);
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+}
+
+.ue-indicator.active {
+  background: rgba(34, 197, 94, 0.2);
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
+}
+
+.ue-indicator[data-ue="21"] {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+.ue-indicator[data-ue="21"].active {
+  background: rgba(168, 85, 247, 0.2);
+  border-color: var(--accent-purple);
+  color: var(--accent-purple);
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+}
+
+/* Статусы У.Е. и У.М. (в один ряд) */
+.status-um-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.ue-status-display {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.ue-status-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.ue-status-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ue-status-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.ue-status-active .ue-status-value {
+  color: var(--accent-green);
+}
+
+.ue-status-impulse .ue-status-value {
+  color: var(--accent-purple);
+  opacity: 0.7;
+}
+
+.um-balance-inline {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.um-balance-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.um-balance-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+/* DAG Visual */
+.dag-visual {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(10, 10, 15, 0.5);
+  border-radius: 8px;
+}
+
+.dag-visual h3 {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.dag-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.dag-node {
+  padding: 0.5rem 1rem;
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid var(--accent-green);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+/* Reflection Visual */
+.reflection-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.flower-of-life {
+  width: 200px;
+  height: 200px;
+}
+
+.flower-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.flower-center {
+  fill: rgba(59, 130, 246, 0.3);
+  stroke: var(--accent-blue);
+  stroke-width: 2;
+}
+
+.flower-petal {
+  fill: rgba(148, 163, 184, 0.1);
+  stroke: var(--text-secondary);
+  stroke-width: 1.5;
+  transition: all 0.5s;
+}
+
+.flower-petal.active {
+  fill: rgba(59, 130, 246, 0.4);
+  stroke: var(--accent-blue);
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+}
+
+.domains-legend {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.domain-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.domain-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+/* Weight Formula */
+.weight-formula {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formula-display {
+  padding: 1rem;
+  background: rgba(10, 10, 15, 0.5);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent-blue);
+}
+
+.formula-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.formula-display code {
+  font-size: 1.1rem;
+  color: var(--accent-blue);
+  font-family: 'Courier New', monospace;
+}
+
+/* Weight Table */
+.weight-table-container {
+  overflow-x: auto;
+}
+
+.weight-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(10, 10, 15, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.weight-table th,
+.weight-table td {
+  padding: 0.75rem;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.weight-table th {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.weight-table td:first-child {
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.weight-table tr:hover {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.weight-total-row {
+  background: rgba(59, 130, 246, 0.1);
+  border-top: 2px solid var(--accent-blue);
+}
+
+.weight-total-row td {
+  font-size: 1.1rem;
+  color: var(--accent-blue);
+}
+
+/* Old weight styles (for backward compatibility) */
+.weight-calc {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.weight-component {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: rgba(10, 10, 15, 0.3);
+  border-radius: 6px;
+}
+
+.weight-component:first-child {
+  border-left: 3px solid var(--accent-green);
+}
+
+.weight-component:nth-child(2) {
+  border-left: 3px solid var(--accent-blue);
+}
+
+.weight-component.negative {
+  border-left: 3px solid var(--accent-red);
+}
+
+.weight-value {
+  font-weight: 700;
+  font-size: 1.2rem;
+  min-width: 40px;
+}
+
+.weight-multiplier {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-left: auto;
+}
+
+.weight-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: rgba(59, 130, 246, 0.1);
+  border: 2px solid var(--accent-blue);
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.total-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-blue);
+}
+
+.btn-secondary {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 1px solid var(--accent-blue);
+  border-radius: 6px;
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.archive-link {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+/* ========================================
+   Модальные окна (Modal Overlays)
+   ======================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+.modal-content {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  max-width: 800px;
+  width: 90%;
+  max-height: 80vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: var(--accent-blue);
+  font-size: 1.2rem;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.3s;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-close:hover {
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.registry-placeholder {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Стили для содержимого реестров */
+.registry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.registry-item {
+  padding: 1rem;
+  background: rgba(10, 10, 15, 0.5);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.registry-item:hover {
+  border-color: var(--accent-blue);
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.registry-item-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.registry-item-icon {
+  font-size: 1.5rem;
+}
+
+.registry-item-title {
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+
+.registry-item-type {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.registry-item-type.type-permanent {
+  background: rgba(34, 197, 94, 0.2);
+  color: var(--accent-green);
+}
+
+.registry-item-type.type-temporary {
+  background: rgba(168, 85, 247, 0.2);
+  color: var(--accent-purple);
+}
+
+.registry-item-value {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  color: var(--accent-blue);
+  margin-bottom: 0.5rem;
+  word-break: break-all;
+}
+
+.registry-item-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.registry-item-details {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.registry-row {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.registry-row .label {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.registry-row .value {
+  color: var(--text-primary);
+}
+
+.registry-empty {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 2rem;
+  font-style: italic;
+}
+
+.status-active {
+  color: var(--accent-green);
+  font-weight: 600;
+}
+
+.status-pending {
+  color: var(--accent-yellow);
+  font-weight: 600;
+}
+
+/* Footer */
+.sandbox-footer {
+  text-align: center;
+  padding: 2rem;
+  border-top: 1px solid var(--border-color);
+  margin-top: 2rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.sandbox-footer p {
+  margin: 0.5rem 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sandbox-header {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .brand {
+    align-items: center;
+  }
+
+  .lang-switch {
+    justify-content: center;
+  }
+
+  .sandbox-container {
+    padding: 1rem;
+  }
+
+  /* v0.3.11: Акт 1 на мобильных — вертикально */
+  .act-1-top-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .act-1-title {
+    min-width: auto;
+  }
+
+  .state-block {
+    flex-direction: column;
+    align-items: stretch;
+    white-space: normal;
+  }
+
+  .ue-status-display {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .emission-status {
+    grid-template-columns: 1fr;
+  }
+
+  .timer-ue-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .timer-display {
+    justify-content: center;
+  }
+
+  .ue-indicators {
+    justify-content: center;
+  }
+
+  .status-um-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ue-balance,
+  .um-balance {
+    margin-top: 0.5rem;
+  }
+
+  .domains-legend {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .weight-component {
+    flex-wrap: wrap;
+  }
+
+  .weight-multiplier {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  /* Адаптив для новых блоков v0.3.9 */
+  .state-block {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .act-2-header-row {
+    flex-direction: column;
+  }
+
+  .gratitude-input-inline {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .dag-split-container {
+    grid-template-columns: 1fr;
+  }
+
+  .indicators-a-container,
+  .indicators-b-container {
+    flex-direction: column;
+  }
+
+  .indicators-a-container .emit-btn,
+  .indicators-b-container .transfer-btn {
+    width: 100%;
+  }
+}
+
+/* ========================================
+   Панель разработчика (Dev Panel)
+   ======================================== */
+.dev-panel {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.btn-dev-panel {
+  width: 100%;
+  padding: 0.75rem 1.5rem;
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid var(--accent-blue);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.95rem;
+}
+
+.btn-dev-panel:hover {
+  background: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+.dev-panel-content {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.dev-panel-section {
+  margin-bottom: 1.5rem;
+}
+
+.dev-panel-section:last-child {
+  margin-bottom: 0;
+}
+
+.dev-time-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.btn-dev {
+  padding: 0.5rem 1rem;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid var(--accent-blue);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.85rem;
+}
+
+.btn-dev:hover {
+  background: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+  transform: scale(1.02);
+}
+
+.btn-dev-warning {
+  background: rgba(249, 115, 22, 0.15);
+  border-color: var(--accent-yellow);
+}
+
+.btn-dev-warning:hover {
+  background: rgba(249, 115, 22, 0.3);
+}
+
+.btn-dev-success {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: var(--accent-green);
+}
+
+.btn-dev-success:hover {
+  background: rgba(34, 197, 94, 0.3);
+}
+
+.btn-dev-info {
+  background: rgba(59, 130, 246, 0.15);
+  border-color: var(--accent-blue);
+}
+
+.btn-dev-info:hover {
+  background: rgba(59, 130, 246, 0.3);
+}
+
+.btn-dev-time {
+  min-width: 80px;
+}
+
+.dev-time-status {
+  margin-top: 0.5rem;
+  font-style: italic;
+}
