@@ -1,0 +1,85 @@
+# Prometheus конфигурация для Pygmalion v0.3.2
+# Мониторинг 1000 O.K. и 20 000 транзакций/сутки
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'pygmalion-monitor'
+    environment: 'production'
+
+# Правила алертинга
+rule_files:
+  - "rules/*.yml"
+
+# Настройки алертинга (если используется Alertmanager)
+# alerting:
+#   alertmanagers:
+#     - static_configs:
+#         - targets:
+#           - alertmanager:9093
+
+# Цели для сбора метрик
+scrape_configs:
+  # Prometheus сам себя
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    metrics_path: /metrics
+    scheme: http
+
+  # Nginx (требуется nginx-prometheus-exporter)
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:80']
+    metrics_path: /nginx_status
+    scheme: http
+
+  # PostgreSQL (требуется postgres-exporter)
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:9187']
+    metrics_path: /metrics
+    scheme: http
+
+  # PgBouncer
+  - job_name: 'pgbouncer'
+    static_configs:
+      - targets: ['pgbouncer:9127']
+    metrics_path: /metrics
+    scheme: http
+
+  # Redis
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:9121']
+    metrics_path: /metrics
+    scheme: http
+
+  # Activepieces
+  - job_name: 'activepieces'
+    static_configs:
+      - targets: ['activepieces:8080', 'activepieces-worker:8080']
+    metrics_path: /api/metrics
+    scheme: http
+
+  # Node Exporter (метрики хоста)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    metrics_path: /metrics
+    scheme: http
+
+  # Apache NiFi
+  - job_name: 'nifi'
+    static_configs:
+      - targets: ['nifi:8090']
+    metrics_path: /nifi-metrics/
+    scheme: http
+
+  # Grafana
+  - job_name: 'grafana'
+    static_configs:
+      - targets: ['grafana:3000']
+    metrics_path: /metrics
+    scheme: http

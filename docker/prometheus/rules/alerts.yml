@@ -1,0 +1,207 @@
+# Pygmalion — Правила алертинга Prometheus
+# Canon v0.3.2 · Масштабирование
+
+groups:
+  # ==================== БАЗА ДАННЫХ ====================
+  - name: postgres_alerts
+    interval: 30s
+    rules:
+      # PostgreSQL недоступен
+      - alert: PostgreSQLDown
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "PostgreSQL недоступен"
+          description: "PostgreSQL не отвечает более 1 минуты"
+
+      # Много подключений
+      - alert: PostgreSQLHighConnections
+        expr: pg_stat_activity_count > 150
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Много подключений к PostgreSQL"
+          description: "Текущее количество подключений: {{ $value }}"
+
+      # Медленные запросы
+      - alert: PostgreSQLSlowQueries
+        expr: rate(pg_stat_statements_seconds_total[5m]) > 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Медленные запросы PostgreSQL"
+          description: "Среднее время запроса: {{ $value }}s"
+
+      # Мало места
+      - alert: PostgreSQLLowDiskSpace
+        expr: (pg_database_size_bytes / 1073741824) > 50
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Мало места в PostgreSQL"
+          description: "Размер БД: {{ $value }}GB"
+
+  # ==================== ACTIVEPIECES ====================
+  - name: activepieces_alerts
+    interval: 30s
+    rules:
+      # Activepieces недоступен
+      - alert: ActivepiecesDown
+        expr: up{job="activepieces"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Activepieces недоступен"
+          description: "Activepieces не отвечает более 1 минуты"
+
+      # Много ошибок в flows
+      - alert: ActivepiecesHighErrorRate
+        expr: rate(ap_flow_errors_total[5m]) > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Много ошибок в Activepieces flows"
+          description: "Ошибок в минуту: {{ $value }}"
+
+      # Большая очередь
+      - alert: ActivepiecesLargeQueue
+        expr: ap_queue_size > 1000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Большая очередь в Activepieces"
+          description: "Размер очереди: {{ $value }}"
+
+  # ==================== REDIS ====================
+  - name: redis_alerts
+    interval: 30s
+    rules:
+      # Redis недоступен
+      - alert: RedisDown
+        expr: redis_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Redis недоступен"
+          description: "Redis не отвечает более 1 минуты"
+
+      # Использование памяти
+      - alert: RedisHighMemory
+        expr: (redis_memory_used_bytes / redis_memory_max_bytes) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокое использование памяти Redis"
+          description: "Использование памяти: {{ $value }}%"
+
+  # ==================== NGINX ====================
+  - name: nginx_alerts
+    interval: 30s
+    rules:
+      # Nginx недоступен
+      - alert: NginxDown
+        expr: nginx_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Nginx недоступен"
+          description: "Nginx не отвечает более 1 минуты"
+
+      # Много 5xx ошибок
+      - alert: NginxHigh5xxErrors
+        expr: rate(nginx_http_requests_total{status=~"5.."}[5m]) > 10
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Много 5xx ошибок в Nginx"
+          description: "5xx ошибок в секунду: {{ $value }}"
+
+      # Rate limiting
+      - alert: NginxRateLimiting
+        expr: rate(nginx_limit_requests_total{exceeded="1"}[5m]) > 100
+        for: 5m
+        labels:
+          severity: info
+        annotations:
+          summary: "Срабатывает rate limiting Nginx"
+          description: "Запросов отклонено: {{ $value }}"
+
+  # ==================== БИЗНЕС-МЕТРИКИ ====================
+  - name: business_alerts
+    interval: 1m
+    rules:
+      # Мало активных O.K.
+      - alert: LowActiveOK
+        expr: pygmalion_active_ok_count < 100
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Мало активных O.K."
+          description: "Активных O.K.: {{ $value }} (цель: 1000)"
+
+      # Много сгоревших У.Е.
+      - alert: HighUEBurnRate
+        expr: rate(pygmalion_ue_burned_total[1h]) > 50
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Много сгоревших У.Е."
+          description: "Сгорело У.Е. за час: {{ $value }}"
+
+      # ro.DAG валидация неудачна
+      - alert: RoDAGValidationFailures
+        expr: rate(pygmalion_rodag_validation_failures_total[5m]) > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Много неудачных ro.DAG валидаций"
+          description: "Неудачных валидаций в минуту: {{ $value }}"
+
+  # ==================== ИНФРАСТРУКТУРА ====================
+  - name: infrastructure_alerts
+    interval: 30s
+    rules:
+      # Высокая загрузка CPU
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокая загрузка CPU"
+          description: "Загрузка CPU: {{ $value }}%"
+
+      # Мало памяти
+      - alert: LowMemory
+        expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes) * 100 < 20
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Мало доступной памяти"
+          description: "Доступно памяти: {{ $value }}%"
+
+      # Мало места на диске
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100 < 20
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          summary: "Мало места на диске"
+          description: "Свободно места: {{ $value }}%"

@@ -1,0 +1,37 @@
+﻿services:
+  frontend:
+    image: node:20-alpine
+    container_name: pygmalion-frontend
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ../repository-Pygmalion-/mvp/app:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_HOST=0.0.0.0
+    command: npm run dev
+
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.42.0-jammy
+    container_name: pygmalion-playwright
+    working_dir: /app
+    volumes:
+      - ../repository-Pygmalion-/mvp/app:/app
+      - playwright-report:/app/playwright-report
+    environment:
+      - PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+      - BASE_URL=http://frontend:5173
+    command: bash -c "npm install && npx playwright install --with-deps chromium && npx playwright test"
+    depends_on:
+      - frontend
+    networks:
+      - pygmalion-net
+
+networks:
+  pygmalion-net:
+    driver: bridge
+
+volumes:
+  playwright-report:

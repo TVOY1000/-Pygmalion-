@@ -1,0 +1,135 @@
+<!-- Pygmalion v0.3.0 — Порог «ЧисСлоБукВ» -->
+<!-- Интеграция кода Gemini -->
+
+<section id="threshold-container" class="threshold-section">
+  <div class="threshold-wrapper">
+    
+    <!-- Заголовок Порога -->
+    <div class="threshold-header">
+      <h1 data-i18n="threshold_title">Порог: Рождение О.К.</h1>
+      <p class="threshold-subtitle" data-i18n="threshold_subtitle">
+        Создайте свой Открытый Ключик через «ЧисСлоБукВ»
+      </p>
+    </div>
+
+    <!-- Этическое предупреждение -->
+    <div class="threshold-ethics">
+      <p data-i18n="threshold_ethics">
+        ⚠️ Вы входите в пространство нематериальной ценности.<br>
+        Ваш О.К. — это акт самоопределения, а не регистрация.<br>
+        Длина: от 3 до 70 символов.
+      </p>
+    </div>
+
+    <!-- Отображение О.К. -->
+    <div class="ok-display-container">
+      <div class="ok-display" id="ok-display">_</div>
+      <div class="ok-length" id="ok-length">0 / 70</div>
+    </div>
+
+    <!-- Виртуальная клавиатура ЧисСлоБукВ -->
+    <div class="chislobukv-keyboard">
+      
+      <!-- Числа (канонические) -->
+      <div class="kb-row kb-numbers">
+        <span class="kb-label" data-i18n="kb_numbers">Числа:</span>
+        <button class="kb-btn kb-num" data-char="3">3</button>
+        <button class="kb-btn kb-num" data-char="4">4</button>
+        <button class="kb-btn kb-num" data-char="6">6</button>
+        <button class="kb-btn kb-num" data-char="7">7</button>
+        <button class="kb-btn kb-num" data-char="9">9</button>
+        <button class="kb-btn kb-num" data-char="10">10</button>
+        <button class="kb-btn kb-num" data-char="12">12</button>
+        <button class="kb-btn kb-num" data-char="13">13</button>
+      </div>
+
+      <!-- Буквы (кириллица) -->
+      <div class="kb-row kb-letters">
+        <span class="kb-label" data-i18n="kb_letters_cyr">Буквы (RU):</span>
+        <div class="kb-letters-grid" id="kb-cyr-grid">
+          <!-- Генерируется JS -->
+        </div>
+      </div>
+
+      <!-- Буквы (латиница) -->
+      <div class="kb-row kb-letters">
+        <span class="kb-label" data-i18n="kb_letters_lat">Буквы (EN):</span>
+        <div class="kb-letters-grid" id="kb-lat-grid">
+          <!-- Генерируется JS -->
+        </div>
+      </div>
+
+      <!-- Символы -->
+      <div class="kb-row kb-symbols">
+        <span class="kb-label" data-i18n="kb_symbols">Символы:</span>
+        <button class="kb-btn kb-sym" data-char="_">_</button>
+        <button class="kb-btn kb-sym" data-char="-">-</button>
+        <button class="kb-btn kb-sym" data-char=".">.</button>
+        <button class="kb-btn kb-sym" data-char="@">@</button>
+        <button class="kb-btn kb-sym" data-char="#">#</button>
+        <button class="kb-btn kb-sym" data-char="№">№</button>
+      </div>
+
+      <!-- Управление -->
+      <div class="kb-row kb-controls">
+        <button class="kb-btn kb-control kb-clear" onclick="PygmalionThreshold.handleClear()" data-i18n="kb_clear">
+          ✕ Очистить
+        </button>
+        <button class="kb-btn kb-control kb-backspace" onclick="PygmalionThreshold.handleBackspace()" data-i18n="kb_backspace">
+          ← Стереть
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Кнопка подтверждения -->
+    <div class="threshold-actions">
+      <button 
+        id="confirm-ok-btn" 
+        class="btn-primary btn-confirm" 
+        onclick="PygmalionThreshold.confirmOKKey()"
+        disabled
+        data-i18n="threshold_confirm">
+        ✦ Подтвердить О.К.
+      </button>
+    </div>
+
+    <!-- Информация -->
+    <div class="threshold-info">
+      <p data-i18n="threshold_info">
+        О.К. сохраняется только в вашем браузере.<br>
+        Это не пароль — это ваш «числовой след» в системе.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Скрипт инициализации клавиатуры -->
+<script>
+// Генерация кириллической клавиатуры
+const cyrLetters = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ';
+const cyrGrid = document.getElementById('kb-cyr-grid');
+if (cyrGrid) {
+  cyrLetters.split('').forEach(char => {
+    const btn = document.createElement('button');
+    btn.className = 'kb-btn kb-char';
+    btn.textContent = char;
+    btn.onclick = () => PygmalionThreshold.handleCharInput(char);
+    cyrGrid.appendChild(btn);
+  });
+}
+
+// Генерация латинской клавиатуры
+const latLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const latGrid = document.getElementById('kb-lat-grid');
+if (latGrid) {
+  latLetters.split('').forEach(char => {
+    const btn = document.createElement('button');
+    btn.className = 'kb-btn kb-char';
+    btn.textContent = char;
+    btn.onclick = () => PygmalionThreshold.handleCharInput(char);
+    latGrid.appendChild(btn);
+  });
+}
+</script>

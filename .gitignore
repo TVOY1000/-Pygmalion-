@@ -1,54 +1,33 @@
-# =========================
-# SECURITY: secrets & env
-# =========================
-.env
-.env.*
-*.key
-*.pem
-*.token
-secrets/
-config/local.*
+# Приватные данные Qwen
+.qwen/oauth_creds.json
+.qwen/projects/
+.qwen/tmp/
+.qwen/todos/*.json
+.qwen/debug/
+.qwen/settings.json.orig
 
-# =========================
-# DEPENDENCIES
-# =========================
+# Бэкапы и архивы
+*.bak
+*.rar
+*.7z
+*.zip
+* — копия.*
+
+# Временные директории
+build-temp/
+repo-full/
+repo-main/
+repository-Pygmalion-/
+- Pygmalion-/
+│/
+
+# Node.js
 node_modules/
-vendor/
 
-# =========================
-# LOGS & TEMP FILES
-# =========================
-*.log
-logs/
-tmp/
-temp/
+# Python
+__pycache__/
+*.pyc
 
-# =========================
-# OS FILES
-# =========================
+# OS
 .DS_Store
 Thumbs.db
-
-# =========================
-# IDE / EDITORS
-# =========================
-.vscode/
-.idea/
-*.swp
-*.swo
-
-
-
-
-# =========================
-# TEST / COVERAGE
-# =========================
-coverage/
-.nyc_output/
-
-# =========================
-# MISC
-# =========================
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*

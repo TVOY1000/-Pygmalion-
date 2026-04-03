@@ -1,0 +1,193 @@
+# Activepieces Flows для Pygmalion v0.3.2
+# Canon v1.0 · ТИУП(ч) оркестрация
+
+{
+  "flows": [
+    {
+      "id": "flow_emission_001",
+      "name": "Эмиссия У.Е. (Emission)",
+      "description": "Создание новых У.Е. для участника с активным коном",
+      "version": 1,
+      "trigger": {
+        "type": "webhook",
+        "settings": {
+          "method": "POST",
+          "path": "/api/emission"
+        }
+      },
+      "steps": [
+        {
+          "name": "validate_participant",
+          "type": "code",
+          "settings": {
+            "code": "const { participant_id } = trigger.body;\n\n// Проверка существования участника\nconst participant = await db.query(\n  'SELECT id, is_active FROM participants WHERE id = $1',\n  [participant_id]\n);\n\nif (!participant.rows[0]) {\n  return { valid: false, error: 'Participant not found' };\n}\n\nif (!participant.rows[0].is_active) {\n  return { valid: false, error: 'Participant is not active' };\n}\n\nreturn { valid: true, participant: participant.rows[0] };"
+          }
+        },
+        {
+          "name": "check_active_kon",
+          "type": "code",
+          "settings": {
+            "code": "const { participant_id } = trigger.body;\n\n// Проверка активного кона\nconst kon = await db.query(\n  'SELECT id, remaining_amount, expires_at FROM kons WHERE participant_id = $1 AND status = $2 AND expires_at > NOW()',\n  [participant_id, 'active']\n);\n\nif (!kon.rows[0]) {\n  return { has_active_kon: false, error: 'No active kon found' };\n}\n\nreturn { has_active_kon: true, kon: kon.rows[0] };"
+          }
+        },
+        {
+          "name": "create_transaction",
+          "type": "code",
+          "settings": {
+            "code": "const { participant_id, amount, message, domain } = trigger.body;\n\n// Создание транзакции эмиссии\nconst result = await db.query(\n  `INSERT INTO transactions \n   (from_participant_id, to_participant_id, amount, transaction_type, message, domain, expires_at)\n   VALUES ($1, $1, $2, 'emission', $3, $4, NOW() + INTERVAL '28 hours')\n   RETURNING *`,\n  [participant_id, amount, message, domain]\n);\n\nreturn { transaction: result.rows[0] };"
+          }
+        },
+        {
+          "name": "update_participant_balance",
+          "type": "code",
+          "settings": {
+            "code": "const { participant_id, amount } = trigger.body;\n\n// Обновление баланса участника\nawait db.query(\n  'UPDATE participants SET given_total = given_total + $1 WHERE id = $2',\n  [amount, participant_id]\n);\n\nreturn { updated: true };"
+          }
+        },
+        {
+          "name": "response_success",
+          "type": "code",
+          "settings": {
+            "code": "return {\n  status: 'success',\n  data: {\n    transaction: steps.create_transaction.transaction,\n    message: 'UE emitted successfully'\n  }\n};"
+          }
+        }
+      ]
+    },
+    {
+      "id": "flow_transfer_002",
+      "name": "Передача У.Е. (Transfer ro.DAG)",
+      "description": "Передача У.Е. между участниками с ro.DAG валидацией",
+      "version": 1,
+      "trigger": {
+        "type": "webhook",
+        "settings": {
+          "method": "POST",
+          "path": "/api/transfer"
+        }
+      },
+      "steps": [
+        {
+          "name": "validate_rodag",
+          "type": "code",
+          "settings": {
+            "code": "const { parent_ids, from_participant_id, amount } = trigger.body;\n\n// ro.DAG валидация через функцию БД\nconst result = await db.query(\n  'SELECT * FROM validate_rodag_transaction($1, $2, $3)',\n  [parent_ids, from_participant_id, amount]\n);\n\nconst isValid = result.rows[0].validate_rodag_transaction;\n\nif (!isValid) {\n  return { valid: false, error: 'ro.DAG validation failed' };\n}\n\nreturn { valid: true, parent_count: parent_ids ? parent_ids.length : 0 };"
+          }
+        },
+        {
+          "name": "check_sender_balance",
+          "type": "code",
+          "settings": {
+            "code": "const { from_participant_id, amount } = trigger.body;\n\n// Проверка доступного баланса (активные У.Е.)\nconst balance = await db.query(\n  `SELECT COALESCE(SUM(\n    CASE WHEN transaction_type IN ('emission', 'transfer') THEN amount ELSE 0 END\n  ), 0) as available\n   FROM transactions\n   WHERE to_participant_id = $1 AND expires_at > NOW()`,\n  [from_participant_id]\n);\n\nconst available = balance.rows[0].available;\n\nif (available < amount) {\n  return { sufficient: false, available, required: amount };\n}\n\nreturn { sufficient: true, available };"
+          }
+        },
+        {
+          "name": "create_transfer_transaction",
+          "type": "code",
+          "settings": {
+            "code": "const { from_participant_id, to_participant_id, amount, message, domain, parent_ids } = trigger.body;\n\n// Создание транзакции передачи\nconst result = await db.query(\n  `INSERT INTO transactions\n   (from_participant_id, to_participant_id, parent_ids, amount, transaction_type, message, domain, expires_at)\n   VALUES ($1, $2, $3, $4, 'transfer', $5, $6, NOW() + INTERVAL '28 hours')\n   RETURNING *`,\n  [from_participant_id, to_participant_id, parent_ids, amount, message, domain]\n);\n\nreturn { transaction: result.rows[0] };"
+          }
+        },
+        {
+          "name": "update_balances",
+          "type": "code",
+          "settings": {
+            "code": "const { from_participant_id, to_participant_id, amount } = trigger.body;\n\n// Обновление балансов обоих участников\nawait db.query(\n  `UPDATE participants \n   SET given_total = given_total + $1 \n   WHERE id = $2`,\n  [amount, from_participant_id]\n);\n\nawait db.query(\n  `UPDATE participants \n   SET received_total = received_total + $1 \n   WHERE id = $2`,\n  [amount, to_participant_id]\n);\n\nreturn { updated: true };"
+          }
+        },
+        {
+          "name": "response_success",
+          "type": "code",
+          "settings": {
+            "code": "return {\n  status: 'success',\n  data: {\n    transaction: steps.create_transfer_transaction.transaction,\n    message: 'Transfer completed successfully'\n  }\n};"
+          }
+        }
+      ]
+    },
+    {
+      "id": "flow_burn_003",
+      "name": "Сгорание У.Е. (Burn)",
+      "description": "Автоматическое сгорание У.Е. после 28 часов",
+      "version": 1,
+      "trigger": {
+        "type": "schedule",
+        "settings": {
+          "cron": "0 * * * *",
+          "timezone": "UTC"
+        }
+      },
+      "steps": [
+        {
+          "name": "find_expired_ue",
+          "type": "code",
+          "settings": {
+            "code": "// Поиск сгоревших У.Е.\nconst expired = await db.query(\n  `SELECT to_participant_id, SUM(amount) as burned_amount\n   FROM transactions\n   WHERE expires_at < NOW() \n   AND transaction_type IN ('emission', 'transfer')\n   GROUP BY to_participant_id`\n);\n\nreturn { expired_transactions: expired.rows };"
+          }
+        },
+        {
+          "name": "create_burn_records",
+          "type": "code",
+          "settings": {
+            "code": "const { expired_transactions } = steps.find_expired_ue;\n\nconst burnRecords = [];\n\nfor (const record of expired_transactions) {\n  const { to_participant_id, burned_amount } = record;\n  \n  // Создание записи о сгорании\n  const burn = await db.query(\n    `INSERT INTO transactions\n     (to_participant_id, amount, transaction_type, metadata)\n     VALUES ($1, $2, 'burn', '{\"auto_burn\": true}')\n     RETURNING *`,\n    [to_participant_id, burned_amount]\n  );\n  \n  burnRecords.push(burn.rows[0]);\n}\n\nreturn { burn_records: burnRecords };"
+          }
+        },
+        {
+          "name": "update_participants_burned",
+          "type": "code",
+          "settings": {
+            "code": "const { expired_transactions } = steps.find_expired_ue;\n\nfor (const record of expired_transactions) {\n  const { to_participant_id, burned_amount } = record;\n  \n  await db.query(\n    'UPDATE participants SET burned_total = burned_total + $1 WHERE id = $2',\n    [burned_amount, to_participant_id]\n  );\n}\n\nreturn { updated: true };"
+          }
+        },
+        {
+          "name": "archive_old_transactions",
+          "type": "code",
+          "settings": {
+            "code": "// Архивация старых транзакций (> 7 дней)\nconst result = await db.query(\n  `UPDATE transactions \n   SET metadata = jsonb_set(metadata, '{archived}', 'true')\n   WHERE created_at < NOW() - INTERVAL '7 days'\n   AND (metadata->>'archived') IS NULL`\n);\n\nreturn { archived_count: result.rowCount };"
+          }
+        }
+      ]
+    },
+    {
+      "id": "flow_daily_summary_004",
+      "name": "Итоги дня (Daily Summary)",
+      "description": "Ежедневный расчёт репутационного веса и архивирование",
+      "version": 1,
+      "trigger": {
+        "type": "schedule",
+        "settings": {
+          "cron": "0 0 * * *",
+          "timezone": "UTC"
+        }
+      },
+      "steps": [
+        {
+          "name": "calculate_reputation",
+          "type": "code",
+          "settings": {
+            "code": "// Пересчёт репутационного веса для всех участников\nconst result = await db.query(\n  `UPDATE participants \n   SET reputation_weight = (given_total * 2) + (received_total * 1) - (burned_total * 1),\n       updated_at = NOW()`\n);\n\nreturn { updated_count: result.rowCount };"
+          }
+        },
+        {
+          "name": "refresh_materialized_view",
+          "type": "code",
+          "settings": {
+            "code": "// Обновление материализованного представления\nawait db.query('REFRESH MATERIALIZED VIEW CONCURRENTLY mv_participant_stats');\n\nreturn { refreshed: true };"
+          }
+        },
+        {
+          "name": "create_daily_summary",
+          "type": "code",
+          "settings": {
+            "code": "const stats = await db.query(\n  `SELECT \n    COUNT(*) FILTER (WHERE is_active = true) as active_ok,\n    SUM(given_total) as total_given,\n    SUM(received_total) as total_received,\n    SUM(burned_total) as total_burned,\n    AVG(reputation_weight) as avg_reputation\n   FROM participants`\n);\n\nconst summary = {\n  date: new Date().toISOString().split('T')[0],\n  active_ok: stats.rows[0].active_ok,\n  total_given: stats.rows[0].total_given,\n  total_received: stats.rows[0].total_received,\n  total_burned: stats.rows[0].total_burned,\n  avg_reputation: stats.rows[0].avg_reputation\n};\n\nreturn { summary };"
+          }
+        },
+        {
+          "name": "log_summary",
+          "type": "code",
+          "settings": {
+            "code": "const { summary } = steps.create_daily_summary;\n\nconsole.log('Daily Summary:', JSON.stringify(summary, null, 2));\n\nreturn { logged: true };"
+          }
+        }
+      ]
+    }
+  ]
+}

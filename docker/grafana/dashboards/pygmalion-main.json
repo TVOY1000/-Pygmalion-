@@ -1,0 +1,304 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "pygmalion-main",
+    "title": "Pygmalion v0.3.2 — Главная",
+    "tags": ["pygmalion", "production"],
+    "timezone": "browser",
+    "schemaVersion": 16,
+    "version": 0,
+    "refresh": "10s",
+    "panels": [
+      {
+        "id": 1,
+        "gridPos": {"h": 4, "w": 24, "x": 0, "y": 0},
+        "type": "stat",
+        "title": "Цели: 1000 O.K. × 20 000 транзакций/сутки",
+        "targets": [
+          {
+            "expr": "pygmalion_active_ok_count",
+            "legendFormat": "Активные O.K.",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": null},
+                {"color": "yellow", "value": 500},
+                {"color": "green", "value": 1000}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4},
+        "type": "graph",
+        "title": "Транзакции в секунду",
+        "targets": [
+          {
+            "expr": "rate(pygmalion_transactions_total[1m])",
+            "legendFormat": "Транзакций/сек",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"label": "транзакций/сек", "show": true},
+          {"show": true}
+        ],
+        "xaxis": {"show": true, "mode": "time"},
+        "lines": true,
+        "fill": 1,
+        "linewidth": 2,
+        "pointradius": 2,
+        "points": false,
+        "bars": false,
+        "stack": false,
+        "percentage": false,
+        "legend": {"show": true, "values": false, "min": false, "max": false, "current": true, "total": false, "avg": false}
+      },
+      {
+        "id": 3,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4},
+        "type": "graph",
+        "title": "Время ответа БД (ms)",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(pg_stat_statements_seconds_bucket[5m])) * 1000",
+            "legendFormat": "p95",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(pg_stat_statements_seconds_bucket[5m])) * 1000",
+            "legendFormat": "p99",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [
+          {"label": "мс", "show": true},
+          {"show": true}
+        ],
+        "xaxis": {"show": true, "mode": "time"},
+        "lines": true,
+        "fill": 1,
+        "linewidth": 2
+      },
+      {
+        "id": 4,
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 12},
+        "type": "stat",
+        "title": "Активные O.K.",
+        "targets": [
+          {
+            "expr": "pygmalion_active_ok_count",
+            "legendFormat": "{{status}}",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "palette-classic"},
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": null},
+                {"color": "yellow", "value": 500},
+                {"color": "green", "value": 1000}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 5,
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 12},
+        "type": "stat",
+        "title": "Транзакций сегодня",
+        "targets": [
+          {
+            "expr": "sum(increase(pygmalion_transactions_total[24h]))",
+            "legendFormat": "За 24ч",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "red", "value": null},
+                {"color": "yellow", "value": 10000},
+                {"color": "green", "value": 20000}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 6,
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 12},
+        "type": "stat",
+        "title": "Сгорело У.Е. (24ч)",
+        "targets": [
+          {
+            "expr": "sum(increase(pygmalion_ue_burned_total[24h]))",
+            "legendFormat": "Сгорело",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 100},
+                {"color": "red", "value": 500}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 7,
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 20},
+        "type": "graph",
+        "title": "ro.DAG валидации",
+        "targets": [
+          {
+            "expr": "rate(pygmalion_rodag_validation_success_total[5m])",
+            "legendFormat": "Успешно",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(pygmalion_rodag_validation_failures_total[5m])",
+            "legendFormat": "Неудачно",
+            "refId": "B"
+          }
+        ],
+        "yaxes": [{"show": true}, {"show": true}],
+        "xaxis": {"show": true, "mode": "time"},
+        "lines": true,
+        "fill": 1,
+        "stack": false
+      },
+      {
+        "id": 8,
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 20},
+        "type": "graph",
+        "title": "Activepieces — выполнение flows",
+        "targets": [
+          {
+            "expr": "rate(ap_flow_executions_total[5m])",
+            "legendFormat": "{{flow_name}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [{"show": true}, {"show": true}],
+        "xaxis": {"show": true, "mode": "time"},
+        "lines": true,
+        "fill": 1,
+        "stack": true
+      },
+      {
+        "id": 9,
+        "gridPos": {"h": 8, "w": 8, "x": 0, "y": 28},
+        "type": "stat",
+        "title": "PostgreSQL — подключения",
+        "targets": [
+          {
+            "expr": "sum(pg_stat_activity_count)",
+            "legendFormat": "Активные",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 150},
+                {"color": "red", "value": 190}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 10,
+        "gridPos": {"h": 8, "w": 8, "x": 8, "y": 28},
+        "type": "stat",
+        "title": "Redis — память",
+        "targets": [
+          {
+            "expr": "(redis_memory_used_bytes / redis_memory_max_bytes) * 100",
+            "legendFormat": "Использование %",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 70},
+                {"color": "red", "value": 85}
+              ]
+            },
+            "unit": "percent"
+          }
+        }
+      },
+      {
+        "id": 11,
+        "gridPos": {"h": 8, "w": 8, "x": 16, "y": 28},
+        "type": "stat",
+        "title": "Nginx — запросов/сек",
+        "targets": [
+          {
+            "expr": "rate(nginx_http_requests_total[1m])",
+            "legendFormat": "req/s",
+            "refId": "A"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "color": {"mode": "thresholds"},
+            "thresholds": {
+              "steps": [
+                {"color": "green", "value": null},
+                {"color": "yellow", "value": 500},
+                {"color": "red", "value": 1000}
+              ]
+            }
+          }
+        }
+      },
+      {
+        "id": 12,
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 36},
+        "type": "table",
+        "title": "Последние алерты",
+        "targets": [
+          {
+            "expr": "ALERTS{alertstate=\"firing\"}",
+            "format": "table",
+            "instant": true,
+            "refId": "A"
+          }
+        ],
+        "transformations": [
+          {"id": "organize", "options": {"renameByName": {"alertname": "Алерт", "severity": "Важность"}}}
+        ],
+        "columns": ["Алерт", "Важность", "Значение"],
+        "fontSize": "100%",
+        "sort": {"col": 0, "desc": false}
+      }
+    ]
+  }
+}

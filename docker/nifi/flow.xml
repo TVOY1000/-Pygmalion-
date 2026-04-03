@@ -1,0 +1,176 @@
+# Apache NiFi Flow Configuration для Pygmalion v0.3.2
+# Canon v1.0 · ТИУП(ч) потоки данных
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<flowConfig>
+    <!-- 
+    Pygmalion NiFi Flow для обработки транзакций ro.DAG
+    
+    Процессоры:
+    1. ConsumeKafka - получение транзакций из Kafka (опционально)
+    2. QueryDatabase - валидация ro.DAG транзакций
+    3. MergeContent - агрегация для архивирования
+    4. RouteOnAttribute - детекция аномалий
+    5. PutDatabaseRecord - запись в PostgreSQL
+    6. PutHDFS - архивирование в Parquet
+    -->
+    
+    <processor name="Validate ro.DAG Transactions">
+        <type>org.apache.nifi.processors.standard.QueryDatabase</type>
+        <config>
+            <property name="Database Connection Pooling Service">pygmalion-dcp</property>
+            <property name="Query Strategy">Select List</property>
+            <property name="Query">
+                SELECT 
+                    t.id,
+                    t.parent_ids,
+                    t.from_participant_id,
+                    t.to_participant_id,
+                    t.amount,
+                    t.transaction_type,
+                    t.created_at,
+                    validate_rodag_transaction(
+                        t.parent_ids, 
+                        t.from_participant_id, 
+                        t.amount
+                    ) as is_valid
+                FROM transactions t
+                WHERE t.validated = false
+                ORDER BY t.created_at
+                LIMIT 1000
+            </property>
+            <property name="Output Strategy">Single FlowFile per Row</property>
+            <property name="Compression Level">3</property>
+        </config>
+        <scheduling>
+            <runDurationNanos>0</runDurationNanos>
+            <maxConcurrentTasks>1</maxConcurrentTasks>
+            <schedulingPeriod>1 sec</schedulingPeriod>
+        </scheduling>
+    </processor>
+    
+    <processor name="Route Valid/Invalid">
+        <type>org.apache.nifi.processors.standard.RouteOnAttribute</type>
+        <config>
+            <property name="Routing Strategy">Route to Property name</property>
+            <property name="valid">
+                ${is_valid:equals(true)}
+            </property>
+            <property name="invalid">
+                ${is_valid:equals(false)}
+            </property>
+        </config>
+    </processor>
+    
+    <processor name="Mark as Validated">
+        <type>org.apache.nifi.processors.standard.ExecuteSQL</type>
+        <config>
+            <property name="Database Connection Pooling Service">pygmalion-dcp</property>
+            <property name="SQL Query">
+                UPDATE transactions 
+                SET validated = true, validated_at = NOW()
+                WHERE id = ${id}
+            </property>
+        </config>
+    </processor>
+    
+    <processor name="Alert on Invalid">
+        <type>org.apache.nifi.processors.standard.LogMessage</type>
+        <config>
+            <property name="Level">warn</property>
+            <property name="Message">
+                Invalid ro.DAG transaction detected: ${id}
+                From: ${from_participant_id}
+                Amount: ${amount}
+                Parents: ${parent_ids}
+            </property>
+        </config>
+    </processor>
+    
+    <processor name="Merge for Archive">
+        <type>org.apache.nifi.processors.standard.MergeContent</type>
+        <config>
+            <property name="Merge Strategy">Bin-Packing Algorithm</property>
+            <property name="Minimum Number of Entries">1000</property>
+            <property name="Maximum Number of Entries">10000</property>
+            <property name="Minimum Group Size">1 MB</property>
+            <property name="Maximum Group Size">100 MB</property>
+            <property name="Demarcator Expression">\n</property>
+        </config>
+    </processor>
+    
+    <processor name="Convert to Parquet">
+        <type>org.apache.nifi.processors.apache.parquet.ConvertToParquet</type>
+        <config>
+            <property name="Compression">SNAPPY</property>
+            <property name="Block Size">128 MB</property>
+        </config>
+    </processor>
+    
+    <processor name="Archive to HDFS/S3">
+        <type>org.apache.nifi.processors.hdfs.PutHDFS</type>
+        <config>
+            <property name="HDFS Directory">/pygmalion/archive/${yyyy}/${MM}/${dd}</property>
+            <property name="Filename">${uuid}.parquet</property>
+        </config>
+    </processor>
+    
+    <processor name="Detect Anomalies">
+        <type>org.apache.nifi.processors.standard.RouteOnAttribute</type>
+        <config>
+            <property name="Routing Strategy">Route to Property name</property>
+            <!-- Аномалии: слишком большая сумма, частые транзакции, и т.д. -->
+            <property name="high_amount">
+                ${amount:toNumber():gt(13)}
+            </property>
+            <property name="duplicate_check">
+                ${transaction_type:equals('emission'):and(${amount:toNumber():gt(20)})}
+            </property>
+        </config>
+    </processor>
+    
+    <processor name="Alert Anomaly">
+        <type>org.apache.nifi.processors.standard.PublishKafka_2_0</type>
+        <config>
+            <property name="Topic">pygmalion.anomalies</property>
+            <property name="Delivery Guarantee">PERSIST_ALL</property>
+        </config>
+    </processor>
+    
+    <connection name="Valid Transactions">
+        <source>Route Valid/Invalid</source>
+        <destination>Mark as Validated</destination>
+        <relationship>valid</relationship>
+    </connection>
+    
+    <connection name="Invalid Transactions">
+        <source>Route Valid/Invalid</source>
+        <destination>Alert on Invalid</destination>
+        <relationship>invalid</relationship>
+    </connection>
+    
+    <connection name="Anomaly Detection">
+        <source>Validate ro.DAG Transactions</source>
+        <destination>Detect Anomalies</destination>
+        <relationship>success</relationship>
+    </connection>
+    
+    <connection name="Archive Flow">
+        <source>Mark as Validated</source>
+        <destination>Merge for Archive</destination>
+        <relationship>success</relationship>
+    </connection>
+    
+    <controllerService name="pygmalion-dcp">
+        <type>org.apache.nifi.dbcp.DBCPConnectionPool</type>
+        <config>
+            <property name="Database Driver Class Name">org.postgresql.Driver</property>
+            <property name="Database Driver Location(s)">/opt/nifi/nifi-current/lib/postgresql-42.6.0.jar</property>
+            <property name="Database Connection URL">jdbc:postgresql://pgbouncer:6432/pygmalion</property>
+            <property name="Database User">pygmalion</property>
+            <property name="Database Password">${POSTGRES_PASSWORD}</property>
+            <property name="Max Total Connections">50</property>
+            <property name="Max Idle Connections">25</property>
+        </config>
+    </controllerService>
+</flowConfig>

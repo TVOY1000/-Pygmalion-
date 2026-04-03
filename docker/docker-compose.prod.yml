@@ -1,0 +1,416 @@
+# Pygmalion / C.R.I.S.T.A.L.L.
+# Docker Compose PRODUCTION (v0.3.2 — Масштабирование)
+# Canon v1.0 · Этический стоп-кран активен
+#
+# Цель: 1000 O.K. × 20 000 транзакций/сутки
+#
+# Запуск:
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# Остановка:
+#   docker compose -f docker-compose.prod.yml down
+#
+# Мониторинг:
+#   Prometheus: http://localhost:9090
+#   Grafana: http://localhost:3000 (admin/admin)
+#   NiFi: http://localhost:8090
+
+services:
+  # ===========================================
+  # PostgreSQL — ro.DAG реестр (Master)
+  # ===========================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: pygmalion-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: pygmalion
+      POSTGRES_USER: pygmalion
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pygmalion_prod_secure_2026}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --lc-collate=ru_RU.UTF-8 --lc-ctype=ru_RU.UTF-8"
+      # Настройка производительности для 1000 O.K.
+      POSTGRES_MAX_CONNECTIONS: "200"
+      POSTGRES_SHARED_BUFFERS: "1GB"
+      POSTGRES_EFFECTIVE_CACHE_SIZE: "3GB"
+      POSTGRES_WORK_MEM: "16MB"
+      POSTGRES_MAINTENANCE_WORK_MEM: "256MB"
+      POSTGRES_WAL_BUFFERS: "32MB"
+      POSTGRES_CHECKPOINT_COMPLETION_TARGET: "0.9"
+      POSTGRES_RANDOM_PAGE_COST: "1.1"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d:ro
+      - ./backups:/backups
+    networks:
+      - pygmalion-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pygmalion -d pygmalion"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          memory: 2G
+
+  # ===========================================
+  # PgBouncer — Connection Pooling
+  # ===========================================
+  pgbouncer:
+    image: bitnami/pgbouncer:1.20
+    container_name: pygmalion-pgbouncer
+    restart: unless-stopped
+    environment:
+      POSTGRESQL_HOST: postgres
+      POSTGRESQL_PORT: 5432
+      POSTGRESQL_USERNAME: pygmalion
+      POSTGRESQL_PASSWORD: ${POSTGRES_PASSWORD:-pygmalion_prod_secure_2026}
+      PGBOUNCER_DATABASE: pygmalion
+      PGBOUNCER_PORT: 6432
+      PGBOUNCER_BIND_ADDRESS: 0.0.0.0
+      PGBOUNCER_POOL_MODE: transaction
+      PGBOUNCER_MAX_CLIENT_CONN: 1000
+      PGBOUNCER_DEFAULT_POOL_SIZE: 50
+      PGBOUNCER_MIN_POOL_SIZE: 10
+      PGBOUNCER_RESERVE_POOL_SIZE: 25
+      PGBOUNCER_SERVER_IDLE_TIMEOUT: 60
+      PGBOUNCER_QUERY_TIMEOUT: 120
+    ports:
+      - "6432:6432"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - pygmalion-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -p 6432"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # ===========================================
+  # Redis — Кэш + сессии
+  # ===========================================
+  redis:
+    image: redis:7-alpine
+    container_name: pygmalion-redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 1gb
+      --maxmemory-policy allkeys-lru
+      --save 900 1
+      --save 300 10
+      --save 60 10000
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - pygmalion-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  # ===========================================
+  # Activepieces — Оркестрация ТИУП(ч) (Primary)
+  # ===========================================
+  activepieces:
+    image: ghcr.io/activepieces/activepieces:0.24.0
+    container_name: pygmalion-activepieces
+    restart: unless-stopped
+    environment:
+      AP_API_KEY: ${AP_API_KEY:-pygmalion_ap_secure_2026}
+      AP_ENCRYPTION_KEY: ${AP_ENCRYPTION_KEY:-pygmalion_encryption_secure_2026}
+      AP_POSTGRES_DATABASE: pygmalion
+      AP_POSTGRES_HOST: pgbouncer
+      AP_POSTGRES_PORT: 6432
+      AP_POSTGRES_USERNAME: pygmalion
+      AP_POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pygmalion_prod_secure_2026}
+      AP_REDIS_HOST: redis
+      AP_REDIS_PORT: 6379
+      AP_FRONTEND_URL: http://localhost:8080
+      AP_BACKEND_URL: http://localhost:8080
+      AP_TRIGGER_DEFAULT_POLL_INTERVAL: 1
+      AP_EXECUTION_MODE: SANDBOXED
+      AP_TEMPLATES_SOURCE_URL: https://cloud.activepieces.com/api/v1/flow-templates
+      # Оптимизация для нагрузки
+      AP_CONCURRENCY: 10
+      AP_QUEUE: redis
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - pygmalion-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 2G
+        reservations:
+          memory: 1G
+
+  # ===========================================
+  # Activepieces Worker — Дополнительный воркер
+  # ===========================================
+  activepieces-worker:
+    image: ghcr.io/activepieces/activepieces:0.24.0
+    container_name: pygmalion-activepieces-worker
+    restart: unless-stopped
+    command: ["node", "dist/worker/main.js"]
+    environment:
+      AP_API_KEY: ${AP_API_KEY:-pygmalion_ap_secure_2026}
+      AP_ENCRYPTION_KEY: ${AP_ENCRYPTION_KEY:-pygmalion_encryption_secure_2026}
+      AP_POSTGRES_DATABASE: pygmalion
+      AP_POSTGRES_HOST: pgbouncer
+      AP_POSTGRES_PORT: 6432
+      AP_POSTGRES_USERNAME: pygmalion
+      AP_POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-pygmalion_prod_secure_2026}
+      AP_REDIS_HOST: redis
+      AP_REDIS_PORT: 6379
+      AP_CONCURRENCY: 10
+      AP_QUEUE: redis
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - pygmalion-net
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+
+  # ===========================================
+  # Apache NiFi — ТИУП(ч) потоки данных
+  # ===========================================
+  nifi:
+    image: apache/nifi:1.23.2
+    container_name: pygmalion-nifi
+    restart: unless-stopped
+    environment:
+      - NIFI_WEB_HTTP_PORT=8090
+      - NIFI_WEB_HTTP_HOST=0.0.0.0
+      - NIFI_WEB_PROXY_CONTEXT_PATH=/nifi
+      - NIFI_JVM_HEAP_INIT=512m
+      - NIFI_JVM_HEAP_MAX=2g
+      - NIFI_DATABASE_DRIVER_CLASS_NAME=org.postgresql.Driver
+      - NIFI_DATABASE_DRIVER_LOCATION=/opt/nifi/nifi-current/lib/postgresql-42.6.0.jar
+      - NIFI_DATABASE_URL=jdbc:postgresql://pgbouncer:6432/pygmalion
+      - NIFI_DATABASE_USERNAME=pygmalion
+      - NIFI_DATABASE_PASSWORD=${POSTGRES_PASSWORD:-pygmalion_prod_secure_2026}
+    ports:
+      - "8090:8090"
+    volumes:
+      - nifi_conf:/opt/nifi/nifi-current/conf
+      - nifi_data:/opt/nifi/nifi-current/database
+      - nifi_logs:/opt/nifi/nifi-current/logs
+      - nifi_flow:/opt/nifi/nifi-current/flow
+      - ./nifi/postgresql-driver.jar:/opt/nifi/nifi-current/lib/postgresql-42.6.0.jar:ro
+      - ./nifi/flow.xml.gz:/opt/nifi/nifi-current/conf/flow.xml.gz:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+      pgbouncer:
+        condition: service_healthy
+    networks:
+      - pygmalion-net
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8090/nifi/"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          memory: 1G
+
+  # ===========================================
+  # Nginx — Load Balancer + Reverse Proxy
+  # ===========================================
+  nginx:
+    image: nginx:alpine
+    container_name: pygmalion-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ../sandbox-v0.3.2:/usr/share/nginx/html/sandbox:ro
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - activepieces
+    networks:
+      - pygmalion-net
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # ===========================================
+  # Prometheus — Мониторинг
+  # ===========================================
+  prometheus:
+    image: prom/prometheus:v2.45.0
+    container_name: pygmalion-prometheus
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/rules:/etc/prometheus/rules:ro
+      - prometheus_data:/prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - pygmalion-net
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+
+  # ===========================================
+  # Grafana — Визуализация
+  # ===========================================
+  grafana:
+    image: grafana/grafana:10.0.0
+    container_name: pygmalion-grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-grafana_admin_2026}
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SERVER_ROOT_URL=http://localhost:3000
+      - GF_INSTALL_PLUGINS=grafana-postgresql-datasource
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    networks:
+      - pygmalion-net
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  # ===========================================
+  # Node Exporter — Метрики хоста
+  # ===========================================
+  node-exporter:
+    image: prom/node-exporter:v1.6.0
+    container_name: pygmalion-node-exporter
+    restart: unless-stopped
+    command:
+      - '--path.rootfs=/host'
+    volumes:
+      - '/:/host:ro,rslave'
+    networks:
+      - pygmalion-net
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # ===========================================
+  # Backup — Автоматический backup PostgreSQL
+  # ===========================================
+  pg-backup:
+    image: prodrigestivill/postgres-backup-local:15
+    container_name: pygmalion-pg-backup
+    restart: unless-stopped
+    environment:
+      - POSTGRESQL_HOST=pgbouncer
+      - POSTGRESQL_PORT=6432
+      - POSTGRESQL_DB=pygmalion
+      - POSTGRESQL_USER=pygmalion
+      - POSTGRESQL_PASSWORD=${POSTGRES_PASSWORD:-pygmalion_prod_secure_2026}
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=4
+      - BACKUP_KEEP_MONTHS=6
+    volumes:
+      - ./backups:/backups
+    depends_on:
+      pgbouncer:
+        condition: service_healthy
+    networks:
+      - pygmalion-net
+
+# ===========================================
+# Сети
+# ===========================================
+networks:
+  pygmalion-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
+
+# ===========================================
+# Тома для постоянного хранения
+# ===========================================
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  nifi_conf:
+    driver: local
+  nifi_data:
+    driver: local
+  nifi_logs:
+    driver: local
+  nifi_flow:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+  nginx_logs:
+    driver: local
