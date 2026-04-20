@@ -22,7 +22,7 @@
     // Пробуем относительный путь (локально), затем абсолютный (GitHub Pages)
     const paths = [
       `assets/i18n/${lang}.json`,               // локально: из корня песочницы
-      `https://raw.githubusercontent.com/ORDENp/-Pygmalion-/1/assets/i18n/${lang}.json`,  // GitHub Pages (ветка 1)
+      `https://raw.githubusercontent.com/TVOY1000/-Pygmalion-/1/assets/i18n/${lang}.json`,  // GitHub Pages (ветка 1)
     ];
 
     for (const path of paths) {
